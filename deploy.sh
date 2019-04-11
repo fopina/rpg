@@ -10,6 +10,7 @@ git config --global push.default simple
 
 mv public ../
 git fetch origin gh-pages
+git checkout FETCH_HEAD
 git checkout gh-pages
 rm -fr *
 mv ../public/* .
