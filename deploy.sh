@@ -8,7 +8,6 @@ git config --global user.email "fopina-travisci@users.noreply.github.com"
 git config --global user.name "Publishing bot"
 git config --global push.default simple
 
-mv public ../
 git fetch origin gh-pages
 git checkout FETCH_HEAD
 git checkout -b gh-pages
