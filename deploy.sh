@@ -17,4 +17,4 @@ mv ../public/* .
 rmdir ../public/
 git add -A
 git commit -m "rebuilding site on `date`, commit ${TRAVIS_COMMIT} and job ${TRAVIS_JOB_NUMBER}" || true
-git push
+git push origin gh-pages
