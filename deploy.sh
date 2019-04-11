@@ -9,6 +9,7 @@ git config --global user.name "Publishing bot"
 git config --global push.default simple
 
 mv public ../
+git fetch origin gh-pages
 git checkout gh-pages
 rm -fr *
 mv ../public/* .
