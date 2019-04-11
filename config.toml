@@ -1,4 +1,4 @@
-baseURL = "http://example.org/"
+baseURL = "https://fopina.github.io/rpg/"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "RPG"
 theme = "ananke"
