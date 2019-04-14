@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>RPG</title>
-    <link>https://fopina.github.io/rpg/</link>
+    <link>https://rpg.skmobi.com/</link>
     <description>Recent content on RPG</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="https://fopina.github.io/rpg/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://rpg.skmobi.com/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
