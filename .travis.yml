@@ -7,6 +7,7 @@ install:
 
 script:
   - hugo -d ../public
+  - cp CNAME ../public
 
 deploy:
   - provider: script
