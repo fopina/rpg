@@ -3,12 +3,24 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://rpg.skmobi.com/categories/</loc>
-    <priority>0</priority>
+    <loc>https://rpg.skmobi.com/about/</loc>
+    <lastmod>2019-04-15T00:05:34+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rpg.skmobi.com/</loc>
+    <lastmod>2019-04-15T00:05:34+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://rpg.skmobi.com/posts/post-0/</loc>
+    <lastmod>2019-04-11T01:05:34+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rpg.skmobi.com/posts/</loc>
+    <lastmod>2019-04-11T01:05:34+01:00</lastmod>
     <priority>0</priority>
   </url>
   

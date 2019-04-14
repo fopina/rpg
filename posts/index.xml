@@ -1,0 +1,24 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Posts on Random Post Generator</title>
+		<link>https://rpg.skmobi.com/posts/</link>
+		<description>Recent content in Posts on Random Post Generator</description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>en-us</language>
+		<lastBuildDate>Thu, 11 Apr 2019 01:05:34 +0100</lastBuildDate>
+		<atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Post 0</title>
+			<link>https://rpg.skmobi.com/posts/post-0/</link>
+			<pubDate>Thu, 11 Apr 2019 01:05:34 +0100</pubDate>
+			
+			<guid>https://rpg.skmobi.com/posts/post-0/</guid>
+			<description>https://gohugo.io/getting-started/quick-start/ https://www.sidorenko.io/post/2018/12/hugo-on-github-pages-with-travis-ci/</description>
+			<content type="html"><![CDATA[<p><a href="https://gohugo.io/getting-started/quick-start/">https://gohugo.io/getting-started/quick-start/</a>
+<a href="https://www.sidorenko.io/post/2018/12/hugo-on-github-pages-with-travis-ci/">https://www.sidorenko.io/post/2018/12/hugo-on-github-pages-with-travis-ci/</a></p>
+]]></content>
+		</item>
+		
+	</channel>
+</rss>
