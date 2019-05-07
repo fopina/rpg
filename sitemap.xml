@@ -3,19 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://rpg.skmobi.com/about/</loc>
-    <lastmod>2019-04-15T00:05:34+01:00</lastmod>
+    <loc>https://rpg.skmobi.com/posts/0x0000_the_seed/</loc>
+    <lastmod>2019-05-07T01:37:07+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rpg.skmobi.com/posts/</loc>
+    <lastmod>2019-05-07T01:37:07+01:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://rpg.skmobi.com/</loc>
-    <lastmod>2019-04-15T00:05:34+01:00</lastmod>
+    <lastmod>2019-05-07T01:37:07+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://rpg.skmobi.com/tags/</loc>
+    <lastmod>2019-05-07T01:37:07+01:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://rpg.skmobi.com/tags/filler/</loc>
+    <lastmod>2019-05-07T01:37:07+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://rpg.skmobi.com/about/</loc>
+    <lastmod>2019-04-15T00:05:34+01:00</lastmod>
   </url>
   
 </urlset>

@@ -1,0 +1,46 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Posts on Random Post Generator</title>
+		<link>https://rpg.skmobi.com/posts/</link>
+		<description>Recent content in Posts on Random Post Generator</description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>en-us</language>
+		<lastBuildDate>Tue, 07 May 2019 01:37:07 +0100</lastBuildDate>
+		<atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>0x0000 The Seed</title>
+			<link>https://rpg.skmobi.com/posts/0x0000_the_seed/</link>
+			<pubDate>Tue, 07 May 2019 01:37:07 +0100</pubDate>
+			
+			<guid>https://rpg.skmobi.com/posts/0x0000_the_seed/</guid>
+			<description>Sometimes we need something and we can&amp;rsquo;t find a straight up how-to online.
+We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?
+We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?</description>
+			<content type="html"><![CDATA[<p>Sometimes we need something and we can&rsquo;t find a straight up how-to online.</p>
+
+<p>We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?</p>
+
+<p>We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?</p>
+
+<p>Internet is not running out of space.</p>
+
+<p>In my case, I decided to dump everything here, RPG.</p>
+
+<p>I&rsquo;ll start with how to set up a blog like this one:</p>
+
+<ul>
+<li><a href="https://gohugo.io">Hugo</a></li>
+<li>on <a href="https://pages.github.com/">Github Pages</a></li>
+<li>&hellip; with <a href="https://help.github.com/en/articles/using-a-custom-domain-with-github-pages">custom CNAME</a></li>
+<li>published by <a href="https://travis-ci.org/">Travis CI</a></li>
+</ul>
+
+<p><a href="https://gohugo.io/getting-started/quick-start/">https://gohugo.io/getting-started/quick-start/</a></p>
+
+<p><a href="https://www.sidorenko.io/post/2018/12/hugo-on-github-pages-with-travis-ci/">https://www.sidorenko.io/post/2018/12/hugo-on-github-pages-with-travis-ci/</a></p>
+]]></content>
+		</item>
+		
+	</channel>
+</rss>
