@@ -1,11 +1,11 @@
 ---
-title: "0x0000 The Seed"
-date: 2019-05-07T01:37:07+01:00
+title: "0xD755"
+date: 2019-06-27T00:47:31+01:00
 draft: true
 toc: false
 images:
-tags:
- - filler
+tags: 
+  - untagged
 ---
 
 needed cheap way to collect metrics and logs from raspberry pis and cheap VPSs
