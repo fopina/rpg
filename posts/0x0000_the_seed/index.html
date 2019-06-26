@@ -16,11 +16,11 @@ We want to record our steps to remember later on, but we also want Google to ind
 
 <meta itemprop="datePublished" content="2019-05-07T01:37:07&#43;01:00" />
 <meta itemprop="dateModified" content="2019-05-07T01:37:07&#43;01:00" />
-<meta itemprop="wordCount" content="121">
+<meta itemprop="wordCount" content="692">
 
 
 
-<meta itemprop="keywords" content="filler," />
+<meta itemprop="keywords" content="filler,random,hugo,github," />
 <meta property="og:title" content="0x0000 The Seed" />
 <meta property="og:description" content="Sometimes we need something and we can&rsquo;t find a straight up how-to online.
 We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?
@@ -80,7 +80,9 @@ We want to record our steps to remember later on, but we also want Google to ind
 				<h1>0x0000 The Seed</h1>
 			</header>
 			<div class="content">
-				<p>Sometimes we need something and we can&rsquo;t find a straight up how-to online.</p>
+				
+
+<p>Sometimes we need something and we can&rsquo;t find a straight up how-to online.</p>
 
 <p>We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?</p>
 
@@ -99,17 +101,134 @@ We want to record our steps to remember later on, but we also want Google to ind
 <li>published by <a href="https://travis-ci.org/">Travis CI</a></li>
 </ul>
 
-<p><a href="https://gohugo.io/getting-started/quick-start/">https://gohugo.io/getting-started/quick-start/</a></p>
+<h2 id="step-1-hugo-quickstart">Step 1 - Hugo quickstart<a href="#step-1-hugo-quickstart" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 
-<p><a href="https://www.sidorenko.io/post/2018/12/hugo-on-github-pages-with-travis-ci/">https://www.sidorenko.io/post/2018/12/hugo-on-github-pages-with-travis-ci/</a></p>
+<p>Follow <a href="https://gohugo.io/getting-started/quick-start/">Hugo quick.start</a> to get a basic page running.</p>
+
+<pre><code>➜  hugo new site quickstart
+Congratulations! Your new Hugo site is created in quickstart.
+
+Just a few more steps and you're ready to go:
+
+1. Download a theme into the same-named folder.
+   Choose a theme from https://themes.gohugo.io/, or
+   create your own with the &quot;hugo new theme &lt;THEMENAME&gt;&quot; command.
+2. Perhaps you want to add some content. You can add single files
+   with &quot;hugo new &lt;SECTIONNAME&gt;/&lt;FILENAME&gt;.&lt;FORMAT&gt;&quot;.
+3. Start the built-in live server via &quot;hugo server&quot;.
+
+Visit https://gohugo.io/ for quickstart guide and full documentation.
+➜  cd quickstart
+➜  git init
+Initialized empty Git repository in quickstart/.git/
+➜  git submodule add https://github.com/budparr/gohugo-theme-ananke.git themes/ananke
+Cloning into 'quickstart/themes/ananke'...
+remote: Enumerating objects: 17, done.
+remote: Counting objects: 100% (17/17), done.
+remote: Compressing objects: 100% (15/15), done.
+remote: Total 1349 (delta 3), reused 13 (delta 2), pack-reused 1332
+Receiving objects: 100% (1349/1349), 4.14 MiB | 3.08 MiB/s, done.
+Resolving deltas: 100% (722/722), done.
+➜  echo theme = \&quot;ananke\&quot; &gt;&gt; config.toml
+➜  hugo new posts/my-first-post.md
+quickstart/content/posts/my-first-post.md created
+</code></pre>
+
+<p>If you run <code>hugo server -D</code> you should be able to open up <a href="http://localhost:1313/">http://localhost:1313/</a> and check your brand new blog with one empty post.</p>
+
+<h2 id="step-2-github-pages">Step 2 - Github pages<a href="#step-2-github-pages" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+
+<ul>
+<li>Create a <a href="https://github.com/">GitHub</a> repository</li>
+<li>Add it to your local repo and push
+<code>
+➜  git remote add origin git@github.com:YOURUSER/YOURREPO.git
+➜  git push -u origin master
+</code></li>
+<li>Publish the site to branch <code>gh-pages</code>
+<code>
+➜  hugo -d /tmp/whatever
+➜  git checkout --orphan gh-pages
+➜  rm -fr *
+➜  rm .gitmodules
+➜  cp -a /tmp/whatever/* .
+➜  git add .
+➜  git push -u origin gh-pages
+</code></li>
+<li>Go to your GitHub project settings and enable <code>GitHub Pages</code> with <code>gh-pages branch</code> as <code>source</code></li>
+</ul>
+
+<p>After a couple of minutes <em>your brand new blog wit one empty post</em> should be available at <a href="https://YOURUSER.github.io/YOURREPO">https://YOURUSER.github.io/YOURREPO</a></p>
+
+<h2 id="step-3-extra-custom-cname">Step 3 - EXTRA - Custom CNAME<a href="#step-3-extra-custom-cname" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+
+<p>If you&rsquo;d rather use your own (sub)domain (such as <a href="https://rpg.skmobi.com/):">https://rpg.skmobi.com/):</a></p>
+
+<ul>
+<li>Add the (sub)domain to a file named <code>CNAME</code> in the root of the master branch like <a href="https://github.com/fopina/rpg/blob/master/CNAME">this</a></li>
+<li>Setup your DNS with CNAME record pointing to <code>YOURUSER.github.io</code></li>
+<li>As GitHub pages now supports HTTPS on custom domains (using <a href="https://letsencrypt.org/">LetsEncrypt</a>), I&rsquo;d recommend ticking <code>Enforce HTTPS</code> in <code>GitHub Pages</code> section of the project settings</li>
+</ul>
+
+<h2 id="step-4-travis-ci">Step 4 - Travis-CI<a href="#step-4-travis-ci" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+
+<p>As the last step, you can use <a href="https://travis-ci.org/">Travis-CI</a> to automate publishing when pushing new Hugo content.
+Original idea taken from <a href="https://www.sidorenko.io/post/2018/12/hugo-on-github-pages-with-travis-ci/">this post</a>.</p>
+
+<ul>
+<li>(Optionally) Create a second (bot) GitHub account and add it as collaborator of your repository. This allows you to add this account credentials to Travis instead of your main one.</li>
+<li>Signup to <a href="https://travis-ci.org/">Travis-CI</a> and enable it for your repository
+<a href="https://www.sidorenko.io/post/2018/12/hugo-on-github-pages-with-travis-ci/">https://www.sidorenko.io/post/2018/12/hugo-on-github-pages-with-travis-ci/</a></li>
+<li>In <code>Environment Variables</code> of <code>Settings</code> of this Travis project, create the variable <code>GITHUB_AUTH_SECRET</code> with the content <code>https://USERNAME:PASSWORD@github.com/YOURUSER/YOURREPO</code>. Use your bot account here if you decided to create one.</li>
+<li>Create the file <code>deploy.sh</code> in your <code>master</code> branch root</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+<span class="nb">set</span> -e
+
+<span class="nb">echo</span> <span class="nv">$GITHUB_AUTH_SECRET</span> &gt; ~/.git-credentials <span class="o">&amp;&amp;</span> chmod <span class="m">0600</span> ~/.git-credentials
+git config --global credential.helper store
+git config --global user.email <span class="s2">&#34;GITHUB_USER@users.noreply.github.com&#34;</span>
+git config --global user.name <span class="s2">&#34;Publishing bot&#34;</span>
+git config --global push.default simple
+
+git fetch origin gh-pages
+git checkout FETCH_HEAD
+git checkout -b gh-pages
+rm -fr *
+mv ../public/* .
+rmdir ../public/
+git add -A
+git commit -m <span class="s2">&#34;rebuilding site on `date`, commit </span><span class="si">${</span><span class="nv">TRAVIS_COMMIT</span><span class="si">}</span><span class="s2"> and job </span><span class="si">${</span><span class="nv">TRAVIS_JOB_NUMBER</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">true</span>
+git push origin gh-pages</code></pre></div>
+<ul>
+<li>And finally, the <code>.travis.yml</code>, also in your <code>master</code> branch root</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">language<span class="p">:</span><span class="w"> </span>minimal<span class="w">
+</span><span class="w">
+</span><span class="w"></span>install<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>/tmp/hugo.deb<span class="w"> </span>https<span class="p">:</span>//github.com/gohugoio/hugo/releases/download/v0.<span class="m">55.0</span>/hugo_0.<span class="m">55.</span>0_Linux-64bit.deb<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>/tmp/hugo.deb<span class="w">
+</span><span class="w">
+</span><span class="w"></span>script<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>hugo<span class="w"> </span>-d<span class="w"> </span>../public<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>cp<span class="w"> </span>CNAME<span class="w"> </span>../public<span class="w">
+</span><span class="w">
+</span><span class="w"></span>deploy<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>provider<span class="p">:</span><span class="w"> </span>script<span class="w">
+</span><span class="w">    </span>script<span class="p">:</span><span class="w"> </span>./deploy.sh<span class="w">
+</span><span class="w">    </span>skip_cleanup<span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span>on<span class="p">:</span><span class="w">
+</span><span class="w">      </span>branch<span class="p">:</span><span class="w"> </span>master</code></pre></div>
+<p>Commit these 2 files, push them and you&rsquo;re done! Travis job should kick off and <code>gh-pages</code> branch will be automatically updated, as will your blog.</p>
 
 			</div>
 			<hr class="post-end">
 			<footer class="post-info">
 				<p>
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://rpg.skmobi.com/tags/filler">filler</a></span>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://rpg.skmobi.com/tags/filler">filler</a></span><span class="tag"><a href="https://rpg.skmobi.com/tags/random">random</a></span><span class="tag"><a href="https://rpg.skmobi.com/tags/hugo">hugo</a></span><span class="tag"><a href="https://rpg.skmobi.com/tags/github">github</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>121 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>692 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2019-05-07 00:37 &#43;0000</p>
 			</footer>
 		</article>
