@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>diy on Random Post Generator</title>
+    <link>https://rpg.skmobi.com/tags/diy/</link>
+    <description>Recent content in diy on Random Post Generator</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 30 Jun 2019 18:22:48 +0100</lastBuildDate>
+    
+	<atom:link href="https://rpg.skmobi.com/tags/diy/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>0xC53E Peculiar Lenticular</title>
+      <link>https://rpg.skmobi.com/posts/0xc53e_lenticular/</link>
+      <pubDate>Sun, 30 Jun 2019 18:22:48 +0100</pubDate>
+      
+      <guid>https://rpg.skmobi.com/posts/0xc53e_lenticular/</guid>
+      <description>I needed a symbolic gift some time ago and thought a lenticular keychain but shops I found to get a custom made one would take over 2 weeks to deliver.
+Googling a bit for DIY seems the only thing required to print lenticulars is image processing and lenticular lens. Again, getting lenticular lens was not so easy as it looked, so off and found this video, that looks easy!</description>
+    </item>
+    
+  </channel>
+</rss>
