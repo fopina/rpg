@@ -6,10 +6,55 @@
     <description>Recent content in Tags on Random Post Generator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Jun 2019 18:22:48 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jul 2019 00:47:31 +0100</lastBuildDate>
     
 	<atom:link href="https://rpg.skmobi.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>cloud</title>
+      <link>https://rpg.skmobi.com/tags/cloud/</link>
+      <pubDate>Wed, 10 Jul 2019 00:47:31 +0100</pubDate>
+      
+      <guid>https://rpg.skmobi.com/tags/cloud/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fluentbit</title>
+      <link>https://rpg.skmobi.com/tags/fluentbit/</link>
+      <pubDate>Wed, 10 Jul 2019 00:47:31 +0100</pubDate>
+      
+      <guid>https://rpg.skmobi.com/tags/fluentbit/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fluentd</title>
+      <link>https://rpg.skmobi.com/tags/fluentd/</link>
+      <pubDate>Wed, 10 Jul 2019 00:47:31 +0100</pubDate>
+      
+      <guid>https://rpg.skmobi.com/tags/fluentd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gcp</title>
+      <link>https://rpg.skmobi.com/tags/gcp/</link>
+      <pubDate>Wed, 10 Jul 2019 00:47:31 +0100</pubDate>
+      
+      <guid>https://rpg.skmobi.com/tags/gcp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>logs</title>
+      <link>https://rpg.skmobi.com/tags/logs/</link>
+      <pubDate>Wed, 10 Jul 2019 00:47:31 +0100</pubDate>
+      
+      <guid>https://rpg.skmobi.com/tags/logs/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>diy</title>
@@ -53,15 +98,6 @@
       <pubDate>Tue, 07 May 2019 01:37:07 +0100</pubDate>
       
       <guid>https://rpg.skmobi.com/tags/hugo/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>random</title>
-      <link>https://rpg.skmobi.com/tags/random/</link>
-      <pubDate>Tue, 07 May 2019 01:37:07 +0100</pubDate>
-      
-      <guid>https://rpg.skmobi.com/tags/random/</guid>
       <description></description>
     </item>
     

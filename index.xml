@@ -6,10 +6,21 @@
     <description>Recent content on Random Post Generator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Jun 2019 18:22:48 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jul 2019 00:47:31 +0100</lastBuildDate>
     
 	<atom:link href="https://rpg.skmobi.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>0xD755 Free Log Collection</title>
+      <link>https://rpg.skmobi.com/posts/0xd755_gcp_logging/</link>
+      <pubDate>Wed, 10 Jul 2019 00:47:31 +0100</pubDate>
+      
+      <guid>https://rpg.skmobi.com/posts/0xd755_gcp_logging/</guid>
+      <description>I have a few raspberries lying around the house plus a couple of really cheap low-end VPS (1€ arubas)
+Not only they there are containers, cron jobs, etc spread among them (but all keep under ansible control) 2 of them are a docker swarm cluster with replicas for same services.
+Eventually I need to check logs for something (and I&amp;rsquo;d also like to keep tabs on cpu/memory/disk metrics), so I started looking into log management/collection solutions.</description>
+    </item>
     
     <item>
       <title>0xC53E Peculiar Lenticular</title>

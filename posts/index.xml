@@ -5,8 +5,63 @@
 		<description>Recent content in Posts on Random Post Generator</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
-		<lastBuildDate>Sun, 30 Jun 2019 18:22:48 +0100</lastBuildDate>
+		<lastBuildDate>Wed, 10 Jul 2019 00:47:31 +0100</lastBuildDate>
 		<atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>0xD755 Free Log Collection</title>
+			<link>https://rpg.skmobi.com/posts/0xd755_gcp_logging/</link>
+			<pubDate>Wed, 10 Jul 2019 00:47:31 +0100</pubDate>
+			
+			<guid>https://rpg.skmobi.com/posts/0xd755_gcp_logging/</guid>
+			<description>I have a few raspberries lying around the house plus a couple of really cheap low-end VPS (1€ arubas)
+Not only they there are containers, cron jobs, etc spread among them (but all keep under ansible control) 2 of them are a docker swarm cluster with replicas for same services.
+Eventually I need to check logs for something (and I&amp;rsquo;d also like to keep tabs on cpu/memory/disk metrics), so I started looking into log management/collection solutions.</description>
+			<content type="html"><![CDATA[<p>I have a few <a href="https://www.raspberrypi.org/">raspberries</a> lying around the house plus a couple of <del>really cheap</del> low-end VPS (1€ <a href="https://www.arubacloud.com/">arubas</a>)</p>
+
+<p>Not only they there are containers, cron jobs, etc spread among them (but all keep under ansible control) 2 of them are a docker swarm cluster with replicas for same services.</p>
+
+<p>Eventually I need to check logs for something (and I&rsquo;d also like to keep tabs on cpu/memory/disk metrics), so I started looking into log management/collection solutions.
+As these are for personal projects, I always try to go for <del>free</del> low-cost solutions.</p>
+
+<p>Self-hosting <a href="https://www.graylog.org/">Graylog</a> or <a href="https://www.splunk.com/en_us/software/features-comparison-chart.html">Splunk Free</a> is not an option as they would barely run on any of these options, plus avoiding storage costs is nice.</p>
+
+<ul>
+<li><a href="https://www.loggly.com/plans-and-pricing/">Loggly</a> has a nice free Lite plan</li>
+<li><a href="https://papertrailapp.com/plans">Papertrail</a> has a really shitty one</li>
+</ul>
+
+<p>Probably a few more out there that I could not find before bumping into&hellip;. <a href="https://cloud.google.com/stackdriver/">GCP Stackdriver</a>
+Thanks to the always-free plan Google and Amazon now have, Stackdriver is also included there. With 50GB ingestion per month!</p>
+
+<p>Quickly testing <a href="https://cloud.google.com/logging/docs/agent/installation">their setup guide</a> in one of my VPS gets the logs flowing into (and showing in) <a href="https://console.cloud.google.com/logs/viewer">Log Viewer</a>, awesome!</p>
+
+<p>Issue <strong>uno</strong>: they only have a <em>x86</em> package (as they only support GCP and AWS VMs) and that would leave raspberries out of the party&hellip; But looking at the package content it is just embedded ruby with <a href="https://www.fluentd.org/">fluentd</a> and <a href="https://github.com/GoogleCloudPlatform/fluent-plugin-google-cloud">their own output plugin</a> gems installed.
+Installing the gems (in a ruby docker) in one of the raspberries and it was working.</p>
+
+<p>But this brings up Issue <em>dos</em>: ruby!
+Who uses ruby? Why?
+Fluentd immediately started with 100MB of used memory and grew up to 300MB. Tuning garbage collector helped a little, but not nearly enough. Can&rsquo;t have the log collector using 10 or 15% of the server memory&hellip;</p>
+
+<p>Ranting about it at work, someone mentions <a href="https://fluentbit.io/">Fluentbit</a>, fluentd in C (with Go plugins)!
+Good looking <a href="https://docs.fluentbit.io/manual/installation/td-agent-bit">documentation</a> and in an hour or so, I had the logs in Stackdriver but using 1% of memory instead of 10%!</p>
+
+<p>Instead of writing how to set it up or install it, I&rsquo;ll leave ansible to show for itself, with the role and playbook I used to then apply this to every machine.</p>
+
+<p>The <em>generic</em> role:</p>
+
+<script type="application/javascript" src="//gist.github.com/fopina/c0439fa29bb7f3fa541a2d81a3f4a1e7.js"></script>
+
+<p>And the playbook to set it up in all the machines</p>
+
+<script type="application/javascript" src="//gist.github.com/fopina/eea83d290f634566b2e68e31d9ba6a74.js"></script>
+
+<p>Docker was configured (in another role) with <code>journald</code> as default logger, that&rsquo;s why I&rsquo;m using <a href="https://docs.fluentbit.io/manual/input/systemd">systemd input</a>.
+Also added a few modify filters to reduce the clutter (and avoid hitting the ingestion limit at some point).</p>
+
+<p>Pushing cpu and memory to use <a href="https://console.cloud.google.com/logs/metrics">Logs-based metrics</a>, but that&rsquo;ll be for another day&hellip;</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>0xC53E Peculiar Lenticular</title>
