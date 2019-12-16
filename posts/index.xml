@@ -5,8 +5,106 @@
 		<description>Recent content in Posts on Random Post Generator</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
-		<lastBuildDate>Wed, 10 Jul 2019 00:47:31 +0100</lastBuildDate>
+		<lastBuildDate>Sun, 15 Dec 2019 18:54:23 +0000</lastBuildDate>
 		<atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>0x6BAA OpenVPN Made Easy</title>
+			<link>https://rpg.skmobi.com/posts/0x6baa_openvpn/</link>
+			<pubDate>Sun, 15 Dec 2019 18:54:23 +0000</pubDate>
+			
+			<guid>https://rpg.skmobi.com/posts/0x6baa_openvpn/</guid>
+			<description>Why Some people decide to buy some external VPN service for privacy.
+Personally, as I already commit all my internet usage to my ISP at home, I rather VPN from untrusted locations into my home instead, saving a few bucks and keeping my ISP as the sole entity holding that information.
+I guess I could try to use one of those VPN services (with better privacy terms than my ISP) at home but that would increase complexity too much for the rest of the household</description>
+			<content type="html"><![CDATA[
+
+<h2 id="why">Why</h2>
+
+<p>Some people decide to buy some external VPN service for privacy.<br />
+Personally, as I already commit all my internet usage to my ISP at home, I rather VPN from <em>untrusted locations</em> into my home instead, saving a few bucks and keeping my ISP as the sole entity holding that information.<br />
+I guess I could try to use one of those VPN services (with better privacy terms than my ISP) at home but that would increase complexity too much for the rest of the <em>household</em></p>
+
+<p>As I already had some <a href="https://www.raspberrypi.org/">raspberries</a>, <a href="https://github.com/fopina/docker-openvpn/">forking</a> <a href="https://github.com/kylemanna/docker-openvpn/">kylemanna/docker-openvpn</a> to build it for <strong>arm</strong> was the quickest way, some years ago.</p>
+
+<p>Recently, some people have asked how to use the same docker image quickly in their raspberries, so I took the opportunity to refresh the docker image and add some goodies and I&rsquo;ll summarize the quickstart here.</p>
+
+<h2 id="how">How</h2>
+
+<ol>
+<li>Install <a href="https://www.raspberrypi.org/documentation/installation/installing-images/README.md">raspbian</a> on your Pi (or any other language that supports docker)</li>
+<li>Install <a href="https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/debian/">Docker CE</a></li>
+<li>Run this docker</li>
+</ol>
+
+<p>First 2 steps are well documented already, let&rsquo;s focus on the third.</p>
+
+<p>Setting it up in less than 3min</p>
+
+<p><a href="https://asciinema.org/a/2vyMJDZ76nTQQz3uvIxNyWoCF"><img src="https://asciinema.org/a/2vyMJDZ76nTQQz3uvIxNyWoCF.svg" alt="asciicast" /></a></p>
+
+<h3 id="drill-down">Drill down</h3>
+
+<ol>
+<li><p>Initialize the configuration directory</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm <span class="se">\
+</span><span class="se"></span>        -v testvpn:/etc/openvpn <span class="se">\
+</span><span class="se"></span>        fopina/openvpn <span class="se">\
+</span><span class="se"></span>        ovpn_genconfig -u udp://my.external.ip:9999</code></pre></div>
+<p><code>testvpn</code> used like this will be a <a href="https://docs.docker.com/storage/volumes/">named volume</a> which is probably the cleanest and easiest option for most cases.<br />
+If you want to make configuration files available to the host filesystem or if you&rsquo;re using this in a <a href="https://docs.docker.com/engine/swarm/">swarm</a>, then you don&rsquo;t a named volume&hellip;<br />
+<code>udp://my.external.ip:9999</code> can be <code>tcp://</code> instead if you need to use TCP for some reason, but <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">avoid if possible</a>.<br />
+<code>9999</code> will be port exposed publicly (in your router, for instance), not the one published by the container - might be the same but not necessarily.</p></li>
+
+<li><p>Generate CA</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm -ti <span class="se">\
+</span><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
+</span><span class="se"></span>           fopina/openvpn <span class="se">\
+</span><span class="se"></span>           ovpn_initpki</code></pre></div>
+<p>Nothing much to say, just pick a passphrase for the CA that will be used to issue client certificates.</p></li>
+
+<li><p>Start the service</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run -v testvpn:/etc/openvpn <span class="se">\
+</span><span class="se"></span>           -d -p <span class="m">9999</span>:1194/udp <span class="se">\
+</span><span class="se"></span>           --restart<span class="o">=</span>always <span class="se">\
+</span><span class="se"></span>           --cap-add<span class="o">=</span>NET_ADMIN <span class="se">\
+</span><span class="se"></span>           fopina/openvpn</code></pre></div>
+<p><code>-p 9999:1194/udp</code></p>
+
+<ul>
+<li>you can choose other published port instead of <code>9999</code></li>
+<li>Leave the internal port <code>1194</code> as that one never changes</li>
+<li>Adjust <code>udp</code> to <code>tcp</code> if you used TCP in the first step</li>
+</ul></li>
+
+<li><p>Generate client configuration</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm -ti <span class="se">\
+</span><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
+</span><span class="se"></span>           fopina/openvpn <span class="se">\
+</span><span class="se"></span>           easyrsa build-client-full CLIENTNAME nopass</code></pre></div>
+<ul>
+<li><code>CLIENTNAME</code> should be whatever identifier you want for that profile/device</li>
+<li>remove <code>nopass</code> if you want the profile to have a password (that you will to enter everytime you connect)</li>
+</ul></li>
+
+<li><p>Generate .ovpn and download link</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm <span class="se">\
+</span><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
+</span><span class="se"></span>           fopina/openvpn:helper <span class="se">\
+</span><span class="se"></span>           ovpn_getclient_link CLIENTNAME</code></pre></div>
+<p>This will bundle the previous step into an .ovpn file, upload it to <a href="https://vim.cx">vim.cx</a> (which is a <a href="https://privatebin.info/">PrivateBin</a> instance that supports attachments) and generate a QR code to make it easier to copy to a mobile device.
+If you prefer to manage the file transfer yourself, you can use:</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm <span class="se">\
+</span><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
+</span><span class="se"></span>           fopina/openvpn <span class="se">\
+</span><span class="se"></span>           ovpn_getclient CLIENTNAME &gt; CLIENTNAME.ovpn</code></pre></div></li>
+</ol>
+
+<h2 id="done">Done</h2>
+
+<p>Enjoy your home VPN.</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>0xD755 Free Log Collection</title>
