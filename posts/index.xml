@@ -100,7 +100,13 @@ If you prefer to manage the file transfer yourself, you can use:</p>
 </span><span class="se"></span>           ovpn_getclient CLIENTNAME &gt; CLIENTNAME.ovpn</code></pre></div></li>
 </ol>
 
-<h2 id="done">Done</h2>
+<h2 id="done-references">Done: references</h2>
+
+<ul>
+<li><a href="https://github.com/fopina/privatebin">CLI</a> used to upload attachments to privatebin</li>
+<li><a href="https://github.com/fumiyas/qrc">CLI</a> used to generate the QR codes in the terminal</li>
+<li><a href="https://github.com/fopina/docker-openvpn/blob/master/.github/workflows/main.yml">this github workflow</a> to make the multi-platform builds of the docker image</li>
+</ul>
 
 <p>Enjoy your home VPN.</p>
 ]]></content>

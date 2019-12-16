@@ -6,10 +6,37 @@
     <description>Recent content in Tags on Random Post Generator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jul 2019 00:47:31 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 15 Dec 2019 18:54:23 +0000</lastBuildDate>
     
 	<atom:link href="https://rpg.skmobi.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>docker</title>
+      <link>https://rpg.skmobi.com/tags/docker/</link>
+      <pubDate>Sun, 15 Dec 2019 18:54:23 +0000</pubDate>
+      
+      <guid>https://rpg.skmobi.com/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>raspberrypi</title>
+      <link>https://rpg.skmobi.com/tags/raspberrypi/</link>
+      <pubDate>Sun, 15 Dec 2019 18:54:23 +0000</pubDate>
+      
+      <guid>https://rpg.skmobi.com/tags/raspberrypi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vpn</title>
+      <link>https://rpg.skmobi.com/tags/vpn/</link>
+      <pubDate>Sun, 15 Dec 2019 18:54:23 +0000</pubDate>
+      
+      <guid>https://rpg.skmobi.com/tags/vpn/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>cloud</title>
@@ -71,33 +98,6 @@
       <pubDate>Sun, 30 Jun 2019 18:22:48 +0100</pubDate>
       
       <guid>https://rpg.skmobi.com/tags/gifts/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>filler</title>
-      <link>https://rpg.skmobi.com/tags/filler/</link>
-      <pubDate>Tue, 07 May 2019 01:37:07 +0100</pubDate>
-      
-      <guid>https://rpg.skmobi.com/tags/filler/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>github</title>
-      <link>https://rpg.skmobi.com/tags/github/</link>
-      <pubDate>Tue, 07 May 2019 01:37:07 +0100</pubDate>
-      
-      <guid>https://rpg.skmobi.com/tags/github/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>hugo</title>
-      <link>https://rpg.skmobi.com/tags/hugo/</link>
-      <pubDate>Tue, 07 May 2019 01:37:07 +0100</pubDate>
-      
-      <guid>https://rpg.skmobi.com/tags/hugo/</guid>
       <description></description>
     </item>
     
