@@ -4,7 +4,7 @@ defaultContentLanguage = "en"
 title = "Random Post Generator"
 theme = "hermit"
 
-# enableGitInfo = true
+enableGitInfo = true
 pygmentsCodefences  = true
 pygmentsUseClasses  = true
 rssLimit = 10
@@ -41,7 +41,7 @@ googleAnalytics = "UA-152680315-1"
   # bgImg = ""  # Homepage background-image URL
 
   # Prefix of link to the git commit detail page. GitInfo must be enabled.
-  # gitUrl = "https://github.com/username/repository/commit/"
+  gitUrl = "https://github.com/fopina/rpg/commit/"
 
   # Toggling this option needs to rebuild SCSS, requires Hugo extended version
   justifyContent = false  # Set "text-align: justify" to `.content`.

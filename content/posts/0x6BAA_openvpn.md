@@ -2,6 +2,10 @@
 title: "0x6BAA OpenVPN Made Easy"
 date: 2019-12-15T18:54:23Z
 draft: false
+tags:
+ - vpn
+ - raspberrypi
+ - docker
 ---
 
 ## Why
@@ -89,6 +93,10 @@ Setting it up in less than 3min
                ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn
     ```
 
-## Done
+## Done: references
+
+* [CLI](https://github.com/fopina/privatebin) used to upload attachments to privatebin
+* [CLI](https://github.com/fumiyas/qrc) used to generate the QR codes in the terminal
+* [this github workflow](https://github.com/fopina/docker-openvpn/blob/master/.github/workflows/main.yml) to make the multi-platform builds of the docker image
 
 Enjoy your home VPN.
