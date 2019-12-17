@@ -41,7 +41,7 @@ Setting it up in less than 3min
     ```
 
     `testvpn` used like this will be a [named volume](https://docs.docker.com/storage/volumes/) which is probably the cleanest and easiest option for most cases.  
-    If you want to make configuration files available to the host filesystem or if you're using this in a [swarm](https://docs.docker.com/engine/swarm/), then you don't a named volume...  
+    If you want to make configuration files available to the host filesystem or if you're using this in a [swarm](https://docs.docker.com/engine/swarm/), then you don't use a named volume...  
     `udp://my.external.ip:9999` can be `tcp://` instead if you need to use TCP for some reason, but [avoid if possible](http://sites.inka.de/bigred/devel/tcp-tcp.html).  
     `9999` will be port exposed publicly (in your router, for instance), not the one published by the container - might be the same but not necessarily.
 
