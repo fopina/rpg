@@ -52,7 +52,7 @@ I guess I could try to use one of those VPN services (with better privacy terms 
 </span><span class="se"></span>        fopina/openvpn <span class="se">\
 </span><span class="se"></span>        ovpn_genconfig -u udp://my.external.ip:9999</code></pre></div>
 <p><code>testvpn</code> used like this will be a <a href="https://docs.docker.com/storage/volumes/">named volume</a> which is probably the cleanest and easiest option for most cases.<br />
-If you want to make configuration files available to the host filesystem or if you&rsquo;re using this in a <a href="https://docs.docker.com/engine/swarm/">swarm</a>, then you don&rsquo;t a named volume&hellip;<br />
+If you want to make configuration files available to the host filesystem or if you&rsquo;re using this in a <a href="https://docs.docker.com/engine/swarm/">swarm</a>, then you don&rsquo;t use a named volume&hellip;<br />
 <code>udp://my.external.ip:9999</code> can be <code>tcp://</code> instead if you need to use TCP for some reason, but <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">avoid if possible</a>.<br />
 <code>9999</code> will be port exposed publicly (in your router, for instance), not the one published by the container - might be the same but not necessarily.</p></li>
 
