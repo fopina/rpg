@@ -1,7 +1,7 @@
 ---
 title: "0x8490 Privileged Swarm Services"
 date: 2020-03-07T14:38:07Z
-draft: true
+draft: false
 toc: false
 images:
 tags: 
@@ -66,8 +66,6 @@ services:
                         fopina/openvpn
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    cap_add:
-      - NET_ADMIN
     deploy:
       mode: replicated
       replicas: 1
@@ -78,8 +76,8 @@ services:
 But as openvpn is not running in the actual service container, the port is not published in the swarm VIP / routing mesh.
 If we can scale it up, it needs to end in different nodes (as there's an host bound port) and to make use of the replicas, we need to use the node IP (not *any* node IP as the usual routing mesh)...
 
-Possible solution:
-* adding some proxy (UDP in this case - or something light for both TCP and UDP like [this](https://github.com/arkadijs/goproxy)) to the service image (together with docker binary)
+My overkill solution:
+* adding some proxy - just used [socat](https://linux.die.net/man/1/socat) in my example
 * write an entrypoint script that
   * starts docker container (without binding port) attached to a common network with the service container
   * extract the IP from the new container
@@ -87,4 +85,40 @@ Possible solution:
   * attach to container (so that main service process is the container itself, not the proxy)
 * just use that port in the service description as if it was any other service
 
-This would very likely solve this but I'd rather wait for 19.06 and use as it is for now ^^
+To accomplish this, I've created the image [fopina/swarm-service-proxy](https://hub.docker.com/r/fopina/swarm-service-proxy) (built from [this](https://github.com/fopina/docker-swarm-service-proxy))
+
+The stack definition using this is
+
+```yaml
+version: '3.1'
+
+services:
+  vpnd:
+    image: fopina/swarm-service-proxy:1
+    command: --rm
+             --cap-add NET_ADMIN
+             -v /nfs/path/to/openvpn/:/etc/openvpn/
+             fopina/openvpn
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      PROXIED_PORT: 443
+      PROXIED_PROTO: udp
+      PROXIED_NAME: openvpn_real
+    ports:
+      - 443:443/udp
+    deploy:
+      mode: replicated
+      replicas: 1
+```
+
+With this, port is actually published from the service (not to the secondary container) so it makes use of the routing mesh (and it doesn't lock the port in the docker host where it lands).
+
+Syntax remained as close as possible to the initial version: command is used as if it was `docker run <command>`.
+* `PROXIED_PORT` is the internal port of the secondary container.
+* Use `PROXIED_PROTO: udp` if `socat` should use the UDP labels (instead of TCP).
+* Use `PROXIED_NAME` to choose the name *prefix* of the secondary container - yes, *prefix* as random string is appended to it to make sure it will not collide if scaled up.
+* Do not forget to bind the port you need in the service
+* Do not publish any port on the secondary container (as it won't be used)
+
+So it is now fully managed as it was a service and fully scalable.
