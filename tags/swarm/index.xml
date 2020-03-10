@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>docker on Random Post Generator</title>
-    <link>https://rpg.skmobi.com/tags/docker/</link>
-    <description>Recent content in docker on Random Post Generator</description>
+    <title>swarm on Random Post Generator</title>
+    <link>https://rpg.skmobi.com/tags/swarm/</link>
+    <description>Recent content in swarm on Random Post Generator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 07 Mar 2020 14:38:07 +0000</lastBuildDate>
     
-	<atom:link href="https://rpg.skmobi.com/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://rpg.skmobi.com/tags/swarm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -22,17 +22,6 @@ Swarmkit does not support that (nor the GIEF IT ALL --privileged flag).
 There are a lot of issues on their github(s) such as this, this or this.
 It seems there is consensus into adding the feature to swarmkit though it won&amp;rsquo;t be available before 19.06 or 19.09.
 Until then, the best solution seems to be spinning up a service that starts the container after, such as:</description>
-    </item>
-    
-    <item>
-      <title>0x6BAA OpenVPN Made Easy</title>
-      <link>https://rpg.skmobi.com/posts/0x6baa_openvpn/</link>
-      <pubDate>Sun, 15 Dec 2019 18:54:23 +0000</pubDate>
-      
-      <guid>https://rpg.skmobi.com/posts/0x6baa_openvpn/</guid>
-      <description>Why Some people decide to buy some external VPN service for privacy.
-Personally, as I already commit all my internet usage to my ISP at home, I rather VPN from untrusted locations into my home instead, saving a few bucks and keeping my ISP as the sole entity holding that information.
-I guess I could try to use one of those VPN services (with better privacy terms than my ISP) at home but that would increase complexity too much for the rest of the household</description>
     </item>
     
   </channel>

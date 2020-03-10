@@ -5,8 +5,123 @@
 		<description>Recent content in Posts on Random Post Generator</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
-		<lastBuildDate>Sun, 15 Dec 2019 18:54:23 +0000</lastBuildDate>
+		<lastBuildDate>Sat, 07 Mar 2020 14:38:07 +0000</lastBuildDate>
 		<atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>0x8490 Privileged Swarm Services</title>
+			<link>https://rpg.skmobi.com/posts/0x8490_privileged_swarm_service/</link>
+			<pubDate>Sat, 07 Mar 2020 14:38:07 +0000</pubDate>
+			
+			<guid>https://rpg.skmobi.com/posts/0x8490_privileged_swarm_service/</guid>
+			<description>Some docker images require extra capabilities to work, ie: * openvpn needs NET_ADMIN * anything using USB/i2c will need --device=/dev/ttyAMA0
+Swarmkit does not support that (nor the GIEF IT ALL --privileged flag).
+There are a lot of issues on their github(s) such as this, this or this.
+It seems there is consensus into adding the feature to swarmkit though it won&amp;rsquo;t be available before 19.06 or 19.09.
+Until then, the best solution seems to be spinning up a service that starts the container after, such as:</description>
+			<content type="html"><![CDATA[<p>Some docker images require extra capabilities to work, ie:
+* openvpn needs <code>NET_ADMIN</code>
+* anything using USB/i2c will need <code>--device=/dev/ttyAMA0</code></p>
+
+<p>Swarmkit does not support that (nor the GIEF IT ALL <code>--privileged</code> flag).</p>
+
+<p>There are a lot of issues on their github(s) such as <a href="https://github.com/docker/swarmkit/issues/1030">this</a>, <a href="https://github.com/moby/moby/issues/25885">this</a> or <a href="https://github.com/moby/moby/pull/38380">this</a>.</p>
+
+<p>It seems there is consensus into adding the feature to swarmkit though it won&rsquo;t be available before 19.06 or 19.09.</p>
+
+<p>Until then, the best solution seems to be spinning up a service that starts the container after, such as:</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">version<span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span>services<span class="p">:</span><span class="w">
+</span><span class="w">  </span>web<span class="p">:</span><span class="w">
+</span><span class="w">    </span>image<span class="p">:</span><span class="w"> </span>docker<span class="p">:</span><span class="m">19.03</span><span class="w">
+</span><span class="w">    </span>command<span class="p">:</span><span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&#34;docker pull fopina/octoprint &amp;&amp; docker run 
+</span><span class="s2">                        --rm
+</span><span class="s2">                        --name octoprint_real
+</span><span class="s2">                        -v /nfs/path/to/octoprint/config:/root/.octoprint
+</span><span class="s2">                        --device=/dev/ttyAMA0
+</span><span class="s2">                        -p 5000:5000
+</span><span class="s2">                        fopina/octoprint&#34;</span><span class="w">
+</span><span class="w">    </span>volumes<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>/var/run/docker.sock<span class="p">:</span>/var/run/docker.sock<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>/root/.docker<span class="p">:</span>/root/.docker<span class="p">:</span>ro<span class="w">
+</span><span class="w">    </span>deploy<span class="p">:</span><span class="w">
+</span><span class="w">      </span>mode<span class="p">:</span><span class="w"> </span>replicated<span class="w">
+</span><span class="w">      </span>replicas<span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span>placement<span class="p">:</span><span class="w">
+</span><span class="w">        </span>constraints<span class="p">:</span><span class="w"> </span><span class="p">[</span>node.hostname<span class="w"> </span>==<span class="w"> </span>printingPi<span class="p">]</span></code></pre></div>
+<p>Why would you use swarm service for this, since it&rsquo;s bound to the specific node where the USB cable is connected?</p>
+
+<p>In this case, it&rsquo;s managing all <strong>services</strong> the same way, I don&rsquo;t want to deploy some with <code>docker-compose</code> and others with <code>docker swarm deploy</code>&hellip;</p>
+
+<p>But in the case of, let&rsquo;s say <a href="https://rpg.skmobi.com/posts/0x6baa_openvpn/">openvpn</a>, it could be useful for easily scaling up across different nodes.</p>
+
+<p>We could use a stack like the first:</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">version<span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span>services<span class="p">:</span><span class="w">
+</span><span class="w">  </span>vpnd<span class="p">:</span><span class="w">
+</span><span class="w">    </span>image<span class="p">:</span><span class="w"> </span>docker<span class="p">:</span><span class="m">19.03</span><span class="w">
+</span><span class="w">    </span>command<span class="p">:</span><span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w">
+</span><span class="w">                        </span>--name<span class="w"> </span>openvpn_real<span class="w">
+</span><span class="w">                        </span>--cap-add<span class="w"> </span>NET_ADMIN<span class="w">
+</span><span class="w">                        </span>-p<span class="w"> </span><span class="m">443</span><span class="p">:</span><span class="m">443</span>/udp<span class="w">
+</span><span class="w">                        </span>-v<span class="w"> </span>/nfs/path/to/openvpn/<span class="p">:</span>/etc/openvpn/<span class="w">
+</span><span class="w">                        </span>fopina/openvpn<span class="w">
+</span><span class="w">    </span>volumes<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>/var/run/docker.sock<span class="p">:</span>/var/run/docker.sock<span class="w">
+</span><span class="w">    </span>deploy<span class="p">:</span><span class="w">
+</span><span class="w">      </span>mode<span class="p">:</span><span class="w"> </span>replicated<span class="w">
+</span><span class="w">      </span>replicas<span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span>placement<span class="p">:</span><span class="w">
+</span><span class="w">        </span>constraints<span class="p">:</span><span class="w"> </span><span class="p">[</span>node.role<span class="w"> </span>==<span class="w"> </span>manager<span class="p">]</span></code></pre></div>
+<p>But as openvpn is not running in the actual service container, the port is not published in the swarm VIP / routing mesh.
+If we can scale it up, it needs to end in different nodes (as there&rsquo;s an host bound port) and to make use of the replicas, we need to use the node IP (not <em>any</em> node IP as the usual routing mesh)&hellip;</p>
+
+<p>My overkill solution:
+* adding some proxy - just used <a href="https://linux.die.net/man/1/socat">socat</a> in my example
+* write an entrypoint script that
+  * starts docker container (without binding port) attached to a common network with the service container
+  * extract the IP from the new container
+  * launch proxy using the same port
+  * attach to container (so that main service process is the container itself, not the proxy)
+* just use that port in the service description as if it was any other service</p>
+
+<p>To accomplish this, I&rsquo;ve created the image <a href="https://hub.docker.com/r/fopina/swarm-service-proxy">fopina/swarm-service-proxy</a> (built from <a href="https://github.com/fopina/docker-swarm-service-proxy">this</a>)</p>
+
+<p>The stack definition using this is</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">version<span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span>services<span class="p">:</span><span class="w">
+</span><span class="w">  </span>vpnd<span class="p">:</span><span class="w">
+</span><span class="w">    </span>image<span class="p">:</span><span class="w"> </span>fopina/swarm-service-proxy<span class="p">:</span><span class="m">1</span><span class="w">
+</span><span class="w">    </span>command<span class="p">:</span><span class="w"> </span>--rm<span class="w">
+</span><span class="w">             </span>--cap-add<span class="w"> </span>NET_ADMIN<span class="w">
+</span><span class="w">             </span>-v<span class="w"> </span>/nfs/path/to/openvpn/<span class="p">:</span>/etc/openvpn/<span class="w">
+</span><span class="w">             </span>fopina/openvpn<span class="w">
+</span><span class="w">    </span>volumes<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>/var/run/docker.sock<span class="p">:</span>/var/run/docker.sock<span class="w">
+</span><span class="w">    </span>environment<span class="p">:</span><span class="w">
+</span><span class="w">      </span>PROXIED_PORT<span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
+</span><span class="w">      </span>PROXIED_PROTO<span class="p">:</span><span class="w"> </span>udp<span class="w">
+</span><span class="w">      </span>PROXIED_NAME<span class="p">:</span><span class="w"> </span>openvpn_real<span class="w">
+</span><span class="w">    </span>ports<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span><span class="m">443</span><span class="p">:</span><span class="m">443</span>/udp<span class="w">
+</span><span class="w">    </span>deploy<span class="p">:</span><span class="w">
+</span><span class="w">      </span>mode<span class="p">:</span><span class="w"> </span>replicated<span class="w">
+</span><span class="w">      </span>replicas<span class="p">:</span><span class="w"> </span><span class="m">1</span></code></pre></div>
+<p>With this, port is actually published from the service (not to the secondary container) so it makes use of the routing mesh (and it doesn&rsquo;t lock the port in the docker host where it lands).</p>
+
+<p>Syntax remained as close as possible to the initial version: command is used as if it was <code>docker run &lt;command&gt;</code>.
+* <code>PROXIED_PORT</code> is the internal port of the secondary container.
+* Use <code>PROXIED_PROTO: udp</code> if <code>socat</code> should use the UDP labels (instead of TCP).
+* Use <code>PROXIED_NAME</code> to choose the name <em>prefix</em> of the secondary container - yes, <em>prefix</em> as random string is appended to it to make sure it will not collide if scaled up.
+* Do not forget to bind the port you need in the service
+* Do not publish any port on the secondary container (as it won&rsquo;t be used)</p>
+
+<p>So it is now fully managed as it was a service and fully scalable.</p>
+]]></content>
+		</item>
 		
 		<item>
 			<title>0x6BAA OpenVPN Made Easy</title>

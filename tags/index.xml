@@ -6,7 +6,7 @@
     <description>Recent content in Tags on Random Post Generator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Dec 2019 18:54:23 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Mar 2020 14:38:07 +0000</lastBuildDate>
     
 	<atom:link href="https://rpg.skmobi.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,18 @@
     <item>
       <title>docker</title>
       <link>https://rpg.skmobi.com/tags/docker/</link>
-      <pubDate>Sun, 15 Dec 2019 18:54:23 +0000</pubDate>
+      <pubDate>Sat, 07 Mar 2020 14:38:07 +0000</pubDate>
       
       <guid>https://rpg.skmobi.com/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>swarm</title>
+      <link>https://rpg.skmobi.com/tags/swarm/</link>
+      <pubDate>Sat, 07 Mar 2020 14:38:07 +0000</pubDate>
+      
+      <guid>https://rpg.skmobi.com/tags/swarm/</guid>
       <description></description>
     </item>
     
@@ -89,15 +98,6 @@
       <pubDate>Sun, 30 Jun 2019 18:22:48 +0100</pubDate>
       
       <guid>https://rpg.skmobi.com/tags/diy/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>gifts</title>
-      <link>https://rpg.skmobi.com/tags/gifts/</link>
-      <pubDate>Sun, 30 Jun 2019 18:22:48 +0100</pubDate>
-      
-      <guid>https://rpg.skmobi.com/tags/gifts/</guid>
       <description></description>
     </item>
     
