@@ -7,28 +7,24 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="theme-color" content="#494f5c">
 	<meta name="msapplication-TileColor" content="#494f5c">
-
 <meta itemprop="name" content="0x0000 The Seed">
 <meta itemprop="description" content="Sometimes we need something and we can&rsquo;t find a straight up how-to online.
 We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?
 We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?">
-
-
 <meta itemprop="datePublished" content="2019-05-07T01:37:07&#43;01:00" />
 <meta itemprop="dateModified" content="2019-06-27T00:46:54&#43;01:00" />
-<meta itemprop="wordCount" content="692">
+<meta itemprop="wordCount" content="696">
 
 
 
-<meta itemprop="keywords" content="filler,random,hugo,github," />
-<meta property="og:title" content="0x0000 The Seed" />
+<meta itemprop="keywords" content="filler,random,hugo,github," /><meta property="og:title" content="0x0000 The Seed" />
 <meta property="og:description" content="Sometimes we need something and we can&rsquo;t find a straight up how-to online.
 We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?
 We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://rpg.skmobi.com/posts/0x0000_the_seed/" />
-<meta property="article:published_time" content="2019-05-07T01:37:07&#43;01:00"/>
-<meta property="article:modified_time" content="2019-06-27T00:46:54&#43;01:00"/>
+<meta property="article:published_time" content="2019-05-07T01:37:07+01:00" />
+<meta property="article:modified_time" content="2019-06-27T00:46:54+01:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="0x0000 The Seed"/>
 <meta name="twitter:description" content="Sometimes we need something and we can&rsquo;t find a straight up how-to online.
@@ -82,31 +78,20 @@ We want to record our steps to remember later on, but we also want Google to ind
 				<h1>0x0000 The Seed</h1>
 			</header>
 			<div class="content">
-				
-
-<p>Sometimes we need something and we can&rsquo;t find a straight up how-to online.</p>
-
+				<p>Sometimes we need something and we can&rsquo;t find a straight up how-to online.</p>
 <p>We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?</p>
-
 <p>We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?</p>
-
 <p>Internet is not running out of space.</p>
-
 <p>In my case, I decided to dump everything here, RPG.</p>
-
 <p>I&rsquo;ll start with how to set up a blog like this one:</p>
-
 <ul>
 <li><a href="https://gohugo.io">Hugo</a></li>
 <li>on <a href="https://pages.github.com/">Github Pages</a></li>
 <li>&hellip; with <a href="https://help.github.com/en/articles/using-a-custom-domain-with-github-pages">custom CNAME</a></li>
 <li>published by <a href="https://travis-ci.org/">Travis CI</a></li>
 </ul>
-
-<h2 id="step-1-hugo-quickstart">Step 1 - Hugo quickstart<a href="#step-1-hugo-quickstart" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+<h2 id="step-1---hugo-quickstart">Step 1 - Hugo quickstart<a href="#step-1---hugo-quickstart" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>Follow <a href="https://gohugo.io/getting-started/quick-start/">Hugo quick.start</a> to get a basic page running.</p>
-
 <pre><code>➜  hugo new site quickstart
 Congratulations! Your new Hugo site is created in quickstart.
 
@@ -134,49 +119,38 @@ Resolving deltas: 100% (722/722), done.
 ➜  echo theme = \&quot;ananke\&quot; &gt;&gt; config.toml
 ➜  hugo new posts/my-first-post.md
 quickstart/content/posts/my-first-post.md created
-</code></pre>
-
-<p>If you run <code>hugo server -D</code> you should be able to open up <a href="http://localhost:1313/">http://localhost:1313/</a> and check your brand new blog with one empty post.</p>
-
-<h2 id="step-2-github-pages">Step 2 - Github pages<a href="#step-2-github-pages" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+</code></pre><p>If you run <code>hugo server -D</code> you should be able to open up http://localhost:1313/ and check your brand new blog with one empty post.</p>
+<h2 id="step-2---github-pages">Step 2 - Github pages<a href="#step-2---github-pages" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <ul>
 <li>Create a <a href="https://github.com/">GitHub</a> repository</li>
-<li>Add it to your local repo and push
-<code>
-➜  git remote add origin git@github.com:YOURUSER/YOURREPO.git
+<li>Add it to your local repo and push</li>
+</ul>
+<pre><code>➜  git remote add origin git@github.com:YOURUSER/YOURREPO.git
 ➜  git push -u origin master
-</code></li>
-<li>Publish the site to branch <code>gh-pages</code>
-<code>
-➜  hugo -d /tmp/whatever
+</code></pre><ul>
+<li>Publish the site to branch <code>gh-pages</code></li>
+</ul>
+<pre><code>➜  hugo -d /tmp/whatever
 ➜  git checkout --orphan gh-pages
 ➜  rm -fr *
 ➜  rm .gitmodules
 ➜  cp -a /tmp/whatever/* .
 ➜  git add .
 ➜  git push -u origin gh-pages
-</code></li>
+</code></pre><ul>
 <li>Go to your GitHub project settings and enable <code>GitHub Pages</code> with <code>gh-pages branch</code> as <code>source</code></li>
 </ul>
-
 <p>After a couple of minutes <em>your brand new blog wit one empty post</em> should be available at <a href="https://YOURUSER.github.io/YOURREPO">https://YOURUSER.github.io/YOURREPO</a></p>
-
-<h2 id="step-3-extra-custom-cname">Step 3 - EXTRA - Custom CNAME<a href="#step-3-extra-custom-cname" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+<h2 id="step-3---extra---custom-cname">Step 3 - EXTRA - Custom CNAME<a href="#step-3---extra---custom-cname" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>If you&rsquo;d rather use your own (sub)domain (such as <a href="https://rpg.skmobi.com/):">https://rpg.skmobi.com/):</a></p>
-
 <ul>
 <li>Add the (sub)domain to a file named <code>CNAME</code> in the root of the master branch like <a href="https://github.com/fopina/rpg/blob/master/CNAME">this</a></li>
 <li>Setup your DNS with CNAME record pointing to <code>YOURUSER.github.io</code></li>
 <li>As GitHub pages now supports HTTPS on custom domains (using <a href="https://letsencrypt.org/">LetsEncrypt</a>), I&rsquo;d recommend ticking <code>Enforce HTTPS</code> in <code>GitHub Pages</code> section of the project settings</li>
 </ul>
-
-<h2 id="step-4-travis-ci">Step 4 - Travis-CI<a href="#step-4-travis-ci" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
-
+<h2 id="step-4---travis-ci">Step 4 - Travis-CI<a href="#step-4---travis-ci" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>As the last step, you can use <a href="https://travis-ci.org/">Travis-CI</a> to automate publishing when pushing new Hugo content.
 Original idea taken from <a href="https://www.sidorenko.io/post/2018/12/hugo-on-github-pages-with-travis-ci/">this post</a>.</p>
-
 <ul>
 <li>(Optionally) Create a second (bot) GitHub account and add it as collaborator of your repository. This allows you to add this account credentials to Travis instead of your main one.</li>
 <li>Signup to <a href="https://travis-ci.org/">Travis-CI</a> and enable it for your repository
@@ -202,27 +176,27 @@ mv ../public/* .
 rmdir ../public/
 git add -A
 git commit -m <span class="s2">&#34;rebuilding site on `date`, commit </span><span class="si">${</span><span class="nv">TRAVIS_COMMIT</span><span class="si">}</span><span class="s2"> and job </span><span class="si">${</span><span class="nv">TRAVIS_JOB_NUMBER</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">true</span>
-git push origin gh-pages</code></pre></div>
-<ul>
+git push origin gh-pages
+</code></pre></div><ul>
 <li>And finally, the <code>.travis.yml</code>, also in your <code>master</code> branch root</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">language<span class="p">:</span><span class="w"> </span>minimal<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">language</span><span class="p">:</span><span class="w"> </span>minimal<span class="w">
 </span><span class="w">
-</span><span class="w"></span>install<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>/tmp/hugo.deb<span class="w"> </span>https<span class="p">:</span>//github.com/gohugoio/hugo/releases/download/v0.<span class="m">55.0</span>/hugo_0.<span class="m">55.</span>0_Linux-64bit.deb<span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>/tmp/hugo.deb<span class="w">
+</span><span class="w"></span><span class="k">install</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- wget<span class="w"> </span>-O<span class="w"> </span>/tmp/hugo.deb<span class="w"> </span>https<span class="p">:</span>//github.com/gohugoio/hugo/releases/download/v0<span class="m">.55.0</span>/hugo_0<span class="m">.55</span>.0_Linux-64bit.deb<span class="w">
+</span><span class="w">  </span>- sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>/tmp/hugo.deb<span class="w">
 </span><span class="w">
-</span><span class="w"></span>script<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>hugo<span class="w"> </span>-d<span class="w"> </span>../public<span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>cp<span class="w"> </span>CNAME<span class="w"> </span>../public<span class="w">
+</span><span class="w"></span><span class="k">script</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- hugo<span class="w"> </span>-d<span class="w"> </span>../public<span class="w">
+</span><span class="w">  </span>- cp<span class="w"> </span>CNAME<span class="w"> </span>../public<span class="w">
 </span><span class="w">
-</span><span class="w"></span>deploy<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>provider<span class="p">:</span><span class="w"> </span>script<span class="w">
-</span><span class="w">    </span>script<span class="p">:</span><span class="w"> </span>./deploy.sh<span class="w">
-</span><span class="w">    </span>skip_cleanup<span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span>on<span class="p">:</span><span class="w">
-</span><span class="w">      </span>branch<span class="p">:</span><span class="w"> </span>master</code></pre></div>
-<p>Commit these 2 files, push them and you&rsquo;re done! Travis job should kick off and <code>gh-pages</code> branch will be automatically updated, as will your blog.</p>
+</span><span class="w"></span><span class="k">deploy</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">provider</span><span class="p">:</span><span class="w"> </span>script<span class="w">
+</span><span class="w">    </span><span class="k">script</span><span class="p">:</span><span class="w"> </span>./deploy.sh<span class="w">
+</span><span class="w">    </span><span class="k">skip_cleanup</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="k">on</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">branch</span><span class="p">:</span><span class="w"> </span>master<span class="w">
+</span></code></pre></div><p>Commit these 2 files, push them and you&rsquo;re done! Travis job should kick off and <code>gh-pages</code> branch will be automatically updated, as will your blog.</p>
 
 			</div>
 			<hr class="post-end">
@@ -230,7 +204,7 @@ git push origin gh-pages</code></pre></div>
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://rpg.skmobi.com/tags/filler">filler</a></span><span class="tag"><a href="https://rpg.skmobi.com/tags/random">random</a></span><span class="tag"><a href="https://rpg.skmobi.com/tags/hugo">hugo</a></span><span class="tag"><a href="https://rpg.skmobi.com/tags/github">github</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>692 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>696 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2019-05-07 00:37 &#43;0000</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/fopina/rpg/commit/9481e38c364bec1e6e8b1ed25f75410c4b7b77e4" target="_blank" rel="noopener">9481e38</a> @ 2019-06-26</p>
 			</footer>
@@ -253,7 +227,7 @@ git push origin gh-pages</code></pre></div>
 
 
 
-	<script src="https://rpg.skmobi.com/js/bundle.min.490e43e5af6db5906f28afa49a4e16bf9f626b758e3fca92f146b870eb94bb37.js" integrity="sha256-SQ5D5a9ttZBvKK+kmk4Wv59ia3WOP8qS8Ua4cOuUuzc=" crossorigin="anonymous"></script>
+	<script src="https://rpg.skmobi.com/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
 	
 <script type="application/javascript">
 var doNotTrack = false;

@@ -14,111 +14,108 @@
 			<pubDate>Sat, 07 Mar 2020 14:38:07 +0000</pubDate>
 			
 			<guid>https://rpg.skmobi.com/posts/0x8490_privileged_swarm_service/</guid>
-			<description>Some docker images require extra capabilities to work, ie: * openvpn needs NET_ADMIN * anything using USB/i2c will need --device=/dev/ttyAMA0
-Swarmkit does not support that (nor the GIEF IT ALL --privileged flag).
+			<description>Some docker images require extra capabilities to work, ie:
+ openvpn needs NET_ADMIN anything using USB/i2c will need --device=/dev/ttyAMA0  Swarmkit does not support that (nor the GIEF IT ALL --privileged flag).
 There are a lot of issues on their github(s) such as this, this or this.
 It seems there is consensus into adding the feature to swarmkit though it won&amp;rsquo;t be available before 19.06 or 19.09.
 Until then, the best solution seems to be spinning up a service that starts the container after, such as:</description>
-			<content type="html"><![CDATA[<p>Some docker images require extra capabilities to work, ie:
-* openvpn needs <code>NET_ADMIN</code>
-* anything using USB/i2c will need <code>--device=/dev/ttyAMA0</code></p>
-
+			<content type="html"><![CDATA[<p>Some docker images require extra capabilities to work, ie:</p>
+<ul>
+<li>openvpn needs <code>NET_ADMIN</code></li>
+<li>anything using USB/i2c will need <code>--device=/dev/ttyAMA0</code></li>
+</ul>
 <p>Swarmkit does not support that (nor the GIEF IT ALL <code>--privileged</code> flag).</p>
-
 <p>There are a lot of issues on their github(s) such as <a href="https://github.com/docker/swarmkit/issues/1030">this</a>, <a href="https://github.com/moby/moby/issues/25885">this</a> or <a href="https://github.com/moby/moby/pull/38380">this</a>.</p>
-
 <p>It seems there is consensus into adding the feature to swarmkit though it won&rsquo;t be available before 19.06 or 19.09.</p>
-
 <p>Until then, the best solution seems to be spinning up a service that starts the container after, such as:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">version<span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
 </span><span class="w">
-</span><span class="w"></span>services<span class="p">:</span><span class="w">
-</span><span class="w">  </span>web<span class="p">:</span><span class="w">
-</span><span class="w">    </span>image<span class="p">:</span><span class="w"> </span>docker<span class="p">:</span><span class="m">19.03</span><span class="w">
-</span><span class="w">    </span>command<span class="p">:</span><span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&#34;docker pull fopina/octoprint &amp;&amp; docker run 
+</span><span class="w"></span><span class="k">services</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">web</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>docker<span class="p">:</span><span class="m">19.03</span><span class="w">
+</span><span class="w">    </span><span class="k">command</span><span class="p">:</span><span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&#34;docker pull fopina/octoprint &amp;&amp; docker run 
 </span><span class="s2">                        --rm
 </span><span class="s2">                        --name octoprint_real
 </span><span class="s2">                        -v /nfs/path/to/octoprint/config:/root/.octoprint
 </span><span class="s2">                        --device=/dev/ttyAMA0
 </span><span class="s2">                        -p 5000:5000
 </span><span class="s2">                        fopina/octoprint&#34;</span><span class="w">
-</span><span class="w">    </span>volumes<span class="p">:</span><span class="w">
-</span><span class="w">      </span>-<span class="w"> </span>/var/run/docker.sock<span class="p">:</span>/var/run/docker.sock<span class="w">
-</span><span class="w">      </span>-<span class="w"> </span>/root/.docker<span class="p">:</span>/root/.docker<span class="p">:</span>ro<span class="w">
-</span><span class="w">    </span>deploy<span class="p">:</span><span class="w">
-</span><span class="w">      </span>mode<span class="p">:</span><span class="w"> </span>replicated<span class="w">
-</span><span class="w">      </span>replicas<span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">      </span>placement<span class="p">:</span><span class="w">
-</span><span class="w">        </span>constraints<span class="p">:</span><span class="w"> </span><span class="p">[</span>node.hostname<span class="w"> </span>==<span class="w"> </span>printingPi<span class="p">]</span></code></pre></div>
-<p>Why would you use swarm service for this, since it&rsquo;s bound to the specific node where the USB cable is connected?</p>
-
+</span><span class="w">    </span><span class="k">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- /var/run/docker.sock<span class="p">:</span>/var/run/docker.sock<span class="w">
+</span><span class="w">      </span>- /root/.docker<span class="p">:</span>/root/.docker<span class="p">:</span>ro<span class="w">
+</span><span class="w">    </span><span class="k">deploy</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">mode</span><span class="p">:</span><span class="w"> </span>replicated<span class="w">
+</span><span class="w">      </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span><span class="k">placement</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">constraints</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>node.hostname<span class="w"> </span>==<span class="w"> </span>printingPi<span class="p">]</span><span class="w">
+</span></code></pre></div><p>Why would you use swarm service for this, since it&rsquo;s bound to the specific node where the USB cable is connected?</p>
 <p>In this case, it&rsquo;s managing all <strong>services</strong> the same way, I don&rsquo;t want to deploy some with <code>docker-compose</code> and others with <code>docker swarm deploy</code>&hellip;</p>
-
 <p>But in the case of, let&rsquo;s say <a href="https://rpg.skmobi.com/posts/0x6baa_openvpn/">openvpn</a>, it could be useful for easily scaling up across different nodes.</p>
-
 <p>We could use a stack like the first:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">version<span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
 </span><span class="w">
-</span><span class="w"></span>services<span class="p">:</span><span class="w">
-</span><span class="w">  </span>vpnd<span class="p">:</span><span class="w">
-</span><span class="w">    </span>image<span class="p">:</span><span class="w"> </span>docker<span class="p">:</span><span class="m">19.03</span><span class="w">
-</span><span class="w">    </span>command<span class="p">:</span><span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w">
+</span><span class="w"></span><span class="k">services</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">vpnd</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>docker<span class="p">:</span><span class="m">19.03</span><span class="w">
+</span><span class="w">    </span><span class="k">command</span><span class="p">:</span><span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w">
 </span><span class="w">                        </span>--name<span class="w"> </span>openvpn_real<span class="w">
 </span><span class="w">                        </span>--cap-add<span class="w"> </span>NET_ADMIN<span class="w">
 </span><span class="w">                        </span>-p<span class="w"> </span><span class="m">443</span><span class="p">:</span><span class="m">443</span>/udp<span class="w">
 </span><span class="w">                        </span>-v<span class="w"> </span>/nfs/path/to/openvpn/<span class="p">:</span>/etc/openvpn/<span class="w">
 </span><span class="w">                        </span>fopina/openvpn<span class="w">
-</span><span class="w">    </span>volumes<span class="p">:</span><span class="w">
-</span><span class="w">      </span>-<span class="w"> </span>/var/run/docker.sock<span class="p">:</span>/var/run/docker.sock<span class="w">
-</span><span class="w">    </span>deploy<span class="p">:</span><span class="w">
-</span><span class="w">      </span>mode<span class="p">:</span><span class="w"> </span>replicated<span class="w">
-</span><span class="w">      </span>replicas<span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">      </span>placement<span class="p">:</span><span class="w">
-</span><span class="w">        </span>constraints<span class="p">:</span><span class="w"> </span><span class="p">[</span>node.role<span class="w"> </span>==<span class="w"> </span>manager<span class="p">]</span></code></pre></div>
-<p>But as openvpn is not running in the actual service container, the port is not published in the swarm VIP / routing mesh.
+</span><span class="w">    </span><span class="k">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- /var/run/docker.sock<span class="p">:</span>/var/run/docker.sock<span class="w">
+</span><span class="w">    </span><span class="k">deploy</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">mode</span><span class="p">:</span><span class="w"> </span>replicated<span class="w">
+</span><span class="w">      </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span><span class="k">placement</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="k">constraints</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>node.role<span class="w"> </span>==<span class="w"> </span>manager<span class="p">]</span><span class="w">
+</span></code></pre></div><p>But as openvpn is not running in the actual service container, the port is not published in the swarm VIP / routing mesh.
 If we can scale it up, it needs to end in different nodes (as there&rsquo;s an host bound port) and to make use of the replicas, we need to use the node IP (not <em>any</em> node IP as the usual routing mesh)&hellip;</p>
-
-<p>My overkill solution:
-* adding some proxy - just used <a href="https://linux.die.net/man/1/socat">socat</a> in my example
-* write an entrypoint script that
-  * starts docker container (without binding port) attached to a common network with the service container
-  * extract the IP from the new container
-  * launch proxy using the same port
-  * attach to container (so that main service process is the container itself, not the proxy)
-* just use that port in the service description as if it was any other service</p>
-
+<p>My overkill solution:</p>
+<ul>
+<li>adding some proxy - just used <a href="https://linux.die.net/man/1/socat">socat</a> in my example</li>
+<li>write an entrypoint script that
+<ul>
+<li>starts docker container (without binding port) attached to a common network with the service container</li>
+<li>extract the IP from the new container</li>
+<li>launch proxy using the same port</li>
+<li>attach to container (so that main service process is the container itself, not the proxy)</li>
+</ul>
+</li>
+<li>just use that port in the service description as if it was any other service</li>
+</ul>
 <p>To accomplish this, I&rsquo;ve created the image <a href="https://hub.docker.com/r/fopina/swarm-service-proxy">fopina/swarm-service-proxy</a> (built from <a href="https://github.com/fopina/docker-swarm-service-proxy">this</a>)</p>
-
 <p>The stack definition using this is</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">version<span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
 </span><span class="w">
-</span><span class="w"></span>services<span class="p">:</span><span class="w">
-</span><span class="w">  </span>vpnd<span class="p">:</span><span class="w">
-</span><span class="w">    </span>image<span class="p">:</span><span class="w"> </span>fopina/swarm-service-proxy<span class="p">:</span><span class="m">1</span><span class="w">
-</span><span class="w">    </span>command<span class="p">:</span><span class="w"> </span>--rm<span class="w">
+</span><span class="w"></span><span class="k">services</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">vpnd</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>fopina/swarm-service-proxy<span class="p">:</span><span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="k">command</span><span class="p">:</span><span class="w"> </span>--rm<span class="w">
 </span><span class="w">             </span>--cap-add<span class="w"> </span>NET_ADMIN<span class="w">
 </span><span class="w">             </span>-v<span class="w"> </span>/nfs/path/to/openvpn/<span class="p">:</span>/etc/openvpn/<span class="w">
 </span><span class="w">             </span>fopina/openvpn<span class="w">
-</span><span class="w">    </span>volumes<span class="p">:</span><span class="w">
-</span><span class="w">      </span>-<span class="w"> </span>/var/run/docker.sock<span class="p">:</span>/var/run/docker.sock<span class="w">
-</span><span class="w">    </span>environment<span class="p">:</span><span class="w">
-</span><span class="w">      </span>PROXIED_PORT<span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
-</span><span class="w">      </span>PROXIED_PROTO<span class="p">:</span><span class="w"> </span>udp<span class="w">
-</span><span class="w">      </span>PROXIED_NAME<span class="p">:</span><span class="w"> </span>openvpn_real<span class="w">
-</span><span class="w">    </span>ports<span class="p">:</span><span class="w">
-</span><span class="w">      </span>-<span class="w"> </span><span class="m">443</span><span class="p">:</span><span class="m">443</span>/udp<span class="w">
-</span><span class="w">    </span>deploy<span class="p">:</span><span class="w">
-</span><span class="w">      </span>mode<span class="p">:</span><span class="w"> </span>replicated<span class="w">
-</span><span class="w">      </span>replicas<span class="p">:</span><span class="w"> </span><span class="m">1</span></code></pre></div>
-<p>With this, port is actually published from the service (not to the secondary container) so it makes use of the routing mesh (and it doesn&rsquo;t lock the port in the docker host where it lands).</p>
-
-<p>Syntax remained as close as possible to the initial version: command is used as if it was <code>docker run &lt;command&gt;</code>.
-* <code>PROXIED_PORT</code> is the internal port of the secondary container.
-* Use <code>PROXIED_PROTO: udp</code> if <code>socat</code> should use the UDP labels (instead of TCP).
-* Use <code>PROXIED_NAME</code> to choose the name <em>prefix</em> of the secondary container - yes, <em>prefix</em> as random string is appended to it to make sure it will not collide if scaled up.
-* Do not forget to bind the port you need in the service
-* Do not publish any port on the secondary container (as it won&rsquo;t be used)</p>
-
+</span><span class="w">    </span><span class="k">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- /var/run/docker.sock<span class="p">:</span>/var/run/docker.sock<span class="w">
+</span><span class="w">    </span><span class="k">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">PROXIED_PORT</span><span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
+</span><span class="w">      </span><span class="k">PROXIED_PROTO</span><span class="p">:</span><span class="w"> </span>udp<span class="w">
+</span><span class="w">      </span><span class="k">PROXIED_NAME</span><span class="p">:</span><span class="w"> </span>openvpn_real<span class="w">
+</span><span class="w">    </span><span class="k">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="m">443</span><span class="p">:</span><span class="m">443</span>/udp<span class="w">
+</span><span class="w">    </span><span class="k">deploy</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">mode</span><span class="p">:</span><span class="w"> </span>replicated<span class="w">
+</span><span class="w">      </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></code></pre></div><p>With this, port is actually published from the service (not to the secondary container) so it makes use of the routing mesh (and it doesn&rsquo;t lock the port in the docker host where it lands).</p>
+<p>Syntax remained as close as possible to the initial version: command is used as if it was <code>docker run &lt;command&gt;</code>.</p>
+<ul>
+<li><code>PROXIED_PORT</code> is the internal port of the secondary container.</li>
+<li>Use <code>PROXIED_PROTO: udp</code> if <code>socat</code> should use the UDP labels (instead of TCP).</li>
+<li>Use <code>PROXIED_NAME</code> to choose the name <em>prefix</em> of the secondary container - yes, <em>prefix</em> as random string is appended to it to make sure it will not collide if scaled up.</li>
+<li>Do not forget to bind the port you need in the service</li>
+<li>Do not publish any port on the secondary container (as it won&rsquo;t be used)</li>
+</ul>
 <p>So it is now fully managed as it was a service and fully scalable.</p>
 ]]></content>
 		</item>
@@ -132,97 +129,87 @@ If we can scale it up, it needs to end in different nodes (as there&rsquo;s an h
 			<description>Why Some people decide to buy some external VPN service for privacy.
 Personally, as I already commit all my internet usage to my ISP at home, I rather VPN from untrusted locations into my home instead, saving a few bucks and keeping my ISP as the sole entity holding that information.
 I guess I could try to use one of those VPN services (with better privacy terms than my ISP) at home but that would increase complexity too much for the rest of the household</description>
-			<content type="html"><![CDATA[
-
-<h2 id="why">Why</h2>
-
-<p>Some people decide to buy some external VPN service for privacy.<br />
-Personally, as I already commit all my internet usage to my ISP at home, I rather VPN from <em>untrusted locations</em> into my home instead, saving a few bucks and keeping my ISP as the sole entity holding that information.<br />
+			<content type="html"><![CDATA[<h2 id="why">Why</h2>
+<p>Some people decide to buy some external VPN service for privacy.<br>
+Personally, as I already commit all my internet usage to my ISP at home, I rather VPN from <em>untrusted locations</em> into my home instead, saving a few bucks and keeping my ISP as the sole entity holding that information.<br>
 I guess I could try to use one of those VPN services (with better privacy terms than my ISP) at home but that would increase complexity too much for the rest of the <em>household</em></p>
-
 <p>As I already had some <a href="https://www.raspberrypi.org/">raspberries</a>, <a href="https://github.com/fopina/docker-openvpn/">forking</a> <a href="https://github.com/kylemanna/docker-openvpn/">kylemanna/docker-openvpn</a> to build it for <strong>arm</strong> was the quickest way, some years ago.</p>
-
 <p>Recently, some people have asked how to use the same docker image quickly in their raspberries, so I took the opportunity to refresh the docker image and add some goodies and I&rsquo;ll summarize the quickstart here.</p>
-
 <h2 id="how">How</h2>
-
 <ol>
 <li>Install <a href="https://www.raspberrypi.org/documentation/installation/installing-images/README.md">raspbian</a> on your Pi (or any other language that supports docker)</li>
 <li>Install <a href="https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/debian/">Docker CE</a></li>
 <li>Run this docker</li>
 </ol>
-
 <p>First 2 steps are well documented already, let&rsquo;s focus on the third.</p>
-
 <p>Setting it up in less than 3min</p>
-
-<p><a href="https://asciinema.org/a/2vyMJDZ76nTQQz3uvIxNyWoCF"><img src="https://asciinema.org/a/2vyMJDZ76nTQQz3uvIxNyWoCF.svg" alt="asciicast" /></a></p>
-
+<p><a href="https://asciinema.org/a/2vyMJDZ76nTQQz3uvIxNyWoCF"><img src="https://asciinema.org/a/2vyMJDZ76nTQQz3uvIxNyWoCF.svg" alt="asciicast"></a></p>
 <h3 id="drill-down">Drill down</h3>
-
 <ol>
-<li><p>Initialize the configuration directory</p>
+<li>
+<p>Initialize the configuration directory</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm <span class="se">\
 </span><span class="se"></span>        -v testvpn:/etc/openvpn <span class="se">\
 </span><span class="se"></span>        fopina/openvpn <span class="se">\
-</span><span class="se"></span>        ovpn_genconfig -u udp://my.external.ip:9999</code></pre></div>
-<p><code>testvpn</code> used like this will be a <a href="https://docs.docker.com/storage/volumes/">named volume</a> which is probably the cleanest and easiest option for most cases.<br />
-If you want to make configuration files available to the host filesystem or if you&rsquo;re using this in a <a href="https://docs.docker.com/engine/swarm/">swarm</a>, then you don&rsquo;t use a named volume&hellip;<br />
-<code>udp://my.external.ip:9999</code> can be <code>tcp://</code> instead if you need to use TCP for some reason, but <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">avoid if possible</a>.<br />
-<code>9999</code> will be port exposed publicly (in your router, for instance), not the one published by the container - might be the same but not necessarily.</p></li>
-
-<li><p>Generate CA</p>
+</span><span class="se"></span>        ovpn_genconfig -u udp://my.external.ip:9999
+</code></pre></div><p><code>testvpn</code> used like this will be a <a href="https://docs.docker.com/storage/volumes/">named volume</a> which is probably the cleanest and easiest option for most cases.<br>
+If you want to make configuration files available to the host filesystem or if you&rsquo;re using this in a <a href="https://docs.docker.com/engine/swarm/">swarm</a>, then you don&rsquo;t use a named volume&hellip;<br>
+<code>udp://my.external.ip:9999</code> can be <code>tcp://</code> instead if you need to use TCP for some reason, but <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">avoid if possible</a>.<br>
+<code>9999</code> will be port exposed publicly (in your router, for instance), not the one published by the container - might be the same but not necessarily.</p>
+</li>
+<li>
+<p>Generate CA</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm -ti <span class="se">\
 </span><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
 </span><span class="se"></span>           fopina/openvpn <span class="se">\
-</span><span class="se"></span>           ovpn_initpki</code></pre></div>
-<p>Nothing much to say, just pick a passphrase for the CA that will be used to issue client certificates.</p></li>
-
-<li><p>Start the service</p>
+</span><span class="se"></span>           ovpn_initpki
+</code></pre></div><p>Nothing much to say, just pick a passphrase for the CA that will be used to issue client certificates.</p>
+</li>
+<li>
+<p>Start the service</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run -v testvpn:/etc/openvpn <span class="se">\
-</span><span class="se"></span>           -d -p <span class="m">9999</span>:1194/udp <span class="se">\
+</span><span class="se"></span>           -d -p 9999:1194/udp <span class="se">\
 </span><span class="se"></span>           --restart<span class="o">=</span>always <span class="se">\
 </span><span class="se"></span>           --cap-add<span class="o">=</span>NET_ADMIN <span class="se">\
-</span><span class="se"></span>           fopina/openvpn</code></pre></div>
-<p><code>-p 9999:1194/udp</code></p>
-
+</span><span class="se"></span>           fopina/openvpn
+</code></pre></div><p><code>-p 9999:1194/udp</code></p>
 <ul>
 <li>you can choose other published port instead of <code>9999</code></li>
 <li>Leave the internal port <code>1194</code> as that one never changes</li>
 <li>Adjust <code>udp</code> to <code>tcp</code> if you used TCP in the first step</li>
-</ul></li>
-
-<li><p>Generate client configuration</p>
+</ul>
+</li>
+<li>
+<p>Generate client configuration</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm -ti <span class="se">\
 </span><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
 </span><span class="se"></span>           fopina/openvpn <span class="se">\
-</span><span class="se"></span>           easyrsa build-client-full CLIENTNAME nopass</code></pre></div>
-<ul>
+</span><span class="se"></span>           easyrsa build-client-full CLIENTNAME nopass
+</code></pre></div><ul>
 <li><code>CLIENTNAME</code> should be whatever identifier you want for that profile/device</li>
 <li>remove <code>nopass</code> if you want the profile to have a password (that you will to enter everytime you connect)</li>
-</ul></li>
-
-<li><p>Generate .ovpn and download link</p>
+</ul>
+</li>
+<li>
+<p>Generate .ovpn and download link</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm <span class="se">\
 </span><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
 </span><span class="se"></span>           fopina/openvpn:helper <span class="se">\
-</span><span class="se"></span>           ovpn_getclient_link CLIENTNAME</code></pre></div>
-<p>This will bundle the previous step into an .ovpn file, upload it to <a href="https://vim.cx">vim.cx</a> (which is a <a href="https://privatebin.info/">PrivateBin</a> instance that supports attachments) and generate a QR code to make it easier to copy to a mobile device.
+</span><span class="se"></span>           ovpn_getclient_link CLIENTNAME
+</code></pre></div><p>This will bundle the previous step into an .ovpn file, upload it to <a href="https://vim.cx">vim.cx</a> (which is a <a href="https://privatebin.info/">PrivateBin</a> instance that supports attachments) and generate a QR code to make it easier to copy to a mobile device.
 If you prefer to manage the file transfer yourself, you can use:</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm <span class="se">\
 </span><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
 </span><span class="se"></span>           fopina/openvpn <span class="se">\
-</span><span class="se"></span>           ovpn_getclient CLIENTNAME &gt; CLIENTNAME.ovpn</code></pre></div></li>
+</span><span class="se"></span>           ovpn_getclient CLIENTNAME &gt; CLIENTNAME.ovpn
+</code></pre></div></li>
 </ol>
-
 <h2 id="done-references">Done: references</h2>
-
 <ul>
 <li><a href="https://github.com/fopina/privatebin">CLI</a> used to upload attachments to privatebin</li>
 <li><a href="https://github.com/fumiyas/qrc">CLI</a> used to generate the QR codes in the terminal</li>
 <li><a href="https://github.com/fopina/docker-openvpn/blob/master/.github/workflows/main.yml">this github workflow</a> to make the multi-platform builds of the docker image</li>
 </ul>
-
 <p>Enjoy your home VPN.</p>
 ]]></content>
 		</item>
@@ -237,47 +224,33 @@ If you prefer to manage the file transfer yourself, you can use:</p>
 Not only they there are containers, cron jobs, etc spread among them (but all keep under ansible control) 2 of them are a docker swarm cluster with replicas for same services.
 Eventually I need to check logs for something (and I&amp;rsquo;d also like to keep tabs on cpu/memory/disk metrics), so I started looking into log management/collection solutions.</description>
 			<content type="html"><![CDATA[<p>I have a few <a href="https://www.raspberrypi.org/">raspberries</a> lying around the house plus a couple of <del>really cheap</del> low-end VPS (1€ <a href="https://www.arubacloud.com/">arubas</a>)</p>
-
 <p>Not only they there are containers, cron jobs, etc spread among them (but all keep under ansible control) 2 of them are a docker swarm cluster with replicas for same services.</p>
-
 <p>Eventually I need to check logs for something (and I&rsquo;d also like to keep tabs on cpu/memory/disk metrics), so I started looking into log management/collection solutions.
 As these are for personal projects, I always try to go for <del>free</del> low-cost solutions.</p>
-
 <p>Self-hosting <a href="https://www.graylog.org/">Graylog</a> or <a href="https://www.splunk.com/en_us/software/features-comparison-chart.html">Splunk Free</a> is not an option as they would barely run on any of these options, plus avoiding storage costs is nice.</p>
-
 <ul>
 <li><a href="https://www.loggly.com/plans-and-pricing/">Loggly</a> has a nice free Lite plan</li>
 <li><a href="https://papertrailapp.com/plans">Papertrail</a> has a really shitty one</li>
 </ul>
-
 <p>Probably a few more out there that I could not find before bumping into&hellip;. <a href="https://cloud.google.com/stackdriver/">GCP Stackdriver</a>
 Thanks to the always-free plan Google and Amazon now have, Stackdriver is also included there. With 50GB ingestion per month!</p>
-
 <p>Quickly testing <a href="https://cloud.google.com/logging/docs/agent/installation">their setup guide</a> in one of my VPS gets the logs flowing into (and showing in) <a href="https://console.cloud.google.com/logs/viewer">Log Viewer</a>, awesome!</p>
-
 <p>Issue <strong>uno</strong>: they only have a <em>x86</em> package (as they only support GCP and AWS VMs) and that would leave raspberries out of the party&hellip; But looking at the package content it is just embedded ruby with <a href="https://www.fluentd.org/">fluentd</a> and <a href="https://github.com/GoogleCloudPlatform/fluent-plugin-google-cloud">their own output plugin</a> gems installed.
 Installing the gems (in a ruby docker) in one of the raspberries and it was working.</p>
-
 <p>But this brings up Issue <em>dos</em>: ruby!
 Who uses ruby? Why?
 Fluentd immediately started with 100MB of used memory and grew up to 300MB. Tuning garbage collector helped a little, but not nearly enough. Can&rsquo;t have the log collector using 10 or 15% of the server memory&hellip;</p>
-
 <p>Ranting about it at work, someone mentions <a href="https://fluentbit.io/">Fluentbit</a>, fluentd in C (with Go plugins)!
 Good looking <a href="https://docs.fluentbit.io/manual/installation/td-agent-bit">documentation</a> and in an hour or so, I had the logs in Stackdriver but using 1% of memory instead of 10%!</p>
-
 <p>Instead of writing how to set it up or install it, I&rsquo;ll leave ansible to show for itself, with the role and playbook I used to then apply this to every machine.</p>
-
 <p>The <em>generic</em> role:</p>
-
-<script type="application/javascript" src="//gist.github.com/fopina/c0439fa29bb7f3fa541a2d81a3f4a1e7.js"></script>
+<script type="application/javascript" src="https://gist.github.com/fopina/c0439fa29bb7f3fa541a2d81a3f4a1e7.js"></script>
 
 <p>And the playbook to set it up in all the machines</p>
-
-<script type="application/javascript" src="//gist.github.com/fopina/eea83d290f634566b2e68e31d9ba6a74.js"></script>
+<script type="application/javascript" src="https://gist.github.com/fopina/eea83d290f634566b2e68e31d9ba6a74.js"></script>
 
 <p>Docker was configured (in another role) with <code>journald</code> as default logger, that&rsquo;s why I&rsquo;m using <a href="https://docs.fluentbit.io/manual/input/systemd">systemd input</a>.
 Also added a few modify filters to reduce the clutter (and avoid hitting the ingestion limit at some point).</p>
-
 <p>Pushing cpu and memory to use <a href="https://console.cloud.google.com/logs/metrics">Logs-based metrics</a>, but that&rsquo;ll be for another day&hellip;</p>
 ]]></content>
 		</item>
@@ -289,30 +262,20 @@ Also added a few modify filters to reduce the clutter (and avoid hitting the ing
 			
 			<guid>https://rpg.skmobi.com/posts/0xc53e_lenticular/</guid>
 			<description>I needed a symbolic gift some time ago and thought a lenticular keychain but shops I found to get a custom made one would take over 2 weeks to deliver.
-Googling a bit for DIY seems the only thing required to print lenticulars is image processing and lenticular lens. Again, getting lenticular lens was not so easy as it looked, so off and found this video, that looks easy!</description>
-			<content type="html"><![CDATA[
-
-<p>I needed a symbolic gift <a href="https://lmgtfy.com/?q=mother%27s+day+2019">some time ago</a> and thought a <a href="https://www.alibaba.com/product-detail/2019-Best-Selling-3D-Lenticular-Keychain_62131838666.html?spm=a2700.7724857.normalList.20.5c2525d9YnhbZr&amp;s=p">lenticular keychain</a> but shops I found to get a custom made one would take over 2 weeks to deliver.</p>
-
+Googling a bit for DIY seems the only thing required to print lenticulars is image processing and lenticular lens. Again, getting lenticular lens was not so easy as it looked, so off and found this video, that looks easy!
+Printing photos, cutting in several stripes and putting them all back together seemed like something to scripted though, hence</description>
+			<content type="html"><![CDATA[<p>I needed a symbolic gift <a href="https://lmgtfy.com/?q=mother%27s+day+2019">some time ago</a> and thought a <a href="https://www.alibaba.com/product-detail/2019-Best-Selling-3D-Lenticular-Keychain_62131838666.html?spm=a2700.7724857.normalList.20.5c2525d9YnhbZr&amp;s=p">lenticular keychain</a> but shops I found to get a custom made one would take over 2 weeks to deliver.</p>
 <p>Googling a bit for DIY seems the only thing required to print lenticulars is image processing and lenticular lens.
 Again, getting lenticular lens was not so easy as it looked, so off and found <a href="https://www.youtube.com/watch?v=mmGB9ADKr5Y">this video</a>, that looks easy!</p>
-
 <p>Printing photos, cutting in several stripes and putting them all back together seemed like something to scripted though, hence</p>
-
-<script type="application/javascript" src="//gist.github.com/fopina/6e97829e33de8a8c72c2d1bf65ed5ab9.js"></script>
+<script type="application/javascript" src="https://gist.github.com/fopina/6e97829e33de8a8c72c2d1bf65ed5ab9.js"></script>
 
 <h3 id="example">Example</h3>
-
-<p><img src="/b.png" alt="image 1" /><img src="/o.png" alt="image 2" /></p>
-
+<p><img src="/b.png" alt="image 1"><img src="/o.png" alt="image 2"></p>
 <p>Running</p>
-
 <pre><code>python lenticular.py b.png o.png
-</code></pre>
-
-<p>Yields</p>
-
-<p><img src="/tmp2p9xKb.png" alt="result image" /></p>
+</code></pre><p>Yields</p>
+<p><img src="/tmp2p9xKb.png" alt="result image"></p>
 ]]></content>
 		</item>
 		
@@ -325,31 +288,20 @@ Again, getting lenticular lens was not so easy as it looked, so off and found <a
 			<description>Sometimes we need something and we can&amp;rsquo;t find a straight up how-to online.
 We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?
 We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?</description>
-			<content type="html"><![CDATA[
-
-<p>Sometimes we need something and we can&rsquo;t find a straight up how-to online.</p>
-
+			<content type="html"><![CDATA[<p>Sometimes we need something and we can&rsquo;t find a straight up how-to online.</p>
 <p>We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?</p>
-
 <p>We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?</p>
-
 <p>Internet is not running out of space.</p>
-
 <p>In my case, I decided to dump everything here, RPG.</p>
-
 <p>I&rsquo;ll start with how to set up a blog like this one:</p>
-
 <ul>
 <li><a href="https://gohugo.io">Hugo</a></li>
 <li>on <a href="https://pages.github.com/">Github Pages</a></li>
 <li>&hellip; with <a href="https://help.github.com/en/articles/using-a-custom-domain-with-github-pages">custom CNAME</a></li>
 <li>published by <a href="https://travis-ci.org/">Travis CI</a></li>
 </ul>
-
-<h2 id="step-1-hugo-quickstart">Step 1 - Hugo quickstart</h2>
-
+<h2 id="step-1---hugo-quickstart">Step 1 - Hugo quickstart</h2>
 <p>Follow <a href="https://gohugo.io/getting-started/quick-start/">Hugo quick.start</a> to get a basic page running.</p>
-
 <pre><code>➜  hugo new site quickstart
 Congratulations! Your new Hugo site is created in quickstart.
 
@@ -377,49 +329,38 @@ Resolving deltas: 100% (722/722), done.
 ➜  echo theme = \&quot;ananke\&quot; &gt;&gt; config.toml
 ➜  hugo new posts/my-first-post.md
 quickstart/content/posts/my-first-post.md created
-</code></pre>
-
-<p>If you run <code>hugo server -D</code> you should be able to open up <a href="http://localhost:1313/">http://localhost:1313/</a> and check your brand new blog with one empty post.</p>
-
-<h2 id="step-2-github-pages">Step 2 - Github pages</h2>
-
+</code></pre><p>If you run <code>hugo server -D</code> you should be able to open up http://localhost:1313/ and check your brand new blog with one empty post.</p>
+<h2 id="step-2---github-pages">Step 2 - Github pages</h2>
 <ul>
 <li>Create a <a href="https://github.com/">GitHub</a> repository</li>
-<li>Add it to your local repo and push
-<code>
-➜  git remote add origin git@github.com:YOURUSER/YOURREPO.git
+<li>Add it to your local repo and push</li>
+</ul>
+<pre><code>➜  git remote add origin git@github.com:YOURUSER/YOURREPO.git
 ➜  git push -u origin master
-</code></li>
-<li>Publish the site to branch <code>gh-pages</code>
-<code>
-➜  hugo -d /tmp/whatever
+</code></pre><ul>
+<li>Publish the site to branch <code>gh-pages</code></li>
+</ul>
+<pre><code>➜  hugo -d /tmp/whatever
 ➜  git checkout --orphan gh-pages
 ➜  rm -fr *
 ➜  rm .gitmodules
 ➜  cp -a /tmp/whatever/* .
 ➜  git add .
 ➜  git push -u origin gh-pages
-</code></li>
+</code></pre><ul>
 <li>Go to your GitHub project settings and enable <code>GitHub Pages</code> with <code>gh-pages branch</code> as <code>source</code></li>
 </ul>
-
 <p>After a couple of minutes <em>your brand new blog wit one empty post</em> should be available at <a href="https://YOURUSER.github.io/YOURREPO">https://YOURUSER.github.io/YOURREPO</a></p>
-
-<h2 id="step-3-extra-custom-cname">Step 3 - EXTRA - Custom CNAME</h2>
-
+<h2 id="step-3---extra---custom-cname">Step 3 - EXTRA - Custom CNAME</h2>
 <p>If you&rsquo;d rather use your own (sub)domain (such as <a href="https://rpg.skmobi.com/):">https://rpg.skmobi.com/):</a></p>
-
 <ul>
 <li>Add the (sub)domain to a file named <code>CNAME</code> in the root of the master branch like <a href="https://github.com/fopina/rpg/blob/master/CNAME">this</a></li>
 <li>Setup your DNS with CNAME record pointing to <code>YOURUSER.github.io</code></li>
 <li>As GitHub pages now supports HTTPS on custom domains (using <a href="https://letsencrypt.org/">LetsEncrypt</a>), I&rsquo;d recommend ticking <code>Enforce HTTPS</code> in <code>GitHub Pages</code> section of the project settings</li>
 </ul>
-
-<h2 id="step-4-travis-ci">Step 4 - Travis-CI</h2>
-
+<h2 id="step-4---travis-ci">Step 4 - Travis-CI</h2>
 <p>As the last step, you can use <a href="https://travis-ci.org/">Travis-CI</a> to automate publishing when pushing new Hugo content.
 Original idea taken from <a href="https://www.sidorenko.io/post/2018/12/hugo-on-github-pages-with-travis-ci/">this post</a>.</p>
-
 <ul>
 <li>(Optionally) Create a second (bot) GitHub account and add it as collaborator of your repository. This allows you to add this account credentials to Travis instead of your main one.</li>
 <li>Signup to <a href="https://travis-ci.org/">Travis-CI</a> and enable it for your repository
@@ -445,27 +386,27 @@ mv ../public/* .
 rmdir ../public/
 git add -A
 git commit -m <span class="s2">&#34;rebuilding site on `date`, commit </span><span class="si">${</span><span class="nv">TRAVIS_COMMIT</span><span class="si">}</span><span class="s2"> and job </span><span class="si">${</span><span class="nv">TRAVIS_JOB_NUMBER</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">true</span>
-git push origin gh-pages</code></pre></div>
-<ul>
+git push origin gh-pages
+</code></pre></div><ul>
 <li>And finally, the <code>.travis.yml</code>, also in your <code>master</code> branch root</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">language<span class="p">:</span><span class="w"> </span>minimal<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">language</span><span class="p">:</span><span class="w"> </span>minimal<span class="w">
 </span><span class="w">
-</span><span class="w"></span>install<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>/tmp/hugo.deb<span class="w"> </span>https<span class="p">:</span>//github.com/gohugoio/hugo/releases/download/v0.<span class="m">55.0</span>/hugo_0.<span class="m">55.</span>0_Linux-64bit.deb<span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>/tmp/hugo.deb<span class="w">
+</span><span class="w"></span><span class="k">install</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- wget<span class="w"> </span>-O<span class="w"> </span>/tmp/hugo.deb<span class="w"> </span>https<span class="p">:</span>//github.com/gohugoio/hugo/releases/download/v0<span class="m">.55.0</span>/hugo_0<span class="m">.55</span>.0_Linux-64bit.deb<span class="w">
+</span><span class="w">  </span>- sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>/tmp/hugo.deb<span class="w">
 </span><span class="w">
-</span><span class="w"></span>script<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>hugo<span class="w"> </span>-d<span class="w"> </span>../public<span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>cp<span class="w"> </span>CNAME<span class="w"> </span>../public<span class="w">
+</span><span class="w"></span><span class="k">script</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- hugo<span class="w"> </span>-d<span class="w"> </span>../public<span class="w">
+</span><span class="w">  </span>- cp<span class="w"> </span>CNAME<span class="w"> </span>../public<span class="w">
 </span><span class="w">
-</span><span class="w"></span>deploy<span class="p">:</span><span class="w">
-</span><span class="w">  </span>-<span class="w"> </span>provider<span class="p">:</span><span class="w"> </span>script<span class="w">
-</span><span class="w">    </span>script<span class="p">:</span><span class="w"> </span>./deploy.sh<span class="w">
-</span><span class="w">    </span>skip_cleanup<span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span>on<span class="p">:</span><span class="w">
-</span><span class="w">      </span>branch<span class="p">:</span><span class="w"> </span>master</code></pre></div>
-<p>Commit these 2 files, push them and you&rsquo;re done! Travis job should kick off and <code>gh-pages</code> branch will be automatically updated, as will your blog.</p>
+</span><span class="w"></span><span class="k">deploy</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">provider</span><span class="p">:</span><span class="w"> </span>script<span class="w">
+</span><span class="w">    </span><span class="k">script</span><span class="p">:</span><span class="w"> </span>./deploy.sh<span class="w">
+</span><span class="w">    </span><span class="k">skip_cleanup</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="k">on</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">branch</span><span class="p">:</span><span class="w"> </span>master<span class="w">
+</span></code></pre></div><p>Commit these 2 files, push them and you&rsquo;re done! Travis job should kick off and <code>gh-pages</code> branch will be automatically updated, as will your blog.</p>
 ]]></content>
 		</item>
 		

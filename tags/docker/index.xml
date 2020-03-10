@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>docker on Random Post Generator</title>
@@ -17,8 +17,8 @@
       <pubDate>Sat, 07 Mar 2020 14:38:07 +0000</pubDate>
       
       <guid>https://rpg.skmobi.com/posts/0x8490_privileged_swarm_service/</guid>
-      <description>Some docker images require extra capabilities to work, ie: * openvpn needs NET_ADMIN * anything using USB/i2c will need --device=/dev/ttyAMA0
-Swarmkit does not support that (nor the GIEF IT ALL --privileged flag).
+      <description>Some docker images require extra capabilities to work, ie:
+ openvpn needs NET_ADMIN anything using USB/i2c will need --device=/dev/ttyAMA0  Swarmkit does not support that (nor the GIEF IT ALL --privileged flag).
 There are a lot of issues on their github(s) such as this, this or this.
 It seems there is consensus into adding the feature to swarmkit though it won&amp;rsquo;t be available before 19.06 or 19.09.
 Until then, the best solution seems to be spinning up a service that starts the container after, such as:</description>

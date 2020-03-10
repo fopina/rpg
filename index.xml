@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Random Post Generator</title>
@@ -6,7 +6,7 @@
     <description>Recent content on Random Post Generator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Mar 2020 14:38:07 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Apr 2019 00:05:34 +0100</lastBuildDate>
     
 	<atom:link href="https://rpg.skmobi.com/index.xml" rel="self" type="application/rss+xml" />
     
@@ -17,8 +17,8 @@
       <pubDate>Sat, 07 Mar 2020 14:38:07 +0000</pubDate>
       
       <guid>https://rpg.skmobi.com/posts/0x8490_privileged_swarm_service/</guid>
-      <description>Some docker images require extra capabilities to work, ie: * openvpn needs NET_ADMIN * anything using USB/i2c will need --device=/dev/ttyAMA0
-Swarmkit does not support that (nor the GIEF IT ALL --privileged flag).
+      <description>Some docker images require extra capabilities to work, ie:
+ openvpn needs NET_ADMIN anything using USB/i2c will need --device=/dev/ttyAMA0  Swarmkit does not support that (nor the GIEF IT ALL --privileged flag).
 There are a lot of issues on their github(s) such as this, this or this.
 It seems there is consensus into adding the feature to swarmkit though it won&amp;rsquo;t be available before 19.06 or 19.09.
 Until then, the best solution seems to be spinning up a service that starts the container after, such as:</description>
@@ -53,7 +53,8 @@ Eventually I need to check logs for something (and I&amp;rsquo;d also like to ke
       
       <guid>https://rpg.skmobi.com/posts/0xc53e_lenticular/</guid>
       <description>I needed a symbolic gift some time ago and thought a lenticular keychain but shops I found to get a custom made one would take over 2 weeks to deliver.
-Googling a bit for DIY seems the only thing required to print lenticulars is image processing and lenticular lens. Again, getting lenticular lens was not so easy as it looked, so off and found this video, that looks easy!</description>
+Googling a bit for DIY seems the only thing required to print lenticulars is image processing and lenticular lens. Again, getting lenticular lens was not so easy as it looked, so off and found this video, that looks easy!
+Printing photos, cutting in several stripes and putting them all back together seemed like something to scripted though, hence</description>
     </item>
     
     <item>
