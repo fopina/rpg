@@ -1,26 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>filler on Random Post Generator</title>
-    <link>https://rpg.skmobi.com/tags/filler/</link>
-    <description>Recent content in filler on Random Post Generator</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 07 May 2019 01:37:07 +0100</lastBuildDate>
-    
-	<atom:link href="https://rpg.skmobi.com/tags/filler/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>0x0000 The Seed</title>
-      <link>https://rpg.skmobi.com/posts/0x0000_the_seed/</link>
-      <pubDate>Tue, 07 May 2019 01:37:07 +0100</pubDate>
-      
-      <guid>https://rpg.skmobi.com/posts/0x0000_the_seed/</guid>
-      <description>Sometimes we need something and we can&amp;rsquo;t find a straight up how-to online.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>filler on Random Post Generator</title><link>https://rpg.skmobi.com/tags/filler/</link><description>Recent content in filler on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 07 May 2019 01:37:07 +0100</lastBuildDate><atom:link href="https://rpg.skmobi.com/tags/filler/index.xml" rel="self" type="application/rss+xml"/><item><title>0x0000 The Seed</title><link>https://rpg.skmobi.com/posts/0x0000_the_seed/</link><pubDate>Tue, 07 May 2019 01:37:07 +0100</pubDate><guid>https://rpg.skmobi.com/posts/0x0000_the_seed/</guid><description>Sometimes we need something and we can&amp;rsquo;t find a straight up how-to online.
 We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?
-We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?</description>
-    </item>
-    
-  </channel>
-</rss>
+We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?</description></item></channel></rss>

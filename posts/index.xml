@@ -1,25 +1,8 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Posts on Random Post Generator</title>
-		<link>https://rpg.skmobi.com/posts/</link>
-		<description>Recent content in Posts on Random Post Generator</description>
-		<generator>Hugo -- gohugo.io</generator>
-		<language>en-us</language>
-		<lastBuildDate>Sat, 07 Mar 2020 14:38:07 +0000</lastBuildDate>
-		<atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml" />
-		
-		<item>
-			<title>0x8490 Privileged Swarm Services</title>
-			<link>https://rpg.skmobi.com/posts/0x8490_privileged_swarm_service/</link>
-			<pubDate>Sat, 07 Mar 2020 14:38:07 +0000</pubDate>
-			
-			<guid>https://rpg.skmobi.com/posts/0x8490_privileged_swarm_service/</guid>
-			<description>Some docker images require extra capabilities to work, ie:
- openvpn needs NET_ADMIN anything using USB/i2c will need --device=/dev/ttyAMA0  Swarmkit does not support that (nor the GIEF IT ALL --privileged flag).
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 07 Mar 2020 14:38:07 +0000</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0x8490 Privileged Swarm Services</title><link>https://rpg.skmobi.com/posts/0x8490_privileged_swarm_service/</link><pubDate>Sat, 07 Mar 2020 14:38:07 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0x8490_privileged_swarm_service/</guid><description>Some docker images require extra capabilities to work, ie:
+openvpn needs NET_ADMIN anything using USB/i2c will need --device=/dev/ttyAMA0 Swarmkit does not support that (nor the GIEF IT ALL --privileged flag).
 There are a lot of issues on their github(s) such as this, this or this.
 It seems there is consensus into adding the feature to swarmkit though it won&amp;rsquo;t be available before 19.06 or 19.09.
-Until then, the best solution seems to be spinning up a service that starts the container after, such as:</description>
-			<content type="html"><![CDATA[<p>Some docker images require extra capabilities to work, ie:</p>
+Until then, the best solution seems to be spinning up a service that starts the container after, such as:</description><content type="html"><![CDATA[<p>Some docker images require extra capabilities to work, ie:</p>
 <ul>
 <li>openvpn needs <code>NET_ADMIN</code></li>
 <li>anything using USB/i2c will need <code>--device=/dev/ttyAMA0</code></li>
@@ -117,19 +100,9 @@ If we can scale it up, it needs to end in different nodes (as there&rsquo;s an h
 <li>Do not publish any port on the secondary container (as it won&rsquo;t be used)</li>
 </ul>
 <p>So it is now fully managed as it was a service and fully scalable.</p>
-]]></content>
-		</item>
-		
-		<item>
-			<title>0x6BAA OpenVPN Made Easy</title>
-			<link>https://rpg.skmobi.com/posts/0x6baa_openvpn/</link>
-			<pubDate>Sun, 15 Dec 2019 18:54:23 +0000</pubDate>
-			
-			<guid>https://rpg.skmobi.com/posts/0x6baa_openvpn/</guid>
-			<description>Why Some people decide to buy some external VPN service for privacy.
+]]></content></item><item><title>0x6BAA OpenVPN Made Easy</title><link>https://rpg.skmobi.com/posts/0x6baa_openvpn/</link><pubDate>Sun, 15 Dec 2019 18:54:23 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0x6baa_openvpn/</guid><description>Why Some people decide to buy some external VPN service for privacy.
 Personally, as I already commit all my internet usage to my ISP at home, I rather VPN from untrusted locations into my home instead, saving a few bucks and keeping my ISP as the sole entity holding that information.
-I guess I could try to use one of those VPN services (with better privacy terms than my ISP) at home but that would increase complexity too much for the rest of the household</description>
-			<content type="html"><![CDATA[<h2 id="why">Why</h2>
+I guess I could try to use one of those VPN services (with better privacy terms than my ISP) at home but that would increase complexity too much for the rest of the household</description><content type="html"><![CDATA[<h2 id="why">Why</h2>
 <p>Some people decide to buy some external VPN service for privacy.<br>
 Personally, as I already commit all my internet usage to my ISP at home, I rather VPN from <em>untrusted locations</em> into my home instead, saving a few bucks and keeping my ISP as the sole entity holding that information.<br>
 I guess I could try to use one of those VPN services (with better privacy terms than my ISP) at home but that would increase complexity too much for the rest of the <em>household</em></p>
@@ -211,19 +184,9 @@ If you prefer to manage the file transfer yourself, you can use:</p>
 <li><a href="https://github.com/fopina/docker-openvpn/blob/master/.github/workflows/main.yml">this github workflow</a> to make the multi-platform builds of the docker image</li>
 </ul>
 <p>Enjoy your home VPN.</p>
-]]></content>
-		</item>
-		
-		<item>
-			<title>0xD755 Free Log Collection</title>
-			<link>https://rpg.skmobi.com/posts/0xd755_gcp_logging/</link>
-			<pubDate>Wed, 10 Jul 2019 00:47:31 +0100</pubDate>
-			
-			<guid>https://rpg.skmobi.com/posts/0xd755_gcp_logging/</guid>
-			<description>I have a few raspberries lying around the house plus a couple of really cheap low-end VPS (1€ arubas)
+]]></content></item><item><title>0xD755 Free Log Collection</title><link>https://rpg.skmobi.com/posts/0xd755_gcp_logging/</link><pubDate>Wed, 10 Jul 2019 00:47:31 +0100</pubDate><guid>https://rpg.skmobi.com/posts/0xd755_gcp_logging/</guid><description>I have a few raspberries lying around the house plus a couple of really cheap low-end VPS (1€ arubas)
 Not only they there are containers, cron jobs, etc spread among them (but all keep under ansible control) 2 of them are a docker swarm cluster with replicas for same services.
-Eventually I need to check logs for something (and I&amp;rsquo;d also like to keep tabs on cpu/memory/disk metrics), so I started looking into log management/collection solutions.</description>
-			<content type="html"><![CDATA[<p>I have a few <a href="https://www.raspberrypi.org/">raspberries</a> lying around the house plus a couple of <del>really cheap</del> low-end VPS (1€ <a href="https://www.arubacloud.com/">arubas</a>)</p>
+Eventually I need to check logs for something (and I&amp;rsquo;d also like to keep tabs on cpu/memory/disk metrics), so I started looking into log management/collection solutions.</description><content type="html"><![CDATA[<p>I have a few <a href="https://www.raspberrypi.org/">raspberries</a> lying around the house plus a couple of <del>really cheap</del> low-end VPS (1€ <a href="https://www.arubacloud.com/">arubas</a>)</p>
 <p>Not only they there are containers, cron jobs, etc spread among them (but all keep under ansible control) 2 of them are a docker swarm cluster with replicas for same services.</p>
 <p>Eventually I need to check logs for something (and I&rsquo;d also like to keep tabs on cpu/memory/disk metrics), so I started looking into log management/collection solutions.
 As these are for personal projects, I always try to go for <del>free</del> low-cost solutions.</p>
@@ -252,19 +215,9 @@ Good looking <a href="https://docs.fluentbit.io/manual/installation/td-agent-bit
 <p>Docker was configured (in another role) with <code>journald</code> as default logger, that&rsquo;s why I&rsquo;m using <a href="https://docs.fluentbit.io/manual/input/systemd">systemd input</a>.
 Also added a few modify filters to reduce the clutter (and avoid hitting the ingestion limit at some point).</p>
 <p>Pushing cpu and memory to use <a href="https://console.cloud.google.com/logs/metrics">Logs-based metrics</a>, but that&rsquo;ll be for another day&hellip;</p>
-]]></content>
-		</item>
-		
-		<item>
-			<title>0xC53E Peculiar Lenticular</title>
-			<link>https://rpg.skmobi.com/posts/0xc53e_lenticular/</link>
-			<pubDate>Sun, 30 Jun 2019 18:22:48 +0100</pubDate>
-			
-			<guid>https://rpg.skmobi.com/posts/0xc53e_lenticular/</guid>
-			<description>I needed a symbolic gift some time ago and thought a lenticular keychain but shops I found to get a custom made one would take over 2 weeks to deliver.
+]]></content></item><item><title>0xC53E Peculiar Lenticular</title><link>https://rpg.skmobi.com/posts/0xc53e_lenticular/</link><pubDate>Sun, 30 Jun 2019 18:22:48 +0100</pubDate><guid>https://rpg.skmobi.com/posts/0xc53e_lenticular/</guid><description>I needed a symbolic gift some time ago and thought a lenticular keychain but shops I found to get a custom made one would take over 2 weeks to deliver.
 Googling a bit for DIY seems the only thing required to print lenticulars is image processing and lenticular lens. Again, getting lenticular lens was not so easy as it looked, so off and found this video, that looks easy!
-Printing photos, cutting in several stripes and putting them all back together seemed like something to scripted though, hence</description>
-			<content type="html"><![CDATA[<p>I needed a symbolic gift <a href="https://lmgtfy.com/?q=mother%27s+day+2019">some time ago</a> and thought a <a href="https://www.alibaba.com/product-detail/2019-Best-Selling-3D-Lenticular-Keychain_62131838666.html?spm=a2700.7724857.normalList.20.5c2525d9YnhbZr&amp;s=p">lenticular keychain</a> but shops I found to get a custom made one would take over 2 weeks to deliver.</p>
+Printing photos, cutting in several stripes and putting them all back together seemed like something to scripted though, hence</description><content type="html"><![CDATA[<p>I needed a symbolic gift <a href="https://lmgtfy.com/?q=mother%27s+day+2019">some time ago</a> and thought a <a href="https://www.alibaba.com/product-detail/2019-Best-Selling-3D-Lenticular-Keychain_62131838666.html?spm=a2700.7724857.normalList.20.5c2525d9YnhbZr&amp;s=p">lenticular keychain</a> but shops I found to get a custom made one would take over 2 weeks to deliver.</p>
 <p>Googling a bit for DIY seems the only thing required to print lenticulars is image processing and lenticular lens.
 Again, getting lenticular lens was not so easy as it looked, so off and found <a href="https://www.youtube.com/watch?v=mmGB9ADKr5Y">this video</a>, that looks easy!</p>
 <p>Printing photos, cutting in several stripes and putting them all back together seemed like something to scripted though, hence</p>
@@ -276,19 +229,9 @@ Again, getting lenticular lens was not so easy as it looked, so off and found <a
 <pre><code>python lenticular.py b.png o.png
 </code></pre><p>Yields</p>
 <p><img src="/tmp2p9xKb.png" alt="result image"></p>
-]]></content>
-		</item>
-		
-		<item>
-			<title>0x0000 The Seed</title>
-			<link>https://rpg.skmobi.com/posts/0x0000_the_seed/</link>
-			<pubDate>Tue, 07 May 2019 01:37:07 +0100</pubDate>
-			
-			<guid>https://rpg.skmobi.com/posts/0x0000_the_seed/</guid>
-			<description>Sometimes we need something and we can&amp;rsquo;t find a straight up how-to online.
+]]></content></item><item><title>0x0000 The Seed</title><link>https://rpg.skmobi.com/posts/0x0000_the_seed/</link><pubDate>Tue, 07 May 2019 01:37:07 +0100</pubDate><guid>https://rpg.skmobi.com/posts/0x0000_the_seed/</guid><description>Sometimes we need something and we can&amp;rsquo;t find a straight up how-to online.
 We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?
-We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?</description>
-			<content type="html"><![CDATA[<p>Sometimes we need something and we can&rsquo;t find a straight up how-to online.</p>
+We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?</description><content type="html"><![CDATA[<p>Sometimes we need something and we can&rsquo;t find a straight up how-to online.</p>
 <p>We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?</p>
 <p>We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?</p>
 <p>Internet is not running out of space.</p>
@@ -407,8 +350,4 @@ git push origin gh-pages
 </span><span class="w">    </span><span class="k">on</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span><span class="k">branch</span><span class="p">:</span><span class="w"> </span>master<span class="w">
 </span></code></pre></div><p>Commit these 2 files, push them and you&rsquo;re done! Travis job should kick off and <code>gh-pages</code> branch will be automatically updated, as will your blog.</p>
-]]></content>
-		</item>
-		
-	</channel>
-</rss>
+]]></content></item></channel></rss>
