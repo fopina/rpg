@@ -11,7 +11,7 @@ rssLimit = 10
 copyright = ""
 enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
 googleAnalytics = "UA-152680315-1"
-# disqusShortname = "yourdiscussshortname"
+disqusShortname = "random-post-generator"
 
 [author]
   name = "Filipe Pina"
