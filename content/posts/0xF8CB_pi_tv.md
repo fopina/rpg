@@ -1,7 +1,7 @@
 ---
 title: "0xF8CB Pi TV - Lock HDMI Configuration"
 date: 2020-10-26T12:31:53Z
-draft: true
+draft: false
 toc: false
 images:
 tags: 
