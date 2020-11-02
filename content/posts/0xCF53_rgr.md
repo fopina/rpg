@@ -1,5 +1,5 @@
 ---
-title: "0xCF53"
+title: "0xCF53 Remote Garage Remote"
 date: 2020-11-01T18:40:57Z
 draft: true
 toc: false
@@ -11,6 +11,7 @@ tags:
 ---
 
 
+https://www.digikey.com/en/products/detail/lite-on-inc/4N25/385762
 https://github.com/warthog618/gpio
 https://electronics.stackexchange.com/questions/76682/shorting-a-remote-control-pushbutton-with-gpio-and-a-transistor
 
