@@ -10,11 +10,12 @@ tags:
   - domotics
 ---
 
+{{< imgproc remote_1.jpeg Resize "100x" >}}{{< imgproc remote_1.jpeg Resize "100x" >}}
+
 One of my garage remotes stopped working but I kept it in hope one day I'd make a learning exercise out of repairing it.
 
 The other day somehow I brought it up in a conversation and it was highlighted that it is common for the push button to wear out, so I opened the remote and quickly tested by shorting over the button with a wire.  
 And the garage door opened (thanks Dad)!
-
 
 
 https://www.digikey.com/en/products/detail/lite-on-inc/4N25/385762
