@@ -235,20 +235,19 @@ Good looking <a href="https://docs.fluentbit.io/manual/installation/td-agent-bit
 <p>Docker was configured (in another role) with <code>journald</code> as default logger, that&rsquo;s why I&rsquo;m using <a href="https://docs.fluentbit.io/manual/input/systemd">systemd input</a>.
 Also added a few modify filters to reduce the clutter (and avoid hitting the ingestion limit at some point).</p>
 <p>Pushing cpu and memory to use <a href="https://console.cloud.google.com/logs/metrics">Logs-based metrics</a>, but that&rsquo;ll be for another day&hellip;</p>
-]]></content></item><item><title>0xC53E Peculiar Lenticular</title><link>https://rpg.skmobi.com/posts/0xc53e_lenticular/</link><pubDate>Sun, 30 Jun 2019 18:22:48 +0100</pubDate><guid>https://rpg.skmobi.com/posts/0xc53e_lenticular/</guid><description>I needed a symbolic gift some time ago and thought a lenticular keychain but shops I found to get a custom made one would take over 2 weeks to deliver.
-Googling a bit for DIY seems the only thing required to print lenticulars is image processing and lenticular lens. Again, getting lenticular lens was not so easy as it looked, so off and found this video, that looks easy!
-Printing photos, cutting in several stripes and putting them all back together seemed like something to scripted though, hence</description><content type="html"><![CDATA[<p>I needed a symbolic gift <a href="https://lmgtfy.com/?q=mother%27s+day+2019">some time ago</a> and thought a <a href="https://www.alibaba.com/product-detail/2019-Best-Selling-3D-Lenticular-Keychain_62131838666.html?spm=a2700.7724857.normalList.20.5c2525d9YnhbZr&amp;s=p">lenticular keychain</a> but shops I found to get a custom made one would take over 2 weeks to deliver.</p>
+]]></content></item><item><title>0xC53E Peculiar Lenticular</title><link>https://rpg.skmobi.com/posts/0xc53e_lenticular/</link><pubDate>Sun, 30 Jun 2019 18:22:48 +0100</pubDate><guid>https://rpg.skmobi.com/posts/0xc53e_lenticular/</guid><description>I needed a symbolic gift some time ago and thought a lenticular keychain but the shops I found to get a custom made one would take over 2 weeks to deliver.
+Googling a bit for DIY seems the only thing required to print lenticulars is image processing and lenticular lens. Again, getting lenticular lens was not so easy as it looked, so off and found this video, that looks easy!</description><content type="html"><![CDATA[<p>I needed a symbolic gift <a href="https://lmgtfy.com/?q=mother%27s+day+2019">some time ago</a> and thought a <a href="https://www.alibaba.com/product-detail/2019-Best-Selling-3D-Lenticular-Keychain_62131838666.html?spm=a2700.7724857.normalList.20.5c2525d9YnhbZr&amp;s=p">lenticular keychain</a> but the shops I found to get a custom made one would take over 2 weeks to deliver.</p>
 <p>Googling a bit for DIY seems the only thing required to print lenticulars is image processing and lenticular lens.
 Again, getting lenticular lens was not so easy as it looked, so off and found <a href="https://www.youtube.com/watch?v=mmGB9ADKr5Y">this video</a>, that looks easy!</p>
 <p>Printing photos, cutting in several stripes and putting them all back together seemed like something to scripted though, hence</p>
 <script type="application/javascript" src="https://gist.github.com/fopina/6e97829e33de8a8c72c2d1bf65ed5ab9.js"></script>
 
 <h3 id="example">Example</h3>
-<p><img src="/b.png" alt="image 1"><img src="/o.png" alt="image 2"></p>
+<p><img src="b.png" alt="image 1"><img src="o.png" alt="image 2"></p>
 <p>Running</p>
 <pre><code>python lenticular.py b.png o.png
 </code></pre><p>Yields</p>
-<p><img src="/tmp2p9xKb.png" alt="result image"></p>
+<p><img src="tmp2p9xKb.png" alt="result image"></p>
 ]]></content></item><item><title>0x0000 The Seed</title><link>https://rpg.skmobi.com/posts/0x0000_the_seed/</link><pubDate>Tue, 07 May 2019 01:37:07 +0100</pubDate><guid>https://rpg.skmobi.com/posts/0x0000_the_seed/</guid><description>Sometimes we need something and we can&amp;rsquo;t find a straight up how-to online.
 We put a few pieces together, get it done but wonder if we ever need to do it again, will we find the same resources again? Will they be up? Will we follow the same links?
 We want to record our steps to remember later on, but we also want Google to index them so we get there, so why not post them up somewhere?</description><content type="html"><![CDATA[<p>Sometimes we need something and we can&rsquo;t find a straight up how-to online.</p>
