@@ -17,7 +17,7 @@ And the garage door opened (thanks Dad)!
 
 ## FIXME: side-by-side
 
-{{< imgproc remote_1.jpeg Resize "100x" >}}{{< imgproc remote_2.jpeg Resize "100x" >}}{{< imgproc remote_3.jpeg Resize "100x" >}}
+{{< imgproc "remote_1.jpeg" Resize "100x" >}}{{< imgproc "remote_2.jpeg" Resize "100x" >}}{{< imgproc "remote_3.jpeg" Resize "100x" >}}
 
 
 
