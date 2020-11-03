@@ -1,0 +1,14 @@
+{{ $original := .Page.Resources.GetMatch (.Get "src") }}
+{{ $command := .Get "op" }}
+{{ $options := .Get "args" }}
+{{ if eq $command "Fit"}}
+{{ .Scratch.Set "image" ($original.Fit $options) }}
+{{ else if eq $command "Fill"}}
+{{ .Scratch.Set "image" ($original.Fill $options) }}
+{{ else }}
+{{ .Scratch.Set "image" ($original.Resize $options) }}
+{{ end }}
+{{ $image := .Scratch.Get "image" }}
+<a href="{{ $original.RelPermalink }}">
+    <img src="{{ $image.RelPermalink }}{{ with .Get "tags" }}#{{ . }}{{ end }}" width="{{ $image.Width }}" height="{{ $image.Height }}">
+</a>
