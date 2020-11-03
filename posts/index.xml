@@ -1,4 +1,201 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 26 Oct 2020 12:31:53 +0000</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0xF8CB Pi TV - Lock HDMI Configuration</title><link>https://rpg.skmobi.com/posts/0xf8cb_pi_tv/</link><pubDate>Mon, 26 Oct 2020 12:31:53 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xf8cb_pi_tv/</guid><description>One of my raspberries is connected to the TV (quite original!) running RetroPie with Kodi as well.
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 01 Nov 2020 18:40:57 +0000</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0xCF53 Remote, Garage Remote</title><link>https://rpg.skmobi.com/posts/0xcf53_rgr/</link><pubDate>Sun, 01 Nov 2020 18:40:57 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xcf53_rgr/</guid><description>Dr. No Open One of my garage openers stopped working but I kept it in hope one day I&amp;rsquo;d make a learning exercise out of repairing it.
+The other day somehow I brought it up in a conversation and it was highlighted that it is common for the push button to wear out, so I opened the case and tested by shorting over the button with a wire.
+And the garage door opened (thanks Dad)!</description><content type="html"><![CDATA[<h2 id="dr-no-open">Dr. No Open</h2>
+<p>One of my garage openers stopped working but I kept it in hope one day I&rsquo;d make a learning exercise out of repairing it.</p>
+<p>The other day somehow I brought it up in a conversation and it was highlighted that it is common for the push button to wear out, so I opened the case and tested by shorting over the button with a wire.<br>
+And the garage door opened (thanks Dad)!</p>
+<p>
+
+
+
+
+
+
+<a href="/posts/0xcf53_rgr/remote_1.jpeg">
+    <img src="/posts/0xcf53_rgr/remote_1_hu8ec6b6cc74a9a32ea27ee816486b4937_175217_150x0_resize_q75_box.jpeg#inline" width="150" height="200">
+</a>
+
+
+
+
+
+
+
+
+<a href="/posts/0xcf53_rgr/remote_2.jpeg">
+    <img src="/posts/0xcf53_rgr/remote_2_huc3cf7066b61b5fc727fd4db0caade3d6_242171_150x0_resize_q75_box.jpeg#inline" width="150" height="200">
+</a>
+
+
+
+
+
+
+
+
+<a href="/posts/0xcf53_rgr/remote_3.jpeg">
+    <img src="/posts/0xcf53_rgr/remote_3_hub05e4f94435c691abe24cf940f219232_206405_150x0_resize_q75_box.jpeg#inline" width="150" height="200">
+</a>
+</p>
+<p>Instead of replacing the push button why not use a raspberry to enable the remote?<br>
+Then a webapp could open the garage door?</p>
+<blockquote>
+<p>Alexa, ask Home Assistant to open garage</p>
+</blockquote>
+<h2 id="from-stackoverflow-with-love">From StackOverflow With Love</h2>
+<p>I have used <a href="https://en.wikipedia.org/wiki/Relay">relay switches</a> in the past to open <a href="https://en.wikipedia.org/wiki/Electromagnetic_lock">maglocks</a> but the loud <em>clack</em> was annoying and mechanical sounded unnecessary.</p>
+<p>Picked up a multimeter and measured at the push button:</p>
+<ul>
+<li>V=10v (opener uses 12v battery)</li>
+<li>I=4mA</li>
+</ul>
+<p>Looking into alternatives considered using a simple transistor but sharing GND between the garage opener (12v) and the raspberry (3v3) didn&rsquo;t sound safe.</p>
+<p>Dove into the huge world of ICs (thanks x7!) and, overwhelmed with the options, Google led me exactly to <a href="https://electronics.stackexchange.com/questions/76682/shorting-a-remote-control-pushbutton-with-gpio-and-a-transistor">this post in SO</a>. Should&rsquo;ve started with that&hellip;</p>
+<p>An octocoupler, LED on one side, transistor with photosensor on the other side. Two isolated circuits, nice one!</p>
+<p>According to <a href="http://www.mosaic-industries.com/embedded-systems/microcontroller-projects/raspberry-pi/gpio-pin-electrical-specifications#rpi-gpio-input-voltage-and-output-current-limitations">this</a>, no more than 16mA should be drawn from an output pin in the GPIO and I had a bunch of 330 ohm resistors:</p>
+<ul>
+<li><code>3v3 = 330 ohm * I</code> &gt; <code>I = 10 mA</code></li>
+</ul>
+<p>Open up <a href="https://www.digikey.com/en/products/detail/lite-on-inc/4N25/385762">4N25 datasheet</a>: LED on pins 1 and 2 and emitter and collector on 4 and 5.</p>
+<p>Schemed it in <a href="https://www.digikey.pt/schemeit/project/rgr1-cc1bac87b73e494884bbe0246aa2afe0/">Digikey</a>, then plugging the bits into a breadboard and connecting to a <a href="https://www.raspberrypi.org/products/raspberry-pi-zero-w/">Pi 0 WiFi</a>:</p>
+<p>
+
+
+
+
+
+
+<a href="/posts/0xcf53_rgr/scheme1.png">
+    <img src="/posts/0xcf53_rgr/scheme1_hu2b2452184f27a22128abfd49f5d9a7ab_394485_500x0_resize_box_2.png" width="500" height="168">
+</a>
+
+
+
+
+
+
+
+
+<a href="/posts/0xcf53_rgr/basic.jpeg">
+    <img src="/posts/0xcf53_rgr/basic_huef0e227d741b1d54e2d60df26055aa77_279911_300x0_resize_q75_box.jpeg" width="300" height="400">
+</a>
+</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># shell over python, just for fun</span>
+<span class="c1"># export pin to userspace</span>
+<span class="nb">echo</span> <span class="s2">&#34;18&#34;</span> &gt; /sys/class/gpio/export
+<span class="c1"># Sets pin 18 as an output</span>
+<span class="nb">echo</span> <span class="s2">&#34;out&#34;</span> &gt; /sys/class/gpio/gpio18/direction
+<span class="c1"># &#34;push&#34; the button</span>
+<span class="nb">echo</span> <span class="s2">&#34;1&#34;</span> &gt; /sys/class/gpio/gpio18/value
+<span class="c1"># for 3 seconds</span>
+sleep <span class="m">3</span>
+<span class="c1"># release</span>
+<span class="nb">echo</span> <span class="s2">&#34;0&#34;</span> &gt; /sys/class/gpio/gpio18/value 
+</code></pre></div><p>And Sesame is open.</p>
+<h2 id="you-must-live-twice">You Must Live Twice</h2>
+<p>All good and simple, but what about feedback? If the garage opener battery is dead, the Pi cannot <em>see</em> it anywhere&hellip;</p>
+<p>Let&rsquo;s use a second GPIO pin as input and enable it with the current from the opener!<br>
+But the Pi works on 3v and the opener is working on 10v&hellip;<br>
+Déjà vu, another 4N25 it is then, the other way around: input will be the garage opener and the output will be connecting Pi 3v3 to the input GPIO pin.</p>
+<ul>
+<li>Updated the scheme in <a href="https://www.digikey.pt/schemeit/project/rgr1-cc1bac87b73e494884bbe0246aa2afe0/b59742577e02417988ec0c8ade0acb29">Digikey</a></li>
+</ul>
+
+
+
+
+
+
+
+<a href="/posts/0xcf53_rgr/scheme2.png">
+    <img src="/posts/0xcf53_rgr/scheme2_hub59d32c9272cd5a9921cbd512959cabd_239752_500x0_resize_box_2.png" width="500" height="212">
+</a>
+
+<ul>
+<li>Applied it in the breadboard</li>
+</ul>
+
+
+
+
+
+
+
+<a href="/posts/0xcf53_rgr/basic_2.jpeg">
+    <img src="/posts/0xcf53_rgr/basic_2_hu67307361ed8a787880e671b3b667181a_289354_300x0_resize_q75_box.jpeg" width="300" height="400">
+</a>
+
+<p>And there: enabling GPIO 18 will enable the opener that then enables GPIO 24. If opener battery is dead, it won&rsquo;t trigger the second 4N25, not enabling GPIO 24.</p>
+<p>In this setup, there&rsquo;s no GND connected to GPIO 24 so the GPIO setup needs proper <code>pull_up_down</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">pull_up_down</span><span class="o">=</span><span class="n">GPIO</span><span class="o">.</span><span class="n">PUD_DOWN</span><span class="p">)</span>
+</code></pre></div><h2 id="pentapussy">Pentapussy</h2>
+<p>Time to trim a stripboard and solder!</p>
+<p>
+
+
+
+
+
+
+<a href="/posts/0xcf53_rgr/penta1.jpeg">
+    <img src="/posts/0xcf53_rgr/penta1_hu4839fef8723a485f1eb3e57ecdc2f7d6_162711_0x250_resize_q75_box.jpeg#inline" width="268" height="250">
+</a>
+
+
+
+
+
+
+
+
+<a href="/posts/0xcf53_rgr/penta2.jpeg">
+    <img src="/posts/0xcf53_rgr/penta2_hu97d8da35f928ea3ee29bf723c9a864cb_285945_0x250_resize_q75_box.jpeg#inline" width="333" height="250">
+</a>
+</p>
+<p>Nice mess of wires but it ended up small</p>
+<table>
+<thead>
+<tr>
+<th>Wire</th>
+<th>Pin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Green</td>
+<td>Pi GPIO 18</td>
+</tr>
+<tr>
+<td>Blue</td>
+<td>Pi GND</td>
+</tr>
+<tr>
+<td>Red</td>
+<td>Garage Opener GND</td>
+</tr>
+<tr>
+<td>Brown</td>
+<td>Garage Opener Vcc</td>
+</tr>
+<tr>
+<td>Orange</td>
+<td>Pi 3v3</td>
+</tr>
+<tr>
+<td>Yellow</td>
+<td>Pi GPIO 24</td>
+</tr>
+</tbody>
+</table>
+<h2 id="licence-to-click">Licence to Click</h2>
+<p>This wouldn&rsquo;t be very useful without software to use it.</p>
+<p>To change a bit from Python, found a clean <a href="https://github.com/warthog618/gpio">Go lib</a> (that uses the sysfs interface) and made a simple one-button webapp <a href="https://github.com/fopina/rgrweb">rgrweb</a>.</p>
+<p><img src="https://raw.githubusercontent.com/fopina/rgrweb/assets/Image.GIF" alt="rgrweb"></p>
+<p>Added some testing flags to use it as a CLI tool. As there is feedback (after adding the second 4N25), it can be used to fully test the circuit wihout actually standing next to the garage door.</p>
+<p><a href="https://asciinema.org/a/J1YR3McPxz5NykMiu7M9PcVxb?autoplay=1"><img src="https://asciinema.org/a/J1YR3McPxz5NykMiu7M9PcVxb.svg" alt="asciicast"></a></p>
+<h2 id="the-word-is-not-enough">The Word is Not Enough</h2>
+<p>Apologies for using <code>Garage Remote</code> in the title instead of <code>Garage Opener</code> (which I prefer and use in the rest of the text), but IoT pun called for it&hellip; Remote Garage Remote&hellip;</p>
+]]></content></item><item><title>0xF8CB Pi TV - Lock HDMI Configuration</title><link>https://rpg.skmobi.com/posts/0xf8cb_pi_tv/</link><pubDate>Mon, 26 Oct 2020 12:31:53 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xf8cb_pi_tv/</guid><description>One of my raspberries is connected to the TV (quite original!) running RetroPie with Kodi as well.
 Every now and then, power fails. When restored, the Pi always came up with messed up resolution.
 I would just reboot it once again and everything would be fine, so I postponed looking into.
 Turns out it was one of those things you delay because you think it will take forever to understand but in the end takes 5min&amp;hellip;</description><content type="html"><![CDATA[<p>One of my raspberries is connected to the TV (quite original!) running <a href="https://retropie.org.uk/">RetroPie</a> with Kodi as well.</p>
