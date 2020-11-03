@@ -12,9 +12,9 @@ tags:
 
 ## Dr. No Open
 
-One of my garage remotes stopped working but I kept it in hope one day I'd make a learning exercise out of repairing it.
+One of my garage openers stopped working but I kept it in hope one day I'd make a learning exercise out of repairing it.
 
-The other day somehow I brought it up in a conversation and it was highlighted that it is common for the push button to wear out, so I opened the remote and tested by shorting over the button with a wire.  
+The other day somehow I brought it up in a conversation and it was highlighted that it is common for the push button to wear out, so I opened the case and tested by shorting over the button with a wire.  
 And the garage door opened (thanks Dad)!
 
 {{< imgproc src="remote_1.jpeg" op=Resize args="150x" tags=inline >}}
@@ -45,7 +45,7 @@ According to [this](http://www.mosaic-industries.com/embedded-systems/microcontr
 
 Open up [4N25 datasheet](https://www.digikey.com/en/products/detail/lite-on-inc/4N25/385762): LED on pins 1 and 2 and emitter and collector on 4 and 5.
 
-Schemed it in [Digikey](https://www.digikey.pt/schemeit/project/rgr1-cc1bac87b73e494884bbe0246aa2afe0/), then plugging the bits into a breadboard and connecting to a [Pi 0 WiFi](https://www.raspberrypi.org/products/raspberry-pi-zero-w/?resellerType=home):
+Schemed it in [Digikey](https://www.digikey.pt/schemeit/project/rgr1-cc1bac87b73e494884bbe0246aa2afe0/), then plugging the bits into a breadboard and connecting to a [Pi 0 WiFi](https://www.raspberrypi.org/products/raspberry-pi-zero-w/):
 
 {{< imgproc src="scheme1.png" args="500x" >}}
 {{< imgproc src="basic.jpeg" args="300x" >}}
@@ -97,8 +97,29 @@ Time to trim a stripboard and solder!
 {{< imgproc src="penta1.jpeg" args="x250" tags=inline >}}
 {{< imgproc src="penta2.jpeg" args="x250" tags=inline >}}
 
+Nice mess of wires but it ended up small
 
+| Wire | Pin |
+| ---- | --- |
+| Green | Pi GPIO 18 |
+| Blue  | Pi GND     |
+| Red   | Garage Opener GND |
+| Brown | Garage Opener Vcc |
+| Orange | Pi 3v3     |
+| Yellow | Pi GPIO 24 |
 
 ## Licence to Click
 
-https://github.com/warthog618/gpio
+This wouldn't be very useful without software to use it.
+
+To change a bit from Python, found a clean [Go lib](https://github.com/warthog618/gpio) (that uses the sysfs interface) and made a simple one-button webapp [rgrweb](https://github.com/fopina/rgrweb).
+
+![rgrweb](https://raw.githubusercontent.com/fopina/rgrweb/assets/Image.GIF)
+
+Added some testing flags to use it as a CLI tool. As there is feedback (after adding the second 4N25), it can be used to fully test the circuit wihout actually standing next to the garage door.
+
+[![asciicast](https://asciinema.org/a/J1YR3McPxz5NykMiu7M9PcVxb.svg)](https://asciinema.org/a/J1YR3McPxz5NykMiu7M9PcVxb?autoplay=1)
+
+## The Word is Not Enough
+
+Apologies for using `Garage Remote` in the title instead of `Garage Opener` (which I prefer and use in the rest of the text), but IoT pun called for it... Remote Garage Remote...
