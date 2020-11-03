@@ -228,48 +228,48 @@ Until then, the best solution seems to be spinning up a service that starts the 
 <p>There are a lot of issues on their github(s) such as <a href="https://github.com/docker/swarmkit/issues/1030">this</a>, <a href="https://github.com/moby/moby/issues/25885">this</a> or <a href="https://github.com/moby/moby/pull/38380">this</a>.</p>
 <p>It seems there is consensus into adding the feature to swarmkit though it won&rsquo;t be available before 19.06 or 19.09.</p>
 <p>Until then, the best solution seems to be spinning up a service that starts the container after, such as:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
 </span><span class="w">
-</span><span class="w"></span><span class="k">services</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">web</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>docker<span class="p">:</span><span class="m">19.03</span><span class="w">
-</span><span class="w">    </span><span class="k">command</span><span class="p">:</span><span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&#34;docker pull fopina/octoprint &amp;&amp; docker run 
-</span><span class="s2">                        --rm
-</span><span class="s2">                        --name octoprint_real
-</span><span class="s2">                        -v /nfs/path/to/octoprint/config:/root/.octoprint
-</span><span class="s2">                        --device=/dev/ttyAMA0
-</span><span class="s2">                        -p 5000:5000
-</span><span class="s2">                        fopina/octoprint&#34;</span><span class="w">
-</span><span class="w">    </span><span class="k">volumes</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- /var/run/docker.sock<span class="p">:</span>/var/run/docker.sock<span class="w">
-</span><span class="w">      </span>- /root/.docker<span class="p">:</span>/root/.docker<span class="p">:</span>ro<span class="w">
-</span><span class="w">    </span><span class="k">deploy</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">mode</span><span class="p">:</span><span class="w"> </span>replicated<span class="w">
-</span><span class="w">      </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">      </span><span class="k">placement</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">constraints</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>node.hostname<span class="w"> </span>==<span class="w"> </span>printingPi<span class="p">]</span><span class="w">
+</span><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">web</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">docker:19.03</span><span class="w">
+</span><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l">sh -c &#34;docker pull fopina/octoprint &amp;&amp; docker run </span><span class="w">
+</span><span class="w">                        </span>--<span class="l">rm</span><span class="w">
+</span><span class="w">                        </span>--<span class="l">name octoprint_real</span><span class="w">
+</span><span class="w">                        </span>-<span class="l">v /nfs/path/to/octoprint/config:/root/.octoprint</span><span class="w">
+</span><span class="w">                        </span>--<span class="l">device=/dev/ttyAMA0</span><span class="w">
+</span><span class="w">                        </span>-<span class="l">p 5000:5000</span><span class="w">
+</span><span class="w">                        </span><span class="l">fopina/octoprint&#34;</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">/var/run/docker.sock:/var/run/docker.sock</span><span class="w">
+</span><span class="w">      </span>- <span class="l">/root/.docker:/root/.docker:ro</span><span class="w">
+</span><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">replicated</span><span class="w">
+</span><span class="w">      </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span><span class="nt">placement</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">constraints</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">node.hostname == printingPi]</span><span class="w">
 </span></code></pre></div><p>Why would you use swarm service for this, since it&rsquo;s bound to the specific node where the USB cable is connected?</p>
 <p>In this case, it&rsquo;s managing all <strong>services</strong> the same way, I don&rsquo;t want to deploy some with <code>docker-compose</code> and others with <code>docker swarm deploy</code>&hellip;</p>
 <p>But in the case of, let&rsquo;s say <a href="https://rpg.skmobi.com/posts/0x6baa_openvpn/">openvpn</a>, it could be useful for easily scaling up across different nodes.</p>
 <p>We could use a stack like the first:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
 </span><span class="w">
-</span><span class="w"></span><span class="k">services</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">vpnd</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>docker<span class="p">:</span><span class="m">19.03</span><span class="w">
-</span><span class="w">    </span><span class="k">command</span><span class="p">:</span><span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w">
-</span><span class="w">                        </span>--name<span class="w"> </span>openvpn_real<span class="w">
-</span><span class="w">                        </span>--cap-add<span class="w"> </span>NET_ADMIN<span class="w">
-</span><span class="w">                        </span>-p<span class="w"> </span><span class="m">443</span><span class="p">:</span><span class="m">443</span>/udp<span class="w">
-</span><span class="w">                        </span>-v<span class="w"> </span>/nfs/path/to/openvpn/<span class="p">:</span>/etc/openvpn/<span class="w">
-</span><span class="w">                        </span>fopina/openvpn<span class="w">
-</span><span class="w">    </span><span class="k">volumes</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- /var/run/docker.sock<span class="p">:</span>/var/run/docker.sock<span class="w">
-</span><span class="w">    </span><span class="k">deploy</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">mode</span><span class="p">:</span><span class="w"> </span>replicated<span class="w">
-</span><span class="w">      </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">      </span><span class="k">placement</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">constraints</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>node.role<span class="w"> </span>==<span class="w"> </span>manager<span class="p">]</span><span class="w">
+</span><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">vpnd</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">docker:19.03</span><span class="w">
+</span><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l">docker run --rm</span><span class="w">
+</span><span class="w">                        </span>--<span class="l">name openvpn_real</span><span class="w">
+</span><span class="w">                        </span>--<span class="l">cap-add NET_ADMIN</span><span class="w">
+</span><span class="w">                        </span>-<span class="l">p 443:443/udp</span><span class="w">
+</span><span class="w">                        </span>-<span class="l">v /nfs/path/to/openvpn/:/etc/openvpn/</span><span class="w">
+</span><span class="w">                        </span><span class="l">fopina/openvpn</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">/var/run/docker.sock:/var/run/docker.sock</span><span class="w">
+</span><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">replicated</span><span class="w">
+</span><span class="w">      </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span><span class="nt">placement</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">constraints</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">node.role == manager]</span><span class="w">
 </span></code></pre></div><p>But as openvpn is not running in the actual service container, the port is not published in the swarm VIP / routing mesh.
 If we can scale it up, it needs to end in different nodes (as there&rsquo;s an host bound port) and to make use of the replicas, we need to use the node IP (not <em>any</em> node IP as the usual routing mesh)&hellip;</p>
 <p>My overkill solution:</p>
@@ -287,26 +287,26 @@ If we can scale it up, it needs to end in different nodes (as there&rsquo;s an h
 </ul>
 <p>To accomplish this, I&rsquo;ve created the image <a href="https://hub.docker.com/r/fopina/swarm-service-proxy">fopina/swarm-service-proxy</a> (built from <a href="https://github.com/fopina/docker-swarm-service-proxy">this</a>)</p>
 <p>The stack definition using this is</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
 </span><span class="w">
-</span><span class="w"></span><span class="k">services</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">vpnd</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>fopina/swarm-service-proxy<span class="p">:</span><span class="m">1</span><span class="w">
-</span><span class="w">    </span><span class="k">command</span><span class="p">:</span><span class="w"> </span>--rm<span class="w">
-</span><span class="w">             </span>--cap-add<span class="w"> </span>NET_ADMIN<span class="w">
-</span><span class="w">             </span>-v<span class="w"> </span>/nfs/path/to/openvpn/<span class="p">:</span>/etc/openvpn/<span class="w">
-</span><span class="w">             </span>fopina/openvpn<span class="w">
-</span><span class="w">    </span><span class="k">volumes</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- /var/run/docker.sock<span class="p">:</span>/var/run/docker.sock<span class="w">
-</span><span class="w">    </span><span class="k">environment</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">PROXIED_PORT</span><span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
-</span><span class="w">      </span><span class="k">PROXIED_PROTO</span><span class="p">:</span><span class="w"> </span>udp<span class="w">
-</span><span class="w">      </span><span class="k">PROXIED_NAME</span><span class="p">:</span><span class="w"> </span>openvpn_real<span class="w">
-</span><span class="w">    </span><span class="k">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="m">443</span><span class="p">:</span><span class="m">443</span>/udp<span class="w">
-</span><span class="w">    </span><span class="k">deploy</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">mode</span><span class="p">:</span><span class="w"> </span>replicated<span class="w">
-</span><span class="w">      </span><span class="k">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">vpnd</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">fopina/swarm-service-proxy:1</span><span class="w">
+</span><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span>--<span class="l">rm</span><span class="w">
+</span><span class="w">             </span>--<span class="l">cap-add NET_ADMIN</span><span class="w">
+</span><span class="w">             </span>-<span class="l">v /nfs/path/to/openvpn/:/etc/openvpn/</span><span class="w">
+</span><span class="w">             </span><span class="l">fopina/openvpn</span><span class="w">
+</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">/var/run/docker.sock:/var/run/docker.sock</span><span class="w">
+</span><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">PROXIED_PORT</span><span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
+</span><span class="w">      </span><span class="nt">PROXIED_PROTO</span><span class="p">:</span><span class="w"> </span><span class="l">udp</span><span class="w">
+</span><span class="w">      </span><span class="nt">PROXIED_NAME</span><span class="p">:</span><span class="w"> </span><span class="l">openvpn_real</span><span class="w">
+</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="m">443</span><span class="p">:</span><span class="m">443</span><span class="l">/udp</span><span class="w">
+</span><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">replicated</span><span class="w">
+</span><span class="w">      </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
 </span></code></pre></div><p>With this, port is actually published from the service (not to the secondary container) so it makes use of the routing mesh (and it doesn&rsquo;t lock the port in the docker host where it lands).</p>
 <p>Syntax remained as close as possible to the initial version: command is used as if it was <code>docker run &lt;command&gt;</code>.</p>
 <ul>
@@ -549,21 +549,21 @@ git push origin gh-pages
 </code></pre></div><ul>
 <li>And finally, the <code>.travis.yml</code>, also in your <code>master</code> branch root</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">language</span><span class="p">:</span><span class="w"> </span>minimal<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l">minimal</span><span class="w">
 </span><span class="w">
-</span><span class="w"></span><span class="k">install</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- wget<span class="w"> </span>-O<span class="w"> </span>/tmp/hugo.deb<span class="w"> </span>https<span class="p">:</span>//github.com/gohugoio/hugo/releases/download/v0<span class="m">.55.0</span>/hugo_0<span class="m">.55</span>.0_Linux-64bit.deb<span class="w">
-</span><span class="w">  </span>- sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>/tmp/hugo.deb<span class="w">
+</span><span class="w"></span><span class="nt">install</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="l">wget -O /tmp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.55.0/hugo_0.55.0_Linux-64bit.deb</span><span class="w">
+</span><span class="w">  </span>- <span class="l">sudo dpkg -i /tmp/hugo.deb</span><span class="w">
 </span><span class="w">
-</span><span class="w"></span><span class="k">script</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- hugo<span class="w"> </span>-d<span class="w"> </span>../public<span class="w">
-</span><span class="w">  </span>- cp<span class="w"> </span>CNAME<span class="w"> </span>../public<span class="w">
+</span><span class="w"></span><span class="nt">script</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="l">hugo -d ../public</span><span class="w">
+</span><span class="w">  </span>- <span class="l">cp CNAME ../public</span><span class="w">
 </span><span class="w">
-</span><span class="w"></span><span class="k">deploy</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">provider</span><span class="p">:</span><span class="w"> </span>script<span class="w">
-</span><span class="w">    </span><span class="k">script</span><span class="p">:</span><span class="w"> </span>./deploy.sh<span class="w">
-</span><span class="w">    </span><span class="k">skip_cleanup</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span><span class="k">on</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">branch</span><span class="p">:</span><span class="w"> </span>master<span class="w">
+</span><span class="w"></span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l">script</span><span class="w">
+</span><span class="w">    </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="l">./deploy.sh</span><span class="w">
+</span><span class="w">    </span><span class="nt">skip_cleanup</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l">master</span><span class="w">
 </span></code></pre></div><p>Commit these 2 files, push them and you&rsquo;re done! Travis job should kick off and <code>gh-pages</code> branch will be automatically updated, as will your blog.</p>
 ]]></content></item></channel></rss>
