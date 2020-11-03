@@ -35,7 +35,7 @@ Picked up a multimeter and measured at the push button:
 
 Looking into alternatives considered using a simple transistor but sharing GND between the garage opener (12v) and the raspberry (3v3) didn't sound safe.
 
-Dove into the huge world of ICs and, overwhelmed with the options, Google led me exactly to [this post in SO](https://electronics.stackexchange.com/questions/76682/shorting-a-remote-control-pushbutton-with-gpio-and-a-transistor). Should've started with that...
+Dove into the huge world of ICs (thanks x7!) and, overwhelmed with the options, Google led me exactly to [this post in SO](https://electronics.stackexchange.com/questions/76682/shorting-a-remote-control-pushbutton-with-gpio-and-a-transistor). Should've started with that...
 
 An octocoupler, LED on one side, transistor with photosensor on the other side. Two isolated circuits, nice one!
 
