@@ -2,10 +2,7 @@
 
 [build]
   publish = "public/"
-  command = "true"
+  command = "hugo --minify -D -F -b /"
 
 [build.environment]
   HUGO_VERSION = "0.76.5"
-
-[context.deploy-preview]
-  command = "hugo --minify -D -F -b /"
