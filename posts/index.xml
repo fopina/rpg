@@ -1,4 +1,98 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 01 Nov 2020 18:40:57 +0000</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0xCF53 Remote, Garage Remote</title><link>https://rpg.skmobi.com/posts/0xcf53_rgr/</link><pubDate>Sun, 01 Nov 2020 18:40:57 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xcf53_rgr/</guid><description>Dr. No Open One of my garage openers stopped working but I kept it in hope one day I&amp;rsquo;d make a learning exercise out of repairing it.
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2020 02:54:26 +0000</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0x9B4B Free Telemetry</title><link>https://rpg.skmobi.com/posts/0x9b4b_gcp_metrics/</link><pubDate>Tue, 24 Nov 2020 02:54:26 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0x9b4b_gcp_metrics/</guid><description>Some time ago I wrote about leveraging GCP free tier for log collection. I also started using it for telemetry though I never updated the post with those details.
+Since Google refactored their Monitoring away from that crappy StackDriver interface, it&amp;rsquo;s actually quite nice, so might as well write the setup down (up? ☁️).
+Even though GCP monitoring seems oriented to metrics from GCP services it also allows you to create logs-based metrics.</description><content type="html"><![CDATA[<p>Some time ago I <a href="/posts/0xd755_gcp_logging/">wrote</a> about leveraging GCP free tier for log collection. I also started using it for telemetry though I never updated the post with those details.</p>
+<p>Since Google refactored their Monitoring away from that crappy StackDriver interface, it&rsquo;s actually quite nice, so might as well write the setup down (up? ☁️).</p>
+<p>Even though GCP monitoring seems oriented to metrics from GCP services it also allows you to create <a href="https://cloud.google.com/logging/docs/logs-based-metrics/">logs-based metrics</a>.<br>
+This basically allows you to defined rules to extract data points from logs into metrics that can be monitored and alerted on.</p>
+<p>First things first: based on <a href="/posts/0xd755_gcp_logging/">that previous post about GCP logging</a>, and assuming you have the setup mentioned there to ship logs to GCP/stackdriver, you can use <a href="https://fluentbit.io/">fluentbit</a> to generate these logs.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">~# /opt/td-agent-bit/bin/td-agent-bit -i mem -o stdout
+Fluent Bit v1.5.6
+
+<span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>engine<span class="o">]</span> started <span class="o">(</span><span class="nv">pid</span><span class="o">=</span>21309<span class="o">)</span>
+<span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>storage<span class="o">]</span> <span class="nv">version</span><span class="o">=</span>1.0.5, initializing...
+<span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>storage<span class="o">]</span> in-memory
+<span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>storage<span class="o">]</span> normal synchronization mode, checksum disabled, <span class="nv">max_chunks_up</span><span class="o">=</span><span class="m">128</span>
+<span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>sp<span class="o">]</span> stream processor started
+<span class="o">[</span>0<span class="o">]</span> mem.0: <span class="o">[</span>1606182084.325065322, <span class="o">{</span><span class="s2">&#34;Mem.total&#34;</span><span class="o">=</span>&gt;948084, <span class="s2">&#34;Mem.used&#34;</span><span class="o">=</span>&gt;772048, <span class="s2">&#34;Mem.free&#34;</span><span class="o">=</span>&gt;176036, <span class="s2">&#34;Swap.total&#34;</span><span class="o">=</span>&gt;102396, <span class="s2">&#34;Swap.used&#34;</span><span class="o">=</span>&gt;6608, <span class="s2">&#34;Swap.free&#34;</span><span class="o">=</span>&gt;95788<span class="o">}]</span>
+<span class="o">[</span>1<span class="o">]</span> mem.0: <span class="o">[</span>1606182085.325055771, <span class="o">{</span><span class="s2">&#34;Mem.total&#34;</span><span class="o">=</span>&gt;948084, <span class="s2">&#34;Mem.used&#34;</span><span class="o">=</span>&gt;772088, <span class="s2">&#34;Mem.free&#34;</span><span class="o">=</span>&gt;175996, <span class="s2">&#34;Swap.total&#34;</span><span class="o">=</span>&gt;102396, <span class="s2">&#34;Swap.used&#34;</span><span class="o">=</span>&gt;6608, <span class="s2">&#34;Swap.free&#34;</span><span class="o">=</span>&gt;95788<span class="o">}]</span>
+<span class="o">[</span>2<span class="o">]</span> mem.0: <span class="o">[</span>1606182086.325105700, <span class="o">{</span><span class="s2">&#34;Mem.total&#34;</span><span class="o">=</span>&gt;948084, <span class="s2">&#34;Mem.used&#34;</span><span class="o">=</span>&gt;772904, <span class="s2">&#34;Mem.free&#34;</span><span class="o">=</span>&gt;175180, <span class="s2">&#34;Swap.total&#34;</span><span class="o">=</span>&gt;102396, <span class="s2">&#34;Swap.used&#34;</span><span class="o">=</span>&gt;6608, <span class="s2">&#34;Swap.free&#34;</span><span class="o">=</span>&gt;95788<span class="o">}]</span>
+</code></pre></div><p>configuration file <code>/etc/td-agent-bit/td-agent-bit.conf</code> would be updated with something like:</p>
+<div class="highlight"><pre class="chroma"><code class="language-ini" data-lang="ini"><span class="na">...</span>
+
+<span class="k">[INPUT]</span>
+    <span class="na">Name cpu</span>
+    <span class="na">Tag cpu</span>
+    <span class="na">Interval_Sec 10</span>
+
+<span class="k">[INPUT]</span>
+    <span class="na">Name mem</span>
+    <span class="na">Tag mem</span>
+    <span class="na">Interval_Sec 10</span>
+
+<span class="na">...</span>
+
+<span class="k">[OUTPUT]</span>
+    <span class="na">Name stackdriver</span>
+    <span class="na">google_service_credentials /etc/gcreds.json</span>
+    <span class="na">Match *</span>
+</code></pre></div><p>Logs will then show up in GCP Logs Viewer:</p>
+
+
+
+
+
+
+
+<a href="/posts/0x9b4b_gcp_metrics/shot1.png">
+    <img src="/posts/0x9b4b_gcp_metrics/shot1_hu74071fae66812d2454692a91eaf0d9b6_107407_600x0_resize_box_2.png" width="600" height="119">
+</a>
+
+<p>As an extra step, as fluentbit <code>mem</code> outputs bytes, GCP does not allow any transformation of the data and visualization with multiple hostnames is friendlier when using percentage (instead of absolute values), I&rsquo;ve created <a href="https://github.com/fopina/fluent-bit-filter-math">a fluenbit math filter</a>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-ini" data-lang="ini"><span class="na">...</span>
+<span class="k">[INPUT]</span>
+    <span class="na">Name mem</span>
+    <span class="na">Tag mem</span>
+    <span class="na">Interval_Sec 10</span>
+
+<span class="k">[FILTER]</span>
+    <span class="na">Name math</span>
+    <span class="na">Match mem</span>
+    <span class="na">Operation div</span>
+    <span class="na">Field Mem.used</span>
+    <span class="na">Field Mem.total</span>
+    <span class="na">Output_field Mem.usage</span>
+<span class="na">...</span>
+</code></pre></div><p>This <code>[FILTER]</code> entry will add <code>Mem.usage</code> to the output (which is <code>Mem.used / Mem.total</code>).</p>
+<p>In the <code>Logs Viewer</code> you can then click <code>Actions</code>, <code>Create Metric</code> and set it up.</p>
+
+
+
+
+
+
+
+<a href="/posts/0x9b4b_gcp_metrics/shot2.png">
+    <img src="/posts/0x9b4b_gcp_metrics/shot2_hud475d487dd79bc8f34550ec4e3280d1a_347900_600x0_resize_box_2.png" width="600" height="252">
+</a>
+
+<p>Type <code>counter</code> will just measure the number of log lines for the given query while <code>distribution</code> will extract an actual value from each line (distribution being the right choice here).</p>
+<p>Metric setup, it can now be added to a dashboard and/or used as alert source</p>
+
+
+
+
+
+
+
+<a href="/posts/0x9b4b_gcp_metrics/shot3.png">
+    <img src="/posts/0x9b4b_gcp_metrics/shot3_hucdb481de5eb74ed37e831e5a9b7d20d0_374560_600x0_resize_box_2.png" width="600" height="320">
+</a>
+
+<h3 id="note">Note</h3>
+<p>These metrics will count both towards logs and metric ingestion limits. At the moment they are respectively 10GB and 150MB (per month).</p>
+<p>I have some exclusion filters on the logs (for frequent lines that noone cares). About 10 hosts shipping logs to this (about 30 docker services) and still hardly go above 3GB used for logs.<br>
+Metric ingestion does get to 150MB quickly if we start adding a few&hellip;</p>
+]]></content></item><item><title>0xCF53 Remote, Garage Remote</title><link>https://rpg.skmobi.com/posts/0xcf53_rgr/</link><pubDate>Sun, 01 Nov 2020 18:40:57 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xcf53_rgr/</guid><description>Dr. No Open One of my garage openers stopped working but I kept it in hope one day I&amp;rsquo;d make a learning exercise out of repairing it.
 The other day somehow I brought it up in a conversation and it was highlighted that it is common for the push button to wear out, so I opened the case and tested by shorting over the button with a wire.
 And the garage door opened (thanks Dad)!</description><content type="html"><![CDATA[<h2 id="dr-no-open">Dr. No Open</h2>
 <p>One of my garage openers stopped working but I kept it in hope one day I&rsquo;d make a learning exercise out of repairing it.</p>
