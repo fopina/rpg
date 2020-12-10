@@ -32,7 +32,7 @@ One year I decided it was time to get a 3d printer.
 In a previous company I had to [prototype](https://www.openscad.org/) a few boxes and printed them on a [Bee](https://shop.beeverycreative.com/produto/beethefirstplus/).  
 When I moved into a new job, there was a [Anet A8](https://www.anet3d.com/product/a8-plus-diy/) to play but a lot of people used it and left it broken.
 
-As 3d printers were becoming cheaper and cheaper I decided it was time to look for one, thought it had to:
+As 3d printers were becoming cheaper and cheaper I decided it was time to look for one, though it had to:
 * cheap - not serious into 3d printing
 * compact - not too much space in my apartment home office
 
