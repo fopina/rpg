@@ -1,7 +1,7 @@
 ---
 title: "0xF404 Mono Price, Mini Print"
 date: 2020-12-09T23:38:59Z
-draft: true
+draft: false
 toc: false
 images:
 tags: 
