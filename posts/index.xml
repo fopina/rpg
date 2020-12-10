@@ -1,4 +1,100 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Nov 2020 02:54:26 +0000</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0x9B4B Free Telemetry</title><link>https://rpg.skmobi.com/posts/0x9b4b_gcp_metrics/</link><pubDate>Tue, 24 Nov 2020 02:54:26 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0x9b4b_gcp_metrics/</guid><description>Some time ago I wrote about leveraging GCP free tier for log collection. I also started using it for telemetry though I never updated the post with those details.
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 09 Dec 2020 23:38:59 +0000</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0xF404 Mono Price, Mini Print</title><link>https://rpg.skmobi.com/posts/0xf404_mini_delta/</link><pubDate>Wed, 09 Dec 2020 23:38:59 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xf404_mini_delta/</guid><description>TL;DR; One year ago I bought a MP Mini Delta, my final review:
+Pros:
+Cheapest I could find - bought it £91 Really compact - perk of the delta style and the very small print bed, fits perfectly in a normal desk corner, no need for huge workbenches like most of the others Sturdy, portable - sturdy build and an handle makes it easy and trouble-free to move around Heated bed - rare in cheap printers Cons:</description><content type="html"><![CDATA[<h2 id="tldr">TL;DR;</h2>
+<p>One year ago I bought a <a href="https://www.monoprice.uk/collections/3d-printers/products/monoprice-mp-mini-delta-3d-printer">MP Mini Delta</a>, my final review:</p>
+<p>Pros:</p>
+<ul>
+<li><em>Cheapest I could find</em> - bought it £91</li>
+<li><em>Really compact</em> - perk of the <a href="https://3dinsider.com/what-is-a-delta-3d-printer/">delta</a> style and the very small print bed, fits perfectly in a normal desk corner, no need for huge workbenches like most of the others</li>
+<li><em>Sturdy, portable</em> - sturdy build and an handle makes it easy and trouble-free to move around</li>
+<li><em>Heated bed</em> - rare in cheap printers</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li><em>WiFi</em> - should be a <em>PRO</em> as it is uncommon in cheap printers, but it simply doesn&rsquo;t work</li>
+<li><em>Print bed</em> - 11cm <em>diameter</em> is quite small</li>
+<li><em>Support</em> - it&rsquo;s just ridiculous how bad it is</li>
+</ul>
+<h2 id="the-search">The Search</h2>
+<p>One year I decided it was time to get a 3d printer.<br>
+In a previous company I had to <a href="https://www.openscad.org/">prototype</a> a few boxes and printed them on a <a href="https://shop.beeverycreative.com/produto/beethefirstplus/">Bee</a>.<br>
+When I moved into a new job, there was a <a href="https://www.anet3d.com/product/a8-plus-diy/">Anet A8</a> to play but a lot of people used it and left it broken.</p>
+<p>As 3d printers were becoming cheaper and cheaper I decided it was time to look for one, thought it had to:</p>
+<ul>
+<li>cheap - not serious into 3d printing</li>
+<li>compact - not too much space in my apartment home office</li>
+</ul>
+<p>I wouldn&rsquo;t mind if it was complex to setup and maintain as long as it paid off for flexibility (eg: extruders for different materials) or other benefits, but it definitely had to be smaller than <em>Anet A8</em></p>
+<p>Then I found <a href="https://www.monoprice.uk/collections/3d-printers/products/monoprice-mp-mini-delta-3d-printer">MP Mini Delta</a>.</p>
+<ul>
+<li>Cheap  ✅ - seriously couldn&rsquo;t find anything cheaper&hellip;</li>
+<li>Compact ✅ - small yet everything well protected inside a sturdy steel build</li>
+<li>Ready to use - unexpected but nice!</li>
+</ul>
+<p>I also read <code>11cm</code> for the print bed but missed the <em>circular</em>, so I thought it was a perfect size for raspberry pi cases and all&hellip; (but wrong ❌)</p>
+<p>Promptly ordered it 📦</p>
+<h2 id="first-blood">First Blood</h2>
+<p>As soon as I unboxed the printer, I admit, I was positevely surprised by the looks of it.</p>
+<p>Pulled out the manual, inserted the SD card that comes with it and in less than 10 minutes after unboxing (<em>literally</em>) it was printing out the test <a href="https://en.wikipedia.org/wiki/Maneki-neko">maneki-neko</a>.<br>
+Definitely amazed how simple and fast it was.</p>
+<p>A little over 2h after, the print was done and quality was quite decent (much better than expected).</p>
+<p>First setback though, finally noticed that print bed had <code>11cm</code> of <em>diameter</em>, not square size. That means only a square of <code>7.7cm</code> is possible, quite the difference&hellip; Oh well.</p>
+<h2 id="pull-back">Pull Back</h2>
+<p>Now that the print test was done, I needed to print something of mine to see how it worked out.</p>
+<p>The SD card had the <code>.gcode</code> for the maneki-neko, an installer of <code>Cura 15.04.6</code>, Cura profile settings for the printer and digital version of the manual. Whole content backed up (and shared) <a href="https://github.com/fopina/mp-mini-delta-cura/tree/main/original-but-old">here</a>.</p>
+<p>But no Mac version. Googling a bit <code>Cura 15</code> was a legacy version, it was now <a href="https://ultimaker.com/software/ultimaker-cura">Ultimaker Cura</a> and new version scheme.<br>
+So I download that one. Surprise, USB printing had been removed.</p>
+<p>But WiFi printing is supported. I saw WiFi mentioned in the manual, let&rsquo;s set it up!<br>
+The manual says to download <code>MP 3D Printer WiFi Connect</code> app from Play Store or iTunes, but no direct links.<br>
+I look them up, nothing. There was only an app called <code>MP Mini 3D Printer Client &amp; Connect.</code> (but no longer available either today) but it was from random individual (later found out he was part of the <a href="https://www.mpminidelta.com/">MP community</a>) not from Monoprice. And only for Android.</p>
+<p>So I drop them an email:</p>
+<blockquote>
+<p>From: me<br>
+Received: Thu Nov 14 2019 16:35:16 GMT-0800 (Pacific Standard Time)<br>
+To: <a href="mailto:tech@monoprice.com">tech@monoprice.com</a>; Technical Support;<br>
+Subject: wifi connect mobile app</p>
+<p>Hello, where can I find the mobile apps for wifi connection? Android or iOS, I cannot find either&hellip;</p>
+</blockquote>
+<p>I get this reply:</p>
+<blockquote>
+<p>From: Tech <a href="mailto:Tech@monoprice.com">Tech@monoprice.com</a><br>
+Nov 15, 2019, 5:26 PM</p>
+<p>Good Morning!<br>
+What I would suggest is go to Google Play Store on an Android device. Search &ldquo;MP 3D Printer Wifi Connect&rdquo; one of the first options after searching should be &ldquo;MP Mini 3D Printer Client &amp; Connect.&rdquo; Download that program and follow the instructions. There is also instructions inside the manual for the MP Mini Delta 3D  Printer. If you don&rsquo;t have the manual on hand you can go to the Monoprice website search the printer, at the bottom of the printer product page is a link to the Manual. If you have any other questions or need any help I am more than happy to help out. Have a great day!</p>
+</blockquote>
+<p>I reply that I had done it but it wasn&rsquo;t the official app, so they say:</p>
+<blockquote>
+<p>From: Tech <a href="mailto:Tech@monoprice.com">Tech@monoprice.com</a><br>
+Nov 15, 2019, 7:14 PM</p>
+<p>Thank you for the additional information. I am new and it was brought to my attention that that particular program is not an official app, I&rsquo;m sorry for suggesting that one. Unfortunately the best we could do is suggest you go to the Wiki community page that it sounds like you already went to and follow their tutorials, besides that we can&rsquo;t assist with the Wifi connection because we don&rsquo;t currently have any official applications or guides to assist with. Just in case we are talking about two different websites I will provide the link to the Wiki page we always suggest. Outside of that I do want to make sure that it is known that our 3D Printers all only work off a 2.4ghz Wifi signal, so the first thing I would do is make sure you are trying to connect to a 2.4ghz Wifi signal. If I can assist in any other way, please E-mail me back. Have a great day!
+MP Mini Delta 3D Printer wiki page: <a href="https://www.mpminidelta.com/">https://www.mpminidelta.com/</a></p>
+</blockquote>
+<p>So the official support reply for a standard feature not working is to get support from community&hellip; 🤦</p>
+<p>I follow community instructions for <a href="https://www.mpminidelta.com/wifi/g-code_file">connecting to WiFi</a> (.gcode mirrored <a href="https://github.com/fopina/mp-mini-delta-cura/blob/main/original-but-old/wifi_setup.gcode">here</a>) and I can open the printer webpage from my laptop.</p>
+<p>Great, so I thought. Trying to add <code>network printer</code> in Cura simply fails all the time, so I take the <a href="https://github.com/fopina/mp-mini-delta-cura/blob/main/original-but-old/auto00-demoCAT.g">test cat .gcode</a> and upload it directly from the browser. I&rsquo;d still be pratical if I could just load the prints that way (after slicing in Cura).<br>
+But no, at 9% upload, every time, printer stops responding and only turning it off and back on makes it reponsive again&hellip; Tried another (smaller) .gcode and same&hellip;</p>
+<p>I ping the support again</p>
+<blockquote>
+<p>Understood, just to confirm you are running the printer on a 2.4ghz Wifi correct? The SD card should only have the gcode file on it, if it has anything else you might want to clear it out. As per it failing, even when the Wifi setup is working correct there is always a chance that a file will fail when trying to upload a file through Wifi. From our experience we&rsquo;ve notice that SD card printing is much more reliable than Wifi printing as there are no issues with file transfer. SD card has the best resolution over Wifi and USB. Wifi at best is finicky on transferring files over to the SD card and can experience lag drops. If you have any other questions please E-mail me back.</p>
+</blockquote>
+<p>Again, printer supports WiFi officially but <code>it's flaky and you should use SD card (not even USB)</code>&hellip;</p>
+<h2 id="octoprint">Octoprint</h2>
+<p>Gave up on WiFi.</p>
+<p>Every 3D print search eventually goes through some <a href="https://octoprint.org/">octoprint</a> link. As I already had a few Pis up and running (as a docker swarm cluster), I decide to plug the printer into one and try it (and built <a href="https://github.com/fopina/docker-octoprint">this docker image</a> to use it)</p>
+<p>The USB device is detected but every time I click connect it fails. Google leads me to <a href="https://mpminidelta.com/octoprint/serial_double_open_plugin">this plugin</a>, specifically to solve this issue in these models&hellip;<br>
+And finally, I can print the damn cat without the SD card.</p>
+<h2 id="slicing">Slicing</h2>
+<p>Back to Cura to generate some .gcode by myself (can&rsquo;t print the cat in a loop), the printer is not part of the default profiles. And the profile in the SD card (for <code>Cura 15.04.6</code>) is not compatible.</p>
+<p>Reaching out to community again, a facebook group maintains <a href="https://www.mpminidelta.com/slicers/cura">a profile</a>.<br>
+I set it up, draw a cube in OpenSCAD, slice up the .STL with this profile, load the .gcode in OctoPrint and happily see it print with success.</p>
+<p>Currently, this profile (from the MPMD Facebook group) has been added to <a href="https://github.com/Ultimaker/Cura/blob/master/resources/definitions/mp_mini_delta.def.json">Cura source tree</a>, so installing profile separately is no longer required!</p>
+<h2 id="redemption">Redemption</h2>
+<p>At some point, I had some warped prints and reached out to support again. They suggeted using <a href="https://github.com/fopina/mp-mini-delta-cura/blob/main/start_code.gcode">this</a> as <code>Start Gcode</code> in the profile. It did seem to solve the issue.<br>
+Not using it anymore, but saving it here in case it happens again.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>For the price, I couldn&rsquo;t ask much from the support, but maybe they could state that somewhere, that they don&rsquo;t support their own printer. And I&rsquo;d buy it anyway, after finding out about the small yet strong community.</p>
+<p>Apart from the support, print-wise, I&rsquo;m quite happy with it and I strongly recommend it as a <code>cheap, compact, ready-to-use</code> printer, if you have a raspberry pi (or anything else) to use with OctoPrint.</p>
+]]></content></item><item><title>0x9B4B Free Telemetry</title><link>https://rpg.skmobi.com/posts/0x9b4b_gcp_metrics/</link><pubDate>Tue, 24 Nov 2020 02:54:26 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0x9b4b_gcp_metrics/</guid><description>Some time ago I wrote about leveraging GCP free tier for log collection. I also started using it for telemetry though I never updated the post with those details.
 Since Google refactored their Monitoring away from that crappy StackDriver interface, it&amp;rsquo;s actually quite nice, so might as well write the setup down (up? ☁️).
 Even though GCP monitoring seems oriented to metrics from GCP services it also allows you to create logs-based metrics.</description><content type="html"><![CDATA[<p>Some time ago I <a href="/posts/0xd755_gcp_logging/">wrote</a> about leveraging GCP free tier for log collection. I also started using it for telemetry though I never updated the post with those details.</p>
 <p>Since Google refactored their Monitoring away from that crappy StackDriver interface, it&rsquo;s actually quite nice, so might as well write the setup down (up? ☁️).</p>
