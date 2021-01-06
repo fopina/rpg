@@ -11,7 +11,7 @@ Kube is so complex...
 * [ ] local volumes / NAS
 * [ ] privileged containers
 * [ ] usb device access
-* [ ] compare standy resource usage
+* [ ] compare standy resource usage
 
 ## resource usage
 
