@@ -34,3 +34,19 @@ Mem:           985M        183M        321M        708K        481M        667M
 Swap:            0B          0B          0B
 ```
 
+### swarm
+
+```
+== swarm-master
+              total        used        free      shared  buff/cache   available
+Mem:           985M        159M        195M        592K        631M        684M
+Swap:            0B          0B          0B
+== swarm-worker1
+              total        used        free      shared  buff/cache   available
+Mem:           985M        143M        183M        592K        658M        699M
+Swap:            0B          0B          0B
+== swarm-worker2
+              total        used        free      shared  buff/cache   available
+Mem:           985M        144M        180M        568K        661M        699M
+Swap:            0B          0B          0B
+```
