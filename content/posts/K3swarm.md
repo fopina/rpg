@@ -50,3 +50,20 @@ Swap:            0B          0B          0B
 Mem:           985M        144M        180M        568K        661M        699M
 Swap:            0B          0B          0B
 ```
+
+### k3s with docker
+
+```
+== k3s-master
+              total        used        free      shared  buff/cache   available
+Mem:           985M        713M         69M        1.2M        202M        197M
+Swap:            0B          0B          0B
+== k3s-worker1
+              total        used        free      shared  buff/cache   available
+Mem:           985M        214M        102M        752K        668M        629M
+Swap:            0B          0B          0B
+== k3s-worker2
+              total        used        free      shared  buff/cache   available
+Mem:           985M        216M         99M        752K        669M        630M
+Swap:            0B          0B          0B
+```
