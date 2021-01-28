@@ -13,6 +13,15 @@ Kube is so complex...
 * [ ] usb device access
 * [ ] compare standy resource usage
 
+## setup
+
+* local storage: https://rancher.com/docs/k3s/latest/en/storage/ https://github.com/rancher/local-path-provisioner
+* disable traefik: https://rancher.com/docs/k3s/latest/en/networking/#traefik-ingress-controller `--disable traefik`
+* exclude lb from some nodes: add `svccontroller.k3s.cattle.io/enablelb` label to the nodes that *should* have lb - https://rancher.com/docs/k3s/latest/en/networking/#traefik-ingress-controller
+* deploy traefik2 (after disabling k3s-traefik): https://www.ivankrizsan.se/2020/10/31/hot-ingress-in-the-k3s-cluster/
+
+
+
 ## resource usage
 
 (test setup https://github.com/fopina/k3s-play)
