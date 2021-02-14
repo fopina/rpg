@@ -1,7 +1,7 @@
 ---
 title: "0xB752 ddwrt + custom certificate"
 date: 2021-02-14T16:26:09Z
-draft: true
+draft: false
 toc: false
 images:
 tags: 
