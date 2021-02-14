@@ -1,4 +1,72 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 09 Dec 2020 23:38:59 +0000</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0xF404 Mono Price, Mini Print</title><link>https://rpg.skmobi.com/posts/0xf404_mini_delta/</link><pubDate>Wed, 09 Dec 2020 23:38:59 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xf404_mini_delta/</guid><description>TL;DR; One year ago I bought a MP Mini Delta, my final review:
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 14 Feb 2021 16:26:09 +0000</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0xB752 ddwrt + custom certificate</title><link>https://rpg.skmobi.com/posts/0xb752_ddwrt_ssl/</link><pubDate>Sun, 14 Feb 2021 16:26:09 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xb752_ddwrt_ssl/</guid><description>When I first installed dd-wrt (no support from openwrt) on my router, I enabled HTTPS-only access for the web UI.
+When the nasty prompt from the self-signed certificate popped up, I looked for an option to upload my own cerficate (signed by the internal CA I use).
+There was none&amp;hellip;
+Left it be for quite soem time, but finally decided to sort it out and, to my surprise, there&amp;rsquo;s no official documentation on it (or not easy to find, at least)&amp;hellip;</description><content type="html"><![CDATA[<p>When I first installed <a href="https://dd-wrt.com/">dd-wrt</a> (no support from <a href="https://openwrt.org/">openwrt</a>) on <a href="https://www.netgear.com/home/online-gaming/routers/xr500/">my router</a>, I enabled HTTPS-only access for the web UI.<br>
+When the nasty prompt from the self-signed certificate popped up, I looked for an option to upload my own cerficate (signed by the internal CA I use).<br>
+There was none&hellip;</p>
+<p>Left it be for quite soem time, but finally decided to sort it out and, to my surprise, there&rsquo;s no official documentation on it (or not easy to find, at least)&hellip;</p>
+<p>Found <a href="https://forum.dd-wrt.com/phpBB2/viewtopic.php?t=27979">this thread</a> on their forum which basically set two options:</p>
+<ul>
+<li>using <a href="https://forum.dd-wrt.com/wiki/index.php/Development#Firmware_Modification_Kit">firmware mod kit</a> to embed your cert into the image before flashing (no need to recompile at least&hellip;)</li>
+<li>enable JFFS, save the cert (and key) there and use a startup script to <code>mount -o bind</code> those on the default <code>/etc/cert.pem</code> and <code>/etc/key.pem</code> locations</li>
+</ul>
+<p>I found it hard to believe that dd-wrt had no GUI setting for a custom SSL cert, even more that there wouldn&rsquo;t be some <code>nvram</code> setting to store one, at least using ssh&hellip;</p>
+<p>Both options would be ok, but I decided to take a quick look at dd-wrt code and found <a href="https://github.com/mirror/dd-wrt/blob/088ba261dfe84e43e5954dd66e9ced02c01a1a95/src/router/httpd/httpd.c#L1564-L1583">this</a>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#if defined(HAVE_OPENSSL) || defined(HAVE_MATRIXSSL) || defined(HAVE_POLARSSL)
+</span><span class="cp"></span>		<span class="kt">char</span> <span class="o">*</span><span class="n">cert</span> <span class="o">=</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_cert&#34;</span><span class="p">);</span>
+		<span class="kt">char</span> <span class="o">*</span><span class="n">key</span> <span class="o">=</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_key&#34;</span><span class="p">);</span>
+		<span class="kt">char</span> <span class="o">*</span><span class="n">certfile</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+		<span class="kt">char</span> <span class="o">*</span><span class="n">keyfile</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">cert</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">certfile</span> <span class="o">=</span> <span class="s">&#34;/tmp/https_cert&#34;</span><span class="p">;</span>
+			<span class="n">writenvram</span><span class="p">(</span><span class="s">&#34;https_cert&#34;</span><span class="p">,</span> <span class="n">certfile</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">keyfile</span> <span class="o">=</span> <span class="s">&#34;/tmp/https_key&#34;</span><span class="p">;</span>
+			<span class="n">writenvram</span><span class="p">(</span><span class="s">&#34;https_key&#34;</span><span class="p">,</span> <span class="n">keyfile</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">certfile</span><span class="p">)</span>
+			<span class="n">certfile</span> <span class="o">=</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_cert_file&#34;</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="n">certfile</span><span class="p">)</span>
+			<span class="n">certfile</span> <span class="o">=</span> <span class="n">CERT_FILE</span><span class="p">;</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">keyfile</span><span class="p">)</span>
+			<span class="n">keyfile</span> <span class="o">=</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_key_file&#34;</span><span class="p">);</span>
+		<span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="n">keyfile</span><span class="p">)</span>
+			<span class="n">keyfile</span> <span class="o">=</span> <span class="n">KEY_FILE</span><span class="p">;</span>
+<span class="cp">#endif
+</span></code></pre></div><p>Taking a look at blame it points to <a href="https://github.com/mirror/dd-wrt/commit/e27ffb50f592a58a392c789a24e2e681eb298112">rev 44703</a>, so sort of recent.</p>
+<p>It seems before it already supported specifying a custom location but only if was compiled with <code>HAVE_CUSTOMSSLCERT</code> 🤷</p>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#ifdef HAVE_CUSTOMSSLCERT
+</span><span class="cp"></span>		<span class="k">if</span> <span class="p">(</span><span class="n">SSL_CTX_use_certificate_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">certfile</span><span class="p">,</span> <span class="n">SSL_FILETYPE_PEM</span><span class="p">)</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">SSL_CTX_use_certificate_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_cert_file&#34;</span><span class="p">),</span> <span class="n">SSL_FILETYPE_PEM</span><span class="p">)</span>
+<span class="cp">#else
+</span><span class="cp"></span>		<span class="k">if</span> <span class="p">(</span><span class="n">SSL_CTX_use_certificate_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">CERT_FILE</span><span class="p">,</span> <span class="n">SSL_FILETYPE_PEM</span><span class="p">)</span>
+<span class="cp">#endif
+</span></code></pre></div><p>Anyway, I haven&rsquo;t found these new nvram settings documented anywhere, so I&rsquo;ll highlight them here:</p>
+<ul>
+<li><code>https_cert</code> / <code>https_key</code> - set them to the raw content of a cert / key and done, no need to store them anywhere in the router filesystem (so it does not require JFFS enabled)</li>
+<li><code>https_cert_file</code> / <code>https_key_file</code> - set them to the paths to each respective file, so you&rsquo;ll have to enable JFFS (or embed in the image, though that wouldn&rsquo;t make much sense - just overwrite the default one). I assume this might be helpful if <a href="https://letsencrypt.org/">Let&rsquo;s Encrypt</a> (or any other form of short-lived certs) are used and it&rsquo;s easier to replace a file that push to <code>nvram</code>. Or maybe if a very long chain of trust is used in the cert&hellip;?</li>
+</ul>
+<p>I went with the cleanest option of putting cert and key directly in <code>nvram</code>:</p>
+<ul>
+<li>generate certificate with <a href="https://github.com/jsha/minica">minica</a></li>
+</ul>
+<pre><code>minica -ca-cert .. -ca-key .. -domains myrouter.internal -ip-addresses 192.168.1.1
+</code></pre><ul>
+<li>ssh to router and set the <code>nvram</code> keys:</li>
+</ul>
+<pre><code>$ nvram set https_cert='-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----'
+$ nvram set https_key='-----BEGIN RSA PRIVATE KEY-----
+...
+-----END RSA PRIVATE KEY-----
+</code></pre><ul>
+<li>reload web UI</li>
+</ul>
+<pre><code>$ stopservice httpd
+$ startservice httpd
+</code></pre>]]></content></item><item><title>0xF404 Mono Price, Mini Print</title><link>https://rpg.skmobi.com/posts/0xf404_mini_delta/</link><pubDate>Wed, 09 Dec 2020 23:38:59 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xf404_mini_delta/</guid><description>TL;DR; One year ago I bought a MP Mini Delta, my final review:
 Pros:
 Cheapest I could find - bought it £91 Really compact - perk of the delta style and the very small print bed, fits perfectly in a normal desk corner, no need for huge workbenches like most of the others Sturdy, portable - sturdy build and an handle makes it easy and trouble-free to move around Heated bed - rare in cheap printers Cons:</description><content type="html"><![CDATA[<h2 id="tldr">TL;DR;</h2>
 <p>One year ago I bought a <a href="https://www.monoprice.uk/collections/3d-printers/products/monoprice-mp-mini-delta-3d-printer">MP Mini Delta</a>, my final review:</p>
