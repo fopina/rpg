@@ -1,10 +1,10 @@
 ---
-title: "0xB752 docker images and internal CAs"
-date: 2021-02-14T23:13:47Z
+title: "0x6FD7 docker images and internal CAs"
+date: 2021-02-15T01:13:47Z
 draft: false
 toc: false
 images:
-tags: 
+tags:
   - docker
   - containers
   - certificates
@@ -22,13 +22,15 @@ FROM homeassistant/home-assistant:2021.2.3
 
 ADD myCA.pem /usr/local/share/ca-certificates/myCA.crt
 RUN /usr/sbin/update-ca-certificates
+# for python requests lib...
+ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 ```
 
 This means that everytime the upstream image is updated, I have to rebuild it (before re-deploy). Pain...
 
 Much simpler option is to bind mount the host trusted certificates in the container (assuming host has the CA setup).
 
-My raspberry Pis (the swarm cluster) have the CA installed with
+My raspberry Pis (the swarm cluster) have the CA installed with:
 
 ```yaml
 (tasks - for debian/raspbian)
@@ -51,8 +53,8 @@ My raspberry Pis (the swarm cluster) have the CA installed with
 
 So any containers running in these hosts can have the system trusted CAs (including internal one) bind mounted with:
 
-```
+```bash
 docker run -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro \
-           -e REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+           -e REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt \
            homeassistant/home-assistant:2021.2.3
 ```
