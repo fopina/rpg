@@ -1,4 +1,219 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 14 Feb 2021 16:26:09 +0000</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0xB752 ddwrt + custom certificate</title><link>https://rpg.skmobi.com/posts/0xb752_ddwrt_ssl/</link><pubDate>Sun, 14 Feb 2021 16:26:09 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xb752_ddwrt_ssl/</guid><description>When I first installed dd-wrt (no support from openwrt) on my router, I enabled HTTPS-only access for the web UI.
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 01 Mar 2021 00:16:05 +0000</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0x474E (In)fluent(a)bit</title><link>https://rpg.skmobi.com/posts/0x474e_telegraf/</link><pubDate>Mon, 01 Mar 2021 00:16:05 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0x474e_telegraf/</guid><description>I&amp;rsquo;ve moved log collection and telemetry out of GCP Stackdriver (mentioned before) to on-prem InfluxDB (running in a raspberry pi 4 4GB)
+FluentBit was the agent of choice at the time but Telegraf seemed like a good candidate now.
+Why fluentd has a lot of plugins but its crappy ruby codebase eats way too many resources for me (why would anyone?) to use it.
+Luckily, the same guys gave it an extreme makeover in C and called it fluentbit.</description><content type="html"><![CDATA[<p>I&rsquo;ve moved log collection and telemetry out of GCP Stackdriver (mentioned <a href="/tags/gcp/">before</a>) to on-prem <a href="https://www.influxdata.com">InfluxDB</a> (running in a raspberry pi 4 4GB)</p>
+<p>FluentBit was the agent of choice at the time but <a href="https://www.influxdata.com/time-series-platform/telegraf/">Telegraf</a> seemed like a good candidate now.</p>
+<h2 id="why">Why</h2>
+<p><a href="https://www.fluentd.org/">fluentd</a> has a lot of plugins but its crappy ruby codebase eats way too many resources for me (why would anyone?) to use it.<br>
+Luckily, the same guys gave it an extreme makeover in C and called it <a href="https://fluentbit.io/">fluentbit</a>. Sadly, its community hasn&rsquo;t grown that much so not so many plugins available out of the box, but making new ones is quite easy: I&rsquo;ve built <a href="https://github.com/fopina/docker-fluent-bit-plugin-dev">this docker image</a> to make it easier to build the plugins and <a href="https://github.com/fopina?tab=repositories&amp;q=fluent-bit">already made a few of my own</a></p>
+<p>As <a href="https://www.influxdata.com/time-series-platform/telegraf/">Telegraf</a> is in Go (worse than C but way better than ruby) and it has almost as many plugins available as fluentd, it seemed like a good reason to measure how worse it was resource-wise (than fluentbit) to be able to weight it properly.</p>
+<h2 id="how">How</h2>
+<h3 id="tldr">TL;DR;</h3>
+<ul>
+<li>setup telegraf and fluentbit collecting the same metrics: memory, cpu and disk IO</li>
+<li>setup a second telegraf to monitor those two agents (with <a href="https://github.com/influxdata/telegraf/blob/master/plugins/inputs/procstat/README.md">procstat</a>)</li>
+<li>compare baseline telemetry data to make sure they do the same</li>
+<li>compare telemetry data of the collector processes to weight telegraf resource-hogging</li>
+</ul>
+<h3 id="test-details">Test Details</h3>
+<p>Test hardware: raspberry pi 2</p>
+<p>All telemetry data goes to an influxdb 2.0.4 instance</p>
+<ul>
+<li>download telegraf</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">curl -LO https://dl.influxdata.com/telegraf/releases/telegraf-1.17.2_linux_armhf.tar.gz
+</code></pre></div><ul>
+<li>
+<p>create test buckets</p>
+<ul>
+<li>test_telegraf</li>
+<li>test_fluentbit</li>
+<li>test_results</li>
+</ul>
+</li>
+<li>
+<p>install fluentbit</p>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">curl https://packages.fluentbit.io/fluentbit.key <span class="p">|</span> sudo apt-key add -
+<span class="nb">echo</span> deb https://packages.fluentbit.io/debian/buster buster main &gt; /etc/apt/sources.list.d/fluentbit.list
+apt update
+apt install td-agent-bit
+</code></pre></div><ul>
+<li>telegraf configuration</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">agent</span><span class="p">]</span>
+  <span class="nx">interval</span> <span class="p">=</span> <span class="s2">&#34;10s&#34;</span>
+  <span class="nx">round_interval</span> <span class="p">=</span> <span class="kc">true</span>
+  <span class="nx">metric_batch_size</span> <span class="p">=</span> <span class="mi">1000</span>
+  <span class="nx">metric_buffer_limit</span> <span class="p">=</span> <span class="mi">10000</span>
+  <span class="nx">collection_jitter</span> <span class="p">=</span> <span class="s2">&#34;0s&#34;</span>
+  <span class="nx">flush_interval</span> <span class="p">=</span> <span class="s2">&#34;10s&#34;</span>
+  <span class="nx">flush_jitter</span> <span class="p">=</span> <span class="s2">&#34;0s&#34;</span>
+  <span class="nx">precision</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+  <span class="nx">debug</span> <span class="p">=</span> <span class="kc">false</span>
+  <span class="nx">quiet</span> <span class="p">=</span> <span class="kc">false</span>
+  <span class="nx">logfile</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+  <span class="nx">hostname</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+  <span class="nx">omit_hostname</span> <span class="p">=</span> <span class="kc">false</span>
+<span class="p">[[</span><span class="nx">outputs</span><span class="p">.</span><span class="nx">influxdb_v2</span><span class="p">]]</span>
+  <span class="nx">urls</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;https://my.influxdb&#34;</span><span class="p">]</span>
+  <span class="nx">token</span> <span class="p">=</span> <span class="s2">&#34;&lt;TOKEN&gt;&#34;</span>
+  <span class="nx">organization</span> <span class="p">=</span> <span class="s2">&#34;myorg&#34;</span>
+  <span class="nx">bucket</span> <span class="p">=</span> <span class="s2">&#34;test_telegraf&#34;</span>
+<span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">cpu</span><span class="p">]]</span>
+  <span class="nx">percpu</span> <span class="p">=</span> <span class="kc">true</span>
+  <span class="nx">totalcpu</span> <span class="p">=</span> <span class="kc">true</span>
+  <span class="nx">collect_cpu_time</span> <span class="p">=</span> <span class="kc">false</span>
+  <span class="nx">report_active</span> <span class="p">=</span> <span class="kc">false</span>
+<span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">diskio</span><span class="p">]]</span>
+<span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">mem</span><span class="p">]]</span>
+</code></pre></div><ul>
+<li>start telegraf</li>
+</ul>
+<pre><code>telegraf-1.17.2/usr/bin/telegraf --config telegraf.conf
+</code></pre><ul>
+<li>fluentbit configuration</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-ini" data-lang="ini"><span class="k">[SERVICE]</span>
+    <span class="na">Flush        5</span>
+    <span class="na">Daemon       Off</span>
+    <span class="na">Log_Level    info</span>
+    <span class="na">HTTP_Server  Off</span>
+    <span class="na">Plugins_File /etc/td-agent-bit/plugins.conf</span>
+<span class="k">[INPUT]</span>
+    <span class="na">Name cpu</span>
+    <span class="na">Tag met.cpu</span>
+<span class="k">[INPUT]</span>
+    <span class="na">Name mem</span>
+    <span class="na">Tag met.mem</span>
+<span class="k">[INPUT]</span>
+    <span class="na">Name disk</span>
+    <span class="na">Tag met.disk</span>
+<span class="k">[FILTER]</span>
+    <span class="na">Name record_modifier</span>
+    <span class="na">Match *</span>
+    <span class="na">Record hostname ${HOSTNAME}</span>
+<span class="k">[OUTPUT]</span>
+    <span class="na">Name influxdb_v2</span>
+    <span class="na">Match met.*</span>
+    <span class="na">Host my.influx</span>
+    <span class="na">Port 443</span>
+    <span class="na">tls on</span>
+    <span class="na">tls.verify off</span>
+    <span class="na">org myorg</span>
+    <span class="na">bucket test_fluentbit</span>
+    <span class="na">http_token &lt;TOKEN&gt;</span>
+    <span class="na">Tag_Keys hostname</span>
+</code></pre></div><ul>
+<li>start fluentbit</li>
+</ul>
+<pre><code>/opt/td-agent-bit/bin/td-agent-bit -c fluentbit.conf
+</code></pre><ul>
+<li>configuration to monitor agents (using telegraf)</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">agent</span><span class="p">]</span>
+  <span class="nx">interval</span> <span class="p">=</span> <span class="s2">&#34;10s&#34;</span>
+  <span class="nx">round_interval</span> <span class="p">=</span> <span class="kc">true</span>
+  <span class="nx">metric_batch_size</span> <span class="p">=</span> <span class="mi">1000</span>
+  <span class="nx">metric_buffer_limit</span> <span class="p">=</span> <span class="mi">10000</span>
+  <span class="nx">collection_jitter</span> <span class="p">=</span> <span class="s2">&#34;0s&#34;</span>
+  <span class="nx">flush_interval</span> <span class="p">=</span> <span class="s2">&#34;10s&#34;</span>
+  <span class="nx">flush_jitter</span> <span class="p">=</span> <span class="s2">&#34;0s&#34;</span>
+  <span class="nx">precision</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+  <span class="nx">debug</span> <span class="p">=</span> <span class="kc">false</span>
+  <span class="nx">quiet</span> <span class="p">=</span> <span class="kc">false</span>
+  <span class="nx">logfile</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+  <span class="nx">hostname</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+  <span class="nx">omit_hostname</span> <span class="p">=</span> <span class="kc">false</span>
+<span class="p">[[</span><span class="nx">outputs</span><span class="p">.</span><span class="nx">influxdb_v2</span><span class="p">]]</span>
+  <span class="nx">urls</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;https://my.influxdb&#34;</span><span class="p">]</span>
+  <span class="nx">token</span> <span class="p">=</span> <span class="s2">&#34;&lt;TOKEN&gt;&#34;</span>
+  <span class="nx">organization</span> <span class="p">=</span> <span class="s2">&#34;myorg&#34;</span>
+  <span class="nx">bucket</span> <span class="p">=</span> <span class="s2">&#34;test_results&#34;</span>
+<span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">procstat</span><span class="p">]]</span>
+  <span class="nx">pattern</span> <span class="p">=</span> <span class="s2">&#34;/opt/td-agent-bit/bin/td-agent-bit -c fluentbit.conf&#34;</span>
+<span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">procstat</span><span class="p">]]</span>
+  <span class="nx">pattern</span> <span class="p">=</span> <span class="s2">&#34;telegraf-1.17.2/usr/bin/telegraf --config telegraf.conf&#34;</span>
+</code></pre></div><ul>
+<li>start second telegraf (agent monitor)</li>
+</ul>
+<pre><code>telegraf-1.17.2/usr/bin/telegraf --config telemon.conf
+</code></pre><h2 id="results">Results</h2>
+<p>Left this running for over a week and these were the results:</p>
+
+
+
+
+
+
+
+<a href="/posts/0x474e_telegraf/telemetry.png">
+    <img src="/posts/0x474e_telegraf/telemetry_hu6c23431beb74cea6008f6c754aa6e6d6_211171_600x0_resize_box_2.png" width="600" height="154">
+</a>
+
+<p>Both lines (from fluentbit and telegraf) basically match so they produced identical telemetry data. Exception <em>might</em> be disk IO where they use different units and I didn&rsquo;t bother to find out how to convert 🏝️</p>
+<p>And the results that matter: fluentbit process telemetry versus telegraf</p>
+
+
+
+
+
+
+
+<a href="/posts/0x474e_telegraf/versus.png">
+    <img src="/posts/0x474e_telegraf/versus_hu170fd6466c940eb28572d2fc65907ba2_239151_600x0_resize_box_2.png" width="600" height="132">
+</a>
+
+<h3 id="cpu">CPU</h3>
+<p>fluentbit (blue line) at 0.4% and telegraf between 0.6% and 0.7%.<br>
+we can also see the frequent ups and downs that probably come with any garbage-collected language versus the the flat(ter) line of fluentbit and its finetuned malloc and free timings.</p>
+<h3 id="mem">MEM</h3>
+<p>fluentbit (blue line) uses around 10mb of memory (1% in this RPi 2) and telegraf uses between 20mb and 40mb.</p>
+<h3 id="disk-io">Disk IO</h3>
+<p>fluentbit read count (blue line) increases much faster than telegraf&rsquo;s (red line), yet write count lines are basically the same. Not entirely sure what this means though.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Fluentbit has a long way to go in plugin availiability and even much longer way for Windows targets&hellip; So if I had Windows machines or I needed a specific plugin and could not build it myself, I think telegraf resource usage wouldn&rsquo;t be an issue.</p>
+<p>But as I already have fluentbit setup for my own plugins, if I need any out of the core ones, I&rsquo;ll keep fluentbit for the smaller footprint.</p>
+]]></content></item><item><title>0x6FD7 docker images and internal CAs</title><link>https://rpg.skmobi.com/posts/0x6fd7_docker_internal_ca/</link><pubDate>Mon, 15 Feb 2021 01:13:47 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0x6fd7_docker_internal_ca/</guid><description>I use an internal CA for all the services in my home lab.
+Big part of the lab is running on docker swarm.
+Usually services connect through internal networks (without using HTTPS as that is offloaded to traefik), but sometimes they do need to validate the certificates (such as interacting with the NAS or router APIs).
+For personal images, private CA is naturally bundled into them.
+For public, 3rd party, ones, I usually rebuild them only for that purpose, such as:</description><content type="html"><![CDATA[<p>I use an internal CA for all the services in my home lab.<br>
+Big part of the lab is running on docker swarm.<br>
+Usually services connect through internal networks (without using HTTPS as that is offloaded to traefik), but sometimes they do need to validate the certificates (such as interacting with the NAS or router APIs).</p>
+<p>For personal images, private CA is naturally bundled into them.<br>
+For public, 3rd party, ones, I usually rebuild them only for that purpose, such as:</p>
+<div class="highlight"><pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="k">FROM</span><span class="s"> homeassistant/home-assistant:2021.2.3</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">ADD</span> myCA.pem /usr/local/share/ca-certificates/myCA.crt<span class="err">
+</span><span class="err"></span><span class="k">RUN</span> /usr/sbin/update-ca-certificates<span class="err">
+</span><span class="err"></span><span class="c"># for python requests lib...</span><span class="err">
+</span><span class="err"></span><span class="k">ENV</span> <span class="nv">REQUESTS_CA_BUNDLE</span><span class="o">=</span>/etc/ssl/certs/ca-certificates.crt<span class="err">
+</span></code></pre></div><p>This means that everytime the upstream image is updated, I have to rebuild it (before re-deploy). Pain&hellip;</p>
+<p>Much simpler option is to bind mount the host trusted certificates in the container (assuming host has the CA setup).</p>
+<p>My raspberry Pis (the swarm cluster) have the CA installed with:</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">(tasks - for debian/raspbian)</span><span class="w">
+</span><span class="w"></span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">copy my CA</span><span class="w">
+</span><span class="w">  </span><span class="nt">copy</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l">myCA.pem</span><span class="w">
+</span><span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/local/share/ca-certificates/myCA.crt</span><span class="w">
+</span><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
+</span><span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
+</span><span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="m">0644</span><span class="w">
+</span><span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="kc">True</span><span class="w">
+</span><span class="w">  </span><span class="nt">notify</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">update trusted ca</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="l">(handlers)</span><span class="w">
+</span><span class="w"></span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">update trusted ca</span><span class="w">
+</span><span class="w">  </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/sbin/update-ca-certificates</span><span class="w">
+</span><span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="kc">True</span><span class="w">
+</span></code></pre></div><p>So any containers running in these hosts can have the system trusted CAs (including internal one) bind mounted with:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">docker run -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro <span class="se">\
+</span><span class="se"></span>           -e <span class="nv">REQUESTS_CA_BUNDLE</span><span class="o">=</span>/etc/ssl/certs/ca-certificates.crt <span class="se">\
+</span><span class="se"></span>           homeassistant/home-assistant:2021.2.3
+</code></pre></div>]]></content></item><item><title>0xB752 ddwrt + custom certificate</title><link>https://rpg.skmobi.com/posts/0xb752_ddwrt_ssl/</link><pubDate>Sun, 14 Feb 2021 16:26:09 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xb752_ddwrt_ssl/</guid><description>When I first installed dd-wrt (no support from openwrt) on my router, I enabled HTTPS-only access for the web UI.
 When the nasty prompt from the self-signed certificate popped up, I looked for an option to upload my own cerficate (signed by the internal CA I use).
 There was none&amp;hellip;
 Left it be for quite soem time, but finally decided to sort it out and, to my surprise, there&amp;rsquo;s no official documentation on it (or not easy to find, at least)&amp;hellip;</description><content type="html"><![CDATA[<p>When I first installed <a href="https://dd-wrt.com/">dd-wrt</a> (no support from <a href="https://openwrt.org/">openwrt</a>) on <a href="https://www.netgear.com/home/online-gaming/routers/xr500/">my router</a>, I enabled HTTPS-only access for the web UI.<br>
