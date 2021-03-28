@@ -6,5 +6,7 @@ To have some sort of extra security, it sits behind Cloudflare WAF so the docker
 
 I've wanted for some time to switch from iptables to mTLS (with Cloudflare Origin CA), as it's much cleaner to install a CA than managing IP ranges in iptables. And safer as [IP ACLs are not that reliable](https://jychp.medium.com/how-to-bypass-cloudflare-bot-protection-1f2c6c0c36fb).
 
+https://support.cloudflare.com/hc/en-us/articles/204899617
+
 Also, properly preparing traffik for validating client certs would allow, not only validating Cloudflare requests, but also expose private services with restricted access using my internal CA.
 
