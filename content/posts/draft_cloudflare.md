@@ -1,3 +1,5 @@
+## drop iptables drop
+
 in my houselab, some of the services are exposed to the internet.
 
 (traeffik setup -> external port 8443 -> 443 on router)
