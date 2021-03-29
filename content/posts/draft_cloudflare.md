@@ -10,3 +10,22 @@ https://support.cloudflare.com/hc/en-us/articles/204899617
 
 Also, properly preparing traffik for validating client certs would allow, not only validating Cloudflare requests, but also expose private services with restricted access using my internal CA.
 
+dynamic conf
+
+```
+tls:
+  options:
+    cfcert:
+      clientAuth:
+        caFiles:
+          - /etc/traefik/dynamic/origin-pull-ca.pem
+        clientAuthType: RequireAndVerifyClientCert
+```
+
+service docker compose
+```
+traefik.http.routers.whoamix1.rule: Host(`whoami-sf.skmobi.com`)
+        traefik.http.routers.whoamix1.entrypoints: https_external
+        traefik.http.routers.whoamix1.tls: "true"
+        traefik.http.routers.whoamix1.tls.options: "cfcert@file"
+```
