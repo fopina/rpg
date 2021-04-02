@@ -34,7 +34,7 @@ traefik.http.routers.whoamix1.rule: Host(`whoami-sf.skmobi.com`)
 
 or apply to all services under entrypoint
 ```
-      - --entrypoints.https_external.http.tls.options=cfcert
+      - --entrypoints.https_external.http.tls.options=cfcert@file
 ```
 
 though it won't apply to services that have any `tls` setting defined such as
