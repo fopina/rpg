@@ -44,3 +44,5 @@ though it won't apply to services that have any `tls` setting defined such as
 so be sure to remove those labels if you don't need them. if you do, also specify `traefik.http.routers.whoamix1.tls.options: "cfcert@file"`
 
 also, it won't apply to the default router (the 404 returned when no service matches), so visiting IP or hostnames that are not part of any service will be possible with any client certificate...
+
+https://www.techjunktrunk.com/docker/2017/11/03/traefik-default-server-catch-all/
