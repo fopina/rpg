@@ -1,6 +1,6 @@
 ---
 title: "0x478C Dynamic Loose Learning (DLL)"
-date: 2021-10-12T23:55:50+01:00
+date: 2021-11-01T23:55:50+01:00
 draft: true
 toc: false
 images:
@@ -152,6 +152,7 @@ I've put this all to use in [dp4cli](https://github.com/fopina/dp4cli/tree/dllve
 120954
 ```
 
+Next step will be to spam F5 on all these DLL functions, but it was an interesting first step (for me)!
 
 [^1]: serial number and activation code
 [^2]: even if distribution is restricted, it can be found online
