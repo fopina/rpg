@@ -1,4 +1,119 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 09 Apr 2021 01:37:29 +0100</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0x904Drop IPTables Drop</title><link>https://rpg.skmobi.com/posts/0x904d_cloudflare_pull/</link><pubDate>Fri, 09 Apr 2021 01:37:29 +0100</pubDate><guid>https://rpg.skmobi.com/posts/0x904d_cloudflare_pull/</guid><description>My houselab is made of a few RPis and docker swarm.
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Random Post Generator</title><link>https://rpg.skmobi.com/posts/</link><description>Recent content in Posts on Random Post Generator</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 01 Nov 2021 23:55:50 +0100</lastBuildDate><atom:link href="https://rpg.skmobi.com/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>0x478C Dynamic Loose Learning (DLL)</title><link>https://rpg.skmobi.com/posts/0x478c_dll/</link><pubDate>Mon, 01 Nov 2021 23:55:50 +0100</pubDate><guid>https://rpg.skmobi.com/posts/0x478c_dll/</guid><description>I was looking for some excuse to improve my nil little experience with IDA and building a CLI for Vasco Digipass came up in a conversation.
+While keeping the OTP generator in the same machine where you use the OTP itself is unlikely to be endorsed by the security team, Vasco already provides that with Digipass For Windows (even if EOL is April 2022).
+Challenge accepted, took a set of valid credentials1, the installer2 and fired up a brand new IDA VM.</description><content type="html"><![CDATA[<p>I was looking for some excuse to improve my <del>nil</del> <em>little</em> experience with IDA and building a CLI for <a href="https://www.onespan.com/support/security/product-life-cycle">Vasco Digipass</a> came up in a conversation.</p>
+<p>While keeping the OTP generator in the same machine where you use the OTP itself is unlikely to be endorsed by the security team, Vasco already provides that with <code>Digipass For Windows</code> (even if EOL is April 2022).</p>
+<p>Challenge accepted, took a set of valid credentials<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, the installer<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> and fired up a brand new IDA VM.</p>
+<h2 id="dll">DLL</h2>
+<p>While I expected to start a long session of spamming F5 hoping IDA would give me pseudo-code easy enough to decipher, looking at the files in Digipass folder there was a <code>DP4CAPI.dll</code></p>
+<p><img src="shot1.png" alt="dll"></p>
+<p>Let&rsquo;s load that DLL in IDA and check the exports</p>
+<p><img src="shot2.png" alt="exports"></p>
+<p>Interesting export names, let&rsquo;s see how they&rsquo;re used:</p>
+<ul>
+<li>Add a breakpoint on each of them: right click, add breakpoint</li>
+<li>Launch <code>DP4Windows.exe</code> from IDA: <code>Debugger</code> &gt; <code>Process Options</code> and set <code>Application</code> to <code>DP4Windows.exe</code></li>
+</ul>
+<p><img src="shot3.png" alt="setup"></p>
+<p>First prompt we get from the app is Profile URL with a default of <a href="http://sc.vasco.com/update/dp4windows/50/digipass.xml">http://sc.vasco.com/update/dp4windows/50/digipass.xml</a>. Back to this one later.</p>
+<p>Next one prompts for serial and activation and entering these brings us to the first breakpoint:</p>
+<p><img src="shot4.png" alt="activate"></p>
+<p><code>*Activate</code>, makes sense. Thank you IDA for such a clear breakdown of the args as well!</p>
+<p>8 args. Let&rsquo;s dump data for the last 8 items pushed to the stack (or 9 but skip the last as that&rsquo;s the ret address for the call)</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">Python</span><span class="o">&gt;</span> <span class="n">arg_addrs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">idaapi</span><span class="o">.</span><span class="n">get_dword</span><span class="p">(</span><span class="n">idautils</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">esp</span><span class="o">+</span><span class="n">X</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">Python</span><span class="o">&gt;</span> <span class="n">init_vals</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">ida_bytes</span><span class="o">.</span><span class="n">get_bytes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">arg_addrs</span>
+<span class="p">]</span>
+
+<span class="n">Python</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">init_vals</span> <span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+<span class="sa">b</span><span class="s1">&#39;3806564553AEF4E69858FB1FA8165D51F7EA40293792D20F06&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;*SERIAL</span><span class="se">\x00</span><span class="s1">...&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;**********ACTIVATION</span><span class="se">\x00</span><span class="s1">...&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff\xff</span><span class="s1">...&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;111111</span><span class="se">\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff\xff</span><span class="s1">...&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
+</code></pre></div><p>Using the variable names assigned by IDA:</p>
+<ul>
+<li><code>Src</code>: back to that <a href="http://sc.vasco.com/update/dp4windows/50/digipass.xml">xml</a> from the start, this matches the <code>OfflineActivation</code> <code>StaticVector</code> value (confirmed by looking into a few more bytes)</li>
+<li><code>a2</code>: serial number used (redacted)</li>
+<li><code>a3</code>: activation code (redacted)</li>
+<li><code>a4</code>: value in stack is 0</li>
+<li><code>a5</code>: seems like a fixed value of <code>111111</code> (even with different credentials<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>)</li>
+<li><code>a6</code>: value in stack is 0</li>
+<li><code>a7</code>: output buffer?</li>
+<li><code>a8</code>: output buffer?</li>
+</ul>
+<p>Double click on current ESP value takes us to the return of the function, so we can add a breakpoint there (press <code>C</code> to convert to code if not decompiled).<br>
+Then continue execution until it stops there. It does through other functions in the DLL but those were called by <code>*Activate</code>, not by the GUI.</p>
+<p>If we look at the values of the args now (re-using the addresses we saved)</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="p">[</span>
+  <span class="n">ida_bytes</span><span class="o">.</span><span class="n">get_bytes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">arg_addrs</span>
+<span class="p">]</span>
+</code></pre></div><p>We can confirm <code>a7</code> and <code>a8</code> have been changed and I&rsquo;ll call them <code>ACTIVATION_KEY1</code> and <code>ACTIVATION_KEY2</code>. <code>EAX</code> value is <code>0</code>, that should be the expected success return code.</p>
+<p>Click continue and next stop: <code>*validPWD</code></p>
+<p><img src="shot5.png" alt="validpwd"></p>
+<p>4 args, do the same:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">Python</span><span class="o">&gt;</span> <span class="n">arg_addrs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">idaapi</span><span class="o">.</span><span class="n">get_dword</span><span class="p">(</span><span class="n">idautils</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">esp</span><span class="o">+</span><span class="n">X</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">Python</span><span class="o">&gt;</span> <span class="n">init_vals</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">ida_bytes</span><span class="o">.</span><span class="n">get_bytes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">arg_addrs</span>
+<span class="p">]</span>
+
+<span class="n">Python</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">init_vals</span> <span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+<span class="sa">b</span><span class="s1">&#39;***ACTIVATION_KEY1&#39;</span>
+<span class="sa">b</span><span class="s2">&#34;***ACTIVATION_KEY2&#34;</span>
+<span class="sa">b</span><span class="s1">&#39;111111</span><span class="se">\x00</span><span class="s1">\...&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
+</code></pre></div><p>Last argument (at least) looks like output buffer. Again, break on return address, continue, dump.</p>
+<p>Content did change, let&rsquo;s call it <code>VALID_TOKEN</code>. <code>EAX</code> value is <code>1</code>, so that should be the expected success return code.</p>
+<p>Next stop, <code>DP4C_GenPasswordEx</code>.</p>
+<p><img src="shot6.png" alt="genpwd"></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">Python</span><span class="o">&gt;</span> <span class="n">arg_addrs</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">idaapi</span><span class="o">.</span><span class="n">get_dword</span><span class="p">(</span><span class="n">idautils</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">esp</span><span class="o">+</span><span class="n">X</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">Python</span><span class="o">&gt;</span> <span class="n">init_vals</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">ida_bytes</span><span class="o">.</span><span class="n">get_bytes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">arg_addrs</span>
+<span class="p">]</span>
+
+<span class="n">Python</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">init_vals</span> <span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="sa">b</span><span class="s1">&#39;***ACTIVATION_KEY1&#39;</span>
+<span class="sa">b</span><span class="s2">&#34;***ACTIVATION_KEY2&#34;</span>
+<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff\xff\xff</span><span class="s1">...&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;***VALID_TOKEN&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff\xff\xff</span><span class="s1">...&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
+<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
+</code></pre></div><p>args 3 and 5 have value 0 and last two arguments look like output buffers. Break on ret, continue, dump.</p>
+<p><code>EAX</code> value is <code>0</code>, last argument was not changed (used only for errors?) but the one before has a six-digit OTP 🏆</p>
+<p>I&rsquo;ve put this all to use in <a href="https://github.com/fopina/dp4cli/tree/dllversion">dp4cli</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">➜ dp4cli
+<span class="m">120954</span>
+</code></pre></div><p>Next step will be to spam F5 on all these DLL functions, but it was an interesting first step (for me)!</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>serial number and activation code <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>even if distribution is restricted, it can be found online <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+]]></content></item><item><title>0x904Drop IPTables Drop</title><link>https://rpg.skmobi.com/posts/0x904d_cloudflare_pull/</link><pubDate>Fri, 09 Apr 2021 01:37:29 +0100</pubDate><guid>https://rpg.skmobi.com/posts/0x904d_cloudflare_pull/</guid><description>My houselab is made of a few RPis and docker swarm.
 Traefik is used to expose (most of) the swarm services and some of these services are exposed to the internet.
 Traefik docker-compose includes these flags
 - --entrypoints.http.address=:80- --entrypoints.https.address=:443- --entrypoints.https_external.address=:8443Home router has port forwarding from 443 to 8443 on one of the manager nodes (where Traefik runs). Binding services to http (80) or https (443) exposes them internally only, binding to https_external (8443) exposes them to the internet.</description><content type="html"><![CDATA[<p>My houselab is made of a few RPis and docker swarm.<br>
