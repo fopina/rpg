@@ -5,14 +5,17 @@ draft: true
 toc: false
 images:
 tags: 
-  - untagged
+  - ida
+  - re
+  - random
+  - dll
 ---
 
 I was looking for some excuse to improve my ~~nil~~ *little* experience with IDA and building a CLI for [Vasco Digipass](https://www.onespan.com/support/security/product-life-cycle) came up in a conversation.
 
 While keeping the OTP generator in the same machine where you use the OTP itself is unlikely to be endorsed by the security team, Vasco already provides that with `Digipass For Windows` (even if EOL is April 2022).
 
-Challenged accepted, took a set of valid credentials[^1], the installer[^2] and fired up a brand new IDA VM.
+Challenge accepted, took a set of valid credentials[^1], the installer[^2] and fired up a brand new IDA VM.
 
 
 ## DLL
