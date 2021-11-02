@@ -1,7 +1,7 @@
 ---
 title: "0x478C Dynamic Loose Learning (DLL)"
 date: 2021-11-01T23:55:50+01:00
-draft: true
+draft: false
 toc: false
 images:
 tags: 
