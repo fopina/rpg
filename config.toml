@@ -10,7 +10,7 @@ pygmentsUseClasses  = true
 rssLimit = 10
 copyright = ""
 enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
-googleAnalytics = "UA-152680315-1"
+googleAnalytics = "G-FRYVGQ292Q"
 disqusShortname = "random-post-generator"
 
 [author]
