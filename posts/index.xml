@@ -19,32 +19,32 @@ Challenge accepted, took a set of valid credentials1, the installer2 and fired u
 <p><img src="shot4.png" alt="activate"></p>
 <p><code>*Activate</code>, makes sense. Thank you IDA for such a clear breakdown of the args as well!</p>
 <p>8 args. Let&rsquo;s dump data for the last 8 items pushed to the stack (or 9 but skip the last as that&rsquo;s the ret address for the call)</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">Python</span><span class="o">&gt;</span> <span class="n">arg_addrs</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="n">idaapi</span><span class="o">.</span><span class="n">get_dword</span><span class="p">(</span><span class="n">idautils</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">esp</span><span class="o">+</span><span class="n">X</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
-  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
-<span class="p">]</span>
-<span class="n">Python</span><span class="o">&gt;</span> <span class="n">init_vals</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="n">ida_bytes</span><span class="o">.</span><span class="n">get_bytes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">arg_addrs</span>
-<span class="p">]</span>
-
-<span class="n">Python</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">init_vals</span> <span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-
-<span class="sa">b</span><span class="s1">&#39;3806564553AEF4E69858FB1FA8165D51F7EA40293792D20F06&#39;</span>
-<span class="sa">b</span><span class="s1">&#39;*SERIAL</span><span class="se">\x00</span><span class="s1">...&#39;</span>
-<span class="sa">b</span><span class="s1">&#39;**********ACTIVATION</span><span class="se">\x00</span><span class="s1">...&#39;</span>
-<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff\xff</span><span class="s1">...&#39;</span>
-<span class="sa">b</span><span class="s1">&#39;111111</span><span class="se">\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
-<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff\xff</span><span class="s1">...&#39;</span>
-<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
-<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
-</code></pre></div><p>Using the variable names assigned by IDA:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">Python</span><span class="o">&gt;</span> <span class="n">arg_addrs</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="n">idaapi</span><span class="o">.</span><span class="n">get_dword</span><span class="p">(</span><span class="n">idautils</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">esp</span><span class="o">+</span><span class="n">X</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">Python</span><span class="o">&gt;</span> <span class="n">init_vals</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ida_bytes</span><span class="o">.</span><span class="n">get_bytes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">arg_addrs</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Python</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">init_vals</span> <span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;3806564553AEF4E69858FB1FA8165D51F7EA40293792D20F06&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;*SERIAL</span><span class="se">\x00</span><span class="s1">...&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;**********ACTIVATION</span><span class="se">\x00</span><span class="s1">...&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff\xff</span><span class="s1">...&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;111111</span><span class="se">\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff\xff</span><span class="s1">...&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
+</span></span></code></pre></div><p>Using the variable names assigned by IDA:</p>
 <ul>
 <li><code>Src</code>: back to that <a href="http://sc.vasco.com/update/dp4windows/50/digipass.xml">xml</a> from the start, this matches the <code>OfflineActivation</code> <code>StaticVector</code> value (confirmed by looking into a few more bytes)</li>
 <li><code>a2</code>: serial number used (redacted)</li>
 <li><code>a3</code>: activation code (redacted)</li>
 <li><code>a4</code>: value in stack is 0</li>
-<li><code>a5</code>: seems like a fixed value of <code>111111</code> (even with different credentials<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>)</li>
+<li><code>a5</code>: seems like a fixed value of <code>111111</code> (even with different credentials<sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>)</li>
 <li><code>a6</code>: value in stack is 0</li>
 <li><code>a7</code>: output buffer?</li>
 <li><code>a8</code>: output buffer?</li>
@@ -52,91 +52,91 @@ Challenge accepted, took a set of valid credentials1, the installer2 and fired u
 <p>Double click on current ESP value takes us to the return of the function, so we can add a breakpoint there (press <code>C</code> to convert to code if not decompiled).<br>
 Then continue execution until it stops there. It does through other functions in the DLL but those were called by <code>*Activate</code>, not by the GUI.</p>
 <p>If we look at the values of the args now (re-using the addresses we saved)</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="p">[</span>
-  <span class="n">ida_bytes</span><span class="o">.</span><span class="n">get_bytes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">arg_addrs</span>
-<span class="p">]</span>
-</code></pre></div><p>We can confirm <code>a7</code> and <code>a8</code> have been changed and I&rsquo;ll call them <code>ACTIVATION_KEY1</code> and <code>ACTIVATION_KEY2</code>. <code>EAX</code> value is <code>0</code>, that should be the expected success return code.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ida_bytes</span><span class="o">.</span><span class="n">get_bytes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">arg_addrs</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></div><p>We can confirm <code>a7</code> and <code>a8</code> have been changed and I&rsquo;ll call them <code>ACTIVATION_KEY1</code> and <code>ACTIVATION_KEY2</code>. <code>EAX</code> value is <code>0</code>, that should be the expected success return code.</p>
 <p>Click continue and next stop: <code>*validPWD</code></p>
 <p><img src="shot5.png" alt="validpwd"></p>
 <p>4 args, do the same:</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">Python</span><span class="o">&gt;</span> <span class="n">arg_addrs</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="n">idaapi</span><span class="o">.</span><span class="n">get_dword</span><span class="p">(</span><span class="n">idautils</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">esp</span><span class="o">+</span><span class="n">X</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
-  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="p">]</span>
-<span class="n">Python</span><span class="o">&gt;</span> <span class="n">init_vals</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="n">ida_bytes</span><span class="o">.</span><span class="n">get_bytes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">arg_addrs</span>
-<span class="p">]</span>
-
-<span class="n">Python</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">init_vals</span> <span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-
-<span class="sa">b</span><span class="s1">&#39;***ACTIVATION_KEY1&#39;</span>
-<span class="sa">b</span><span class="s2">&#34;***ACTIVATION_KEY2&#34;</span>
-<span class="sa">b</span><span class="s1">&#39;111111</span><span class="se">\x00</span><span class="s1">\...&#39;</span>
-<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
-</code></pre></div><p>Last argument (at least) looks like output buffer. Again, break on return address, continue, dump.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">Python</span><span class="o">&gt;</span> <span class="n">arg_addrs</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="n">idaapi</span><span class="o">.</span><span class="n">get_dword</span><span class="p">(</span><span class="n">idautils</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">esp</span><span class="o">+</span><span class="n">X</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">Python</span><span class="o">&gt;</span> <span class="n">init_vals</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ida_bytes</span><span class="o">.</span><span class="n">get_bytes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">arg_addrs</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Python</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">init_vals</span> <span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;***ACTIVATION_KEY1&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s2">&#34;***ACTIVATION_KEY2&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;111111</span><span class="se">\x00</span><span class="s1">\...&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
+</span></span></code></pre></div><p>Last argument (at least) looks like output buffer. Again, break on return address, continue, dump.</p>
 <p>Content did change, let&rsquo;s call it <code>VALID_TOKEN</code>. <code>EAX</code> value is <code>1</code>, so that should be the expected success return code.</p>
 <p>Next stop, <code>DP4C_GenPasswordEx</code>.</p>
 <p><img src="shot6.png" alt="genpwd"></p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">Python</span><span class="o">&gt;</span> <span class="n">arg_addrs</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="n">idaapi</span><span class="o">.</span><span class="n">get_dword</span><span class="p">(</span><span class="n">idautils</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">esp</span><span class="o">+</span><span class="n">X</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
-  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-<span class="p">]</span>
-<span class="n">Python</span><span class="o">&gt;</span> <span class="n">init_vals</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="n">ida_bytes</span><span class="o">.</span><span class="n">get_bytes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">arg_addrs</span>
-<span class="p">]</span>
-
-<span class="n">Python</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">init_vals</span> <span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-<span class="sa">b</span><span class="s1">&#39;***ACTIVATION_KEY1&#39;</span>
-<span class="sa">b</span><span class="s2">&#34;***ACTIVATION_KEY2&#34;</span>
-<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff\xff\xff</span><span class="s1">...&#39;</span>
-<span class="sa">b</span><span class="s1">&#39;***VALID_TOKEN&#39;</span>
-<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff\xff\xff</span><span class="s1">...&#39;</span>
-<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
-<span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
-</code></pre></div><p>args 3 and 5 have value 0 and last two arguments look like output buffers. Break on ret, continue, dump.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">Python</span><span class="o">&gt;</span> <span class="n">arg_addrs</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="n">idaapi</span><span class="o">.</span><span class="n">get_dword</span><span class="p">(</span><span class="n">idautils</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">esp</span><span class="o">+</span><span class="n">X</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">Python</span><span class="o">&gt;</span> <span class="n">init_vals</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ida_bytes</span><span class="o">.</span><span class="n">get_bytes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">arg_addrs</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Python</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">init_vals</span> <span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;***ACTIVATION_KEY1&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s2">&#34;***ACTIVATION_KEY2&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff\xff\xff</span><span class="s1">...&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;***VALID_TOKEN&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xff\xff\xff\xff</span><span class="s1">...&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00\x00</span><span class="s1">...&#39;</span>
+</span></span></code></pre></div><p>args 3 and 5 have value 0 and last two arguments look like output buffers. Break on ret, continue, dump.</p>
 <p><code>EAX</code> value is <code>0</code>, last argument was not changed (used only for errors?) but the one before has a six-digit OTP 🏆</p>
 <p>I&rsquo;ve put this all to use in <a href="https://github.com/fopina/dp4cli/tree/dllversion">dp4cli</a></p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">➜ dp4cli
-<span class="m">120954</span>
-</code></pre></div><p>Next step will be to spam F5 on all these DLL functions, but it was an interesting first step (for me)!</p>
-<section class="footnotes" role="doc-endnotes">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">➜ dp4cli
+</span></span><span class="line"><span class="cl"><span class="m">120954</span>
+</span></span></code></pre></div><p>Next step will be to spam F5 on all these DLL functions, but it was an interesting first step (for me)!</p>
+<div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn:1" role="doc-endnote">
-<p>serial number and activation code <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<li id="fn:1">
+<p>serial number and activation code&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li id="fn:2" role="doc-endnote">
-<p>even if distribution is restricted, it can be found online <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<li id="fn:2">
+<p>even if distribution is restricted, it can be found online&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
-</section>
+</div>
 ]]></content></item><item><title>0x904Drop IPTables Drop</title><link>https://rpg.skmobi.com/posts/0x904d_cloudflare_pull/</link><pubDate>Fri, 09 Apr 2021 01:37:29 +0100</pubDate><guid>https://rpg.skmobi.com/posts/0x904d_cloudflare_pull/</guid><description>My houselab is made of a few RPis and docker swarm.
 Traefik is used to expose (most of) the swarm services and some of these services are exposed to the internet.
 Traefik docker-compose includes these flags
 - --entrypoints.http.address=:80- --entrypoints.https.address=:443- --entrypoints.https_external.address=:8443Home router has port forwarding from 443 to 8443 on one of the manager nodes (where Traefik runs). Binding services to http (80) or https (443) exposes them internally only, binding to https_external (8443) exposes them to the internet.</description><content type="html"><![CDATA[<p>My houselab is made of a few RPis and docker swarm.<br>
 Traefik is used to expose (most of) the swarm services and some of these services are exposed to the internet.</p>
 <p>Traefik docker-compose includes these flags</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w"> </span>- --<span class="l">entrypoints.http.address=:80</span><span class="w">
-</span><span class="w"> </span>- --<span class="l">entrypoints.https.address=:443</span><span class="w">
-</span><span class="w"> </span>- --<span class="l">entrypoints.https_external.address=:8443</span><span class="w">
-</span></code></pre></div><p>Home router has port forwarding from 443 to 8443 on one of the manager nodes (where Traefik runs). Binding services to <code>http</code> (80) or <code>https</code> (443) exposes them internally only, binding to <code>https_external</code> (8443) exposes them to the internet.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w"> </span>- --<span class="l">entrypoints.http.address=:80</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- --<span class="l">entrypoints.https.address=:443</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span>- --<span class="l">entrypoints.https_external.address=:8443</span><span class="w">
+</span></span></span></code></pre></div><p>Home router has port forwarding from 443 to 8443 on one of the manager nodes (where Traefik runs). Binding services to <code>http</code> (80) or <code>https</code> (443) exposes them internally only, binding to <code>https_external</code> (8443) exposes them to the internet.</p>
 <p>With this, service exposure is managed in the service docker-compose itself</p>
 <p>Internal-only</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">deploy</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">traefik.enable</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
-</span><span class="w">      </span><span class="nt">traefik.docker.network</span><span class="p">:</span><span class="w"> </span><span class="l">traefik_default</span><span class="w">
-</span><span class="w">      </span><span class="nt">traefik.http.services.myweb.loadbalancer.server.port</span><span class="p">:</span><span class="w"> </span><span class="m">9999</span><span class="w">
-</span><span class="w">      </span><span class="nt">traefik.http.routers.myweb.rule</span><span class="p">:</span><span class="w"> </span><span class="l">Host(`myweb.internal`)</span><span class="w">
-</span><span class="w">      </span><span class="nt">traefik.http.routers.myweb.entrypoints</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
-</span><span class="w">      </span><span class="nt">traefik.http.routers.myweb.middlewares</span><span class="p">:</span><span class="w"> </span><span class="l">https-only</span><span class="w">
-</span></code></pre></div><p>Or the extra labels to make it external</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">      </span><span class="nt">traefik.http.routers.myweb_ext.rule</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Host(`myweb.skmobi.com`)&#34;</span><span class="w">
-</span><span class="w">      </span><span class="nt">traefik.http.routers.myweb_ext.entrypoints</span><span class="p">:</span><span class="w"> </span><span class="l">https_external</span><span class="w">
-</span></code></pre></div><p>To have some sort of extra security 🔒, all of these domain are behind ☁️ Cloudflare.<br>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">traefik.enable</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">traefik.docker.network</span><span class="p">:</span><span class="w"> </span><span class="l">traefik_default</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">traefik.http.services.myweb.loadbalancer.server.port</span><span class="p">:</span><span class="w"> </span><span class="m">9999</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">traefik.http.routers.myweb.rule</span><span class="p">:</span><span class="w"> </span><span class="l">Host(`myweb.internal`)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">traefik.http.routers.myweb.entrypoints</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">traefik.http.routers.myweb.middlewares</span><span class="p">:</span><span class="w"> </span><span class="l">https-only</span><span class="w">
+</span></span></span></code></pre></div><p>Or the extra labels to make it external</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w">      </span><span class="nt">traefik.http.routers.myweb_ext.rule</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Host(`myweb.skmobi.com`)&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">traefik.http.routers.myweb_ext.entrypoints</span><span class="p">:</span><span class="w"> </span><span class="l">https_external</span><span class="w">
+</span></span></span></code></pre></div><p>To have some sort of extra security 🔒, all of these domain are behind ☁️ Cloudflare.<br>
 In order to prevent anyone from bypassing it, I was using a simple <a href="https://github.com/fopina/ansible-roles/tree/main/cloudflare-ips">ansible role</a> in my RPi provisioning playbook to make sure the <a href="https://www.cloudflare.com/ips/">latest IP ranges from $NET</a> were set up in iptables.</p>
 <p>When I read about their <a href="https://support.cloudflare.com/hc/en-us/articles/204899617">Authenticated Origin Pulls</a> I immediately added it to my backlog, as it&rsquo;s much cleaner to install a CA once than managing IP ranges in iptables.</p>
 <p>And it would allow me to also have non-proxied services in the same port (based on SNI), even restrict those to my own client certificates (issued by the <a href="/posts/0x6fd7_docker_internal_ca/">same internal CA I use for server certificates</a>)</p>
@@ -148,20 +148,20 @@ But that would require all services behind cloudflare instead of letting me choo
 <p>So let&rsquo;s get traefik to handle it!</p>
 <p>Traefik has this <a href="https://doc.traefik.io/traefik/routing/routers/#options">tls.options</a> available both at entrypoint level and router level. But sadly, it&rsquo;s not possible to configure each parameter with labels (<a href="https://github.com/traefik/traefik/issues/5507">yet</a>).</p>
 <p>Enter dynamic configuration! Create some file somewhere, such as <code>/etc/traefik/dynamic/tlsoptions.yaml</code>, with</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">tls</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">options</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">cfcert</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">clientAuth</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">caFiles</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span>- <span class="l">/etc/traefik/dynamic/origin-pull-ca.pem</span><span class="w">
-</span><span class="w">        </span><span class="nt">clientAuthType</span><span class="p">:</span><span class="w"> </span><span class="l">RequireAndVerifyClientCert</span><span class="w">
-</span></code></pre></div><p>Place the <a href="https://support.cloudflare.com/hc/en-us/article_attachments/360044928032/origin-pull-ca.pem">cloudflare-provided origin-pull-ca.pem</a> and add this conf to traefik (CLI flag)</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- --<span class="l">providers.file.directory=/etc/traefik/dynamic</span><span class="w">
-</span></code></pre></div><p>Now, if some service should be only accessible through cloudflare, I only need to add one extra label, with the new <code>tls.options</code> <code>cfcert</code>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">      </span><span class="nt">traefik.http.routers.myweb_ext.entrypoints</span><span class="p">:</span><span class="w"> </span><span class="l">https_external</span><span class="w">
-</span><span class="w">      </span><span class="nt">traefik.http.routers.myweb_ext.tls.options</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;cfcert@file&#34;</span><span class="w">
-</span></code></pre></div><p>As most of my exposed services <em>should</em> be behind cloudflare, I decided to apply this directly to the entrypoint (traefik CLI flag)</p>
-<pre><code>      - --entrypoints.https_external.http.tls.options=cfcert@file
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">tls</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">options</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">cfcert</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">clientAuth</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">caFiles</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span>- <span class="l">/etc/traefik/dynamic/origin-pull-ca.pem</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">clientAuthType</span><span class="p">:</span><span class="w"> </span><span class="l">RequireAndVerifyClientCert</span><span class="w">
+</span></span></span></code></pre></div><p>Place the <a href="https://support.cloudflare.com/hc/en-us/article_attachments/360044928032/origin-pull-ca.pem">cloudflare-provided origin-pull-ca.pem</a> and add this conf to traefik (CLI flag)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl">- --<span class="l">providers.file.directory=/etc/traefik/dynamic</span><span class="w">
+</span></span></span></code></pre></div><p>Now, if some service should be only accessible through cloudflare, I only need to add one extra label, with the new <code>tls.options</code> <code>cfcert</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w">      </span><span class="nt">traefik.http.routers.myweb_ext.entrypoints</span><span class="p">:</span><span class="w"> </span><span class="l">https_external</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">traefik.http.routers.myweb_ext.tls.options</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;cfcert@file&#34;</span><span class="w">
+</span></span></span></code></pre></div><p>As most of my exposed services <em>should</em> be behind cloudflare, I decided to apply this directly to the entrypoint (traefik CLI flag)</p>
+<pre tabindex="0"><code>      - --entrypoints.https_external.http.tls.options=cfcert@file
 </code></pre><p>This makes it the default <code>tls.option</code> for any service on entrypoint <code>https_external</code> 👍<br>
 And to disable it, just need to apply label <code>traefik.http.routers.myweb_ext.tls.options: &quot;default&quot;</code> to a service.</p>
 <p><em>NOTE</em></p>
@@ -169,7 +169,7 @@ And to disable it, just need to apply label <code>traefik.http.routers.myweb_ext
 <p>Unfortunately, setting the <code>tls.option</code> at entrypoint level still does not apply to the default router (the 404 shown when no service matches), and I&rsquo;d really like to have traefik just TLS-reset all those botscan connections&hellip;</p>
 <p>I tried modifying <code>default</code> <code>tls.options</code> (instead of naming it <code>cfcert</code>) but then it applied to every entrypoint, including the internal ones (which hopefully are never pinged by cloudflare!).</p>
 <p>Also found <a href="https://www.techjunktrunk.com/docker/2017/11/03/traefik-default-server-catch-all/">this</a> to setup a new default service. It seems to work as advertised, matching any request that was not caught by others, but:</p>
-<pre><code>traefik_traefik.1.lqdaryaciaex@sfpi3    | time=&quot;2021-04-09T00:02:07Z&quot; level=warning msg=&quot;No domain found in rule HostRegexp(`{catchall:.*}`), the TLS options applied for this router will depend on the hostSNI of each request&quot; entryPointName=https_external routerName=myweb_ext@docker
+<pre tabindex="0"><code>traefik_traefik.1.lqdaryaciaex@sfpi3    | time=&#34;2021-04-09T00:02:07Z&#34; level=warning msg=&#34;No domain found in rule HostRegexp(`{catchall:.*}`), the TLS options applied for this router will depend on the hostSNI of each request&#34; entryPointName=https_external routerName=myweb_ext@docker
 </code></pre><p>So traefik only binds tls.options based on the configured SNI, not in the SNI requested&hellip;</p>
 <p>Too bad, but still happy overall with the final setup!</p>
 <p>Fun part: I finally did this last week and today cloudflare announced <a href="https://www.cloudflare.com/ips/">IP changes</a>. But no, I don&rsquo;t have to do anything about it (anymore).</p>
@@ -196,8 +196,8 @@ Luckily, the same guys gave it an extreme makeover in C and called it <a href="h
 <ul>
 <li>download telegraf</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">curl -LO https://dl.influxdata.com/telegraf/releases/telegraf-1.17.2_linux_armhf.tar.gz
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">curl -LO https://dl.influxdata.com/telegraf/releases/telegraf-1.17.2_linux_armhf.tar.gz
+</span></span></code></pre></div><ul>
 <li>
 <p>create test buckets</p>
 <ul>
@@ -210,110 +210,110 @@ Luckily, the same guys gave it an extreme makeover in C and called it <a href="h
 <p>install fluentbit</p>
 </li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">curl https://packages.fluentbit.io/fluentbit.key <span class="p">|</span> sudo apt-key add -
-<span class="nb">echo</span> deb https://packages.fluentbit.io/debian/buster buster main &gt; /etc/apt/sources.list.d/fluentbit.list
-apt update
-apt install td-agent-bit
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">curl https://packages.fluentbit.io/fluentbit.key <span class="p">|</span> sudo apt-key add -
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> deb https://packages.fluentbit.io/debian/buster buster main &gt; /etc/apt/sources.list.d/fluentbit.list
+</span></span><span class="line"><span class="cl">apt update
+</span></span><span class="line"><span class="cl">apt install td-agent-bit
+</span></span></code></pre></div><ul>
 <li>telegraf configuration</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">agent</span><span class="p">]</span>
-  <span class="nx">interval</span> <span class="p">=</span> <span class="s2">&#34;10s&#34;</span>
-  <span class="nx">round_interval</span> <span class="p">=</span> <span class="kc">true</span>
-  <span class="nx">metric_batch_size</span> <span class="p">=</span> <span class="mi">1000</span>
-  <span class="nx">metric_buffer_limit</span> <span class="p">=</span> <span class="mi">10000</span>
-  <span class="nx">collection_jitter</span> <span class="p">=</span> <span class="s2">&#34;0s&#34;</span>
-  <span class="nx">flush_interval</span> <span class="p">=</span> <span class="s2">&#34;10s&#34;</span>
-  <span class="nx">flush_jitter</span> <span class="p">=</span> <span class="s2">&#34;0s&#34;</span>
-  <span class="nx">precision</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
-  <span class="nx">debug</span> <span class="p">=</span> <span class="kc">false</span>
-  <span class="nx">quiet</span> <span class="p">=</span> <span class="kc">false</span>
-  <span class="nx">logfile</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
-  <span class="nx">hostname</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
-  <span class="nx">omit_hostname</span> <span class="p">=</span> <span class="kc">false</span>
-<span class="p">[[</span><span class="nx">outputs</span><span class="p">.</span><span class="nx">influxdb_v2</span><span class="p">]]</span>
-  <span class="nx">urls</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;https://my.influxdb&#34;</span><span class="p">]</span>
-  <span class="nx">token</span> <span class="p">=</span> <span class="s2">&#34;&lt;TOKEN&gt;&#34;</span>
-  <span class="nx">organization</span> <span class="p">=</span> <span class="s2">&#34;myorg&#34;</span>
-  <span class="nx">bucket</span> <span class="p">=</span> <span class="s2">&#34;test_telegraf&#34;</span>
-<span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">cpu</span><span class="p">]]</span>
-  <span class="nx">percpu</span> <span class="p">=</span> <span class="kc">true</span>
-  <span class="nx">totalcpu</span> <span class="p">=</span> <span class="kc">true</span>
-  <span class="nx">collect_cpu_time</span> <span class="p">=</span> <span class="kc">false</span>
-  <span class="nx">report_active</span> <span class="p">=</span> <span class="kc">false</span>
-<span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">diskio</span><span class="p">]]</span>
-<span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">mem</span><span class="p">]]</span>
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">agent</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">interval</span> <span class="p">=</span> <span class="s2">&#34;10s&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">round_interval</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">metric_batch_size</span> <span class="p">=</span> <span class="mi">1000</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">metric_buffer_limit</span> <span class="p">=</span> <span class="mi">10000</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">collection_jitter</span> <span class="p">=</span> <span class="s2">&#34;0s&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">flush_interval</span> <span class="p">=</span> <span class="s2">&#34;10s&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">flush_jitter</span> <span class="p">=</span> <span class="s2">&#34;0s&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">precision</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">debug</span> <span class="p">=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">quiet</span> <span class="p">=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">logfile</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">hostname</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">omit_hostname</span> <span class="p">=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl"><span class="p">[[</span><span class="nx">outputs</span><span class="p">.</span><span class="nx">influxdb_v2</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">urls</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;https://my.influxdb&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">token</span> <span class="p">=</span> <span class="s2">&#34;&lt;TOKEN&gt;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">organization</span> <span class="p">=</span> <span class="s2">&#34;myorg&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">bucket</span> <span class="p">=</span> <span class="s2">&#34;test_telegraf&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">cpu</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">percpu</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">totalcpu</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">collect_cpu_time</span> <span class="p">=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">report_active</span> <span class="p">=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl"><span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">diskio</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">mem</span><span class="p">]]</span>
+</span></span></code></pre></div><ul>
 <li>start telegraf</li>
 </ul>
-<pre><code>telegraf-1.17.2/usr/bin/telegraf --config telegraf.conf
+<pre tabindex="0"><code>telegraf-1.17.2/usr/bin/telegraf --config telegraf.conf
 </code></pre><ul>
 <li>fluentbit configuration</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-ini" data-lang="ini"><span class="k">[SERVICE]</span>
-    <span class="na">Flush        5</span>
-    <span class="na">Daemon       Off</span>
-    <span class="na">Log_Level    info</span>
-    <span class="na">HTTP_Server  Off</span>
-    <span class="na">Plugins_File /etc/td-agent-bit/plugins.conf</span>
-<span class="k">[INPUT]</span>
-    <span class="na">Name cpu</span>
-    <span class="na">Tag met.cpu</span>
-<span class="k">[INPUT]</span>
-    <span class="na">Name mem</span>
-    <span class="na">Tag met.mem</span>
-<span class="k">[INPUT]</span>
-    <span class="na">Name disk</span>
-    <span class="na">Tag met.disk</span>
-<span class="k">[FILTER]</span>
-    <span class="na">Name record_modifier</span>
-    <span class="na">Match *</span>
-    <span class="na">Record hostname ${HOSTNAME}</span>
-<span class="k">[OUTPUT]</span>
-    <span class="na">Name influxdb_v2</span>
-    <span class="na">Match met.*</span>
-    <span class="na">Host my.influx</span>
-    <span class="na">Port 443</span>
-    <span class="na">tls on</span>
-    <span class="na">tls.verify off</span>
-    <span class="na">org myorg</span>
-    <span class="na">bucket test_fluentbit</span>
-    <span class="na">http_token &lt;TOKEN&gt;</span>
-    <span class="na">Tag_Keys hostname</span>
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[SERVICE]</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Flush        5</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Daemon       Off</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Log_Level    info</span>
+</span></span><span class="line"><span class="cl">    <span class="na">HTTP_Server  Off</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Plugins_File /etc/td-agent-bit/plugins.conf</span>
+</span></span><span class="line"><span class="cl"><span class="k">[INPUT]</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Name cpu</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Tag met.cpu</span>
+</span></span><span class="line"><span class="cl"><span class="k">[INPUT]</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Name mem</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Tag met.mem</span>
+</span></span><span class="line"><span class="cl"><span class="k">[INPUT]</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Name disk</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Tag met.disk</span>
+</span></span><span class="line"><span class="cl"><span class="k">[FILTER]</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Name record_modifier</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Match *</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Record hostname ${HOSTNAME}</span>
+</span></span><span class="line"><span class="cl"><span class="k">[OUTPUT]</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Name influxdb_v2</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Match met.*</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Host my.influx</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Port 443</span>
+</span></span><span class="line"><span class="cl">    <span class="na">tls on</span>
+</span></span><span class="line"><span class="cl">    <span class="na">tls.verify off</span>
+</span></span><span class="line"><span class="cl">    <span class="na">org myorg</span>
+</span></span><span class="line"><span class="cl">    <span class="na">bucket test_fluentbit</span>
+</span></span><span class="line"><span class="cl">    <span class="na">http_token &lt;TOKEN&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Tag_Keys hostname</span>
+</span></span></code></pre></div><ul>
 <li>start fluentbit</li>
 </ul>
-<pre><code>/opt/td-agent-bit/bin/td-agent-bit -c fluentbit.conf
+<pre tabindex="0"><code>/opt/td-agent-bit/bin/td-agent-bit -c fluentbit.conf
 </code></pre><ul>
 <li>configuration to monitor agents (using telegraf)</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">agent</span><span class="p">]</span>
-  <span class="nx">interval</span> <span class="p">=</span> <span class="s2">&#34;10s&#34;</span>
-  <span class="nx">round_interval</span> <span class="p">=</span> <span class="kc">true</span>
-  <span class="nx">metric_batch_size</span> <span class="p">=</span> <span class="mi">1000</span>
-  <span class="nx">metric_buffer_limit</span> <span class="p">=</span> <span class="mi">10000</span>
-  <span class="nx">collection_jitter</span> <span class="p">=</span> <span class="s2">&#34;0s&#34;</span>
-  <span class="nx">flush_interval</span> <span class="p">=</span> <span class="s2">&#34;10s&#34;</span>
-  <span class="nx">flush_jitter</span> <span class="p">=</span> <span class="s2">&#34;0s&#34;</span>
-  <span class="nx">precision</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
-  <span class="nx">debug</span> <span class="p">=</span> <span class="kc">false</span>
-  <span class="nx">quiet</span> <span class="p">=</span> <span class="kc">false</span>
-  <span class="nx">logfile</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
-  <span class="nx">hostname</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
-  <span class="nx">omit_hostname</span> <span class="p">=</span> <span class="kc">false</span>
-<span class="p">[[</span><span class="nx">outputs</span><span class="p">.</span><span class="nx">influxdb_v2</span><span class="p">]]</span>
-  <span class="nx">urls</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;https://my.influxdb&#34;</span><span class="p">]</span>
-  <span class="nx">token</span> <span class="p">=</span> <span class="s2">&#34;&lt;TOKEN&gt;&#34;</span>
-  <span class="nx">organization</span> <span class="p">=</span> <span class="s2">&#34;myorg&#34;</span>
-  <span class="nx">bucket</span> <span class="p">=</span> <span class="s2">&#34;test_results&#34;</span>
-<span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">procstat</span><span class="p">]]</span>
-  <span class="nx">pattern</span> <span class="p">=</span> <span class="s2">&#34;/opt/td-agent-bit/bin/td-agent-bit -c fluentbit.conf&#34;</span>
-<span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">procstat</span><span class="p">]]</span>
-  <span class="nx">pattern</span> <span class="p">=</span> <span class="s2">&#34;telegraf-1.17.2/usr/bin/telegraf --config telegraf.conf&#34;</span>
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">agent</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">interval</span> <span class="p">=</span> <span class="s2">&#34;10s&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">round_interval</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">metric_batch_size</span> <span class="p">=</span> <span class="mi">1000</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">metric_buffer_limit</span> <span class="p">=</span> <span class="mi">10000</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">collection_jitter</span> <span class="p">=</span> <span class="s2">&#34;0s&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">flush_interval</span> <span class="p">=</span> <span class="s2">&#34;10s&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">flush_jitter</span> <span class="p">=</span> <span class="s2">&#34;0s&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">precision</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">debug</span> <span class="p">=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">quiet</span> <span class="p">=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">logfile</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">hostname</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">omit_hostname</span> <span class="p">=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl"><span class="p">[[</span><span class="nx">outputs</span><span class="p">.</span><span class="nx">influxdb_v2</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">urls</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;https://my.influxdb&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">token</span> <span class="p">=</span> <span class="s2">&#34;&lt;TOKEN&gt;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">organization</span> <span class="p">=</span> <span class="s2">&#34;myorg&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">bucket</span> <span class="p">=</span> <span class="s2">&#34;test_results&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">procstat</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">pattern</span> <span class="p">=</span> <span class="s2">&#34;/opt/td-agent-bit/bin/td-agent-bit -c fluentbit.conf&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">[[</span><span class="nx">inputs</span><span class="p">.</span><span class="nx">procstat</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">pattern</span> <span class="p">=</span> <span class="s2">&#34;telegraf-1.17.2/usr/bin/telegraf --config telegraf.conf&#34;</span>
+</span></span></code></pre></div><ul>
 <li>start second telegraf (agent monitor)</li>
 </ul>
-<pre><code>telegraf-1.17.2/usr/bin/telegraf --config telemon.conf
+<pre tabindex="0"><code>telegraf-1.17.2/usr/bin/telegraf --config telemon.conf
 </code></pre><h2 id="results">Results</h2>
 <p>Left this running for over a week and these were the results:</p>
 
@@ -324,7 +324,7 @@ apt install td-agent-bit
 
 
 <a href="/posts/0x474e_telegraf/telemetry.png">
-    <img src="/posts/0x474e_telegraf/telemetry_hu6c23431beb74cea6008f6c754aa6e6d6_211171_600x0_resize_box_2.png" width="600" height="154">
+    <img src="/posts/0x474e_telegraf/telemetry_hu6c23431beb74cea6008f6c754aa6e6d6_211171_600x0_resize_box_3.png" width="600" height="154">
 </a>
 
 <p>Both lines (from fluentbit and telegraf) basically match so they produced identical telemetry data. Exception <em>might</em> be disk IO where they use different units and I didn&rsquo;t bother to find out how to convert 🏝️</p>
@@ -337,7 +337,7 @@ apt install td-agent-bit
 
 
 <a href="/posts/0x474e_telegraf/versus.png">
-    <img src="/posts/0x474e_telegraf/versus_hu170fd6466c940eb28572d2fc65907ba2_239151_600x0_resize_box_2.png" width="600" height="132">
+    <img src="/posts/0x474e_telegraf/versus_hu170fd6466c940eb28572d2fc65907ba2_239151_600x0_resize_box_3.png" width="600" height="132">
 </a>
 
 <h3 id="cpu">CPU</h3>
@@ -359,36 +359,36 @@ Big part of the lab is running on docker swarm.<br>
 Usually services connect through internal networks (without using HTTPS as that is offloaded to traefik), but sometimes they do need to validate the certificates (such as interacting with the NAS or router APIs).</p>
 <p>For personal images, private CA is naturally bundled into them.<br>
 For public, 3rd party, ones, I usually rebuild them only for that purpose, such as:</p>
-<div class="highlight"><pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="k">FROM</span><span class="s"> homeassistant/home-assistant:2021.2.3</span><span class="err">
-</span><span class="err">
-</span><span class="err"></span><span class="k">ADD</span> myCA.pem /usr/local/share/ca-certificates/myCA.crt<span class="err">
-</span><span class="err"></span><span class="k">RUN</span> /usr/sbin/update-ca-certificates<span class="err">
-</span><span class="err"></span><span class="c"># for python requests lib...</span><span class="err">
-</span><span class="err"></span><span class="k">ENV</span> <span class="nv">REQUESTS_CA_BUNDLE</span><span class="o">=</span>/etc/ssl/certs/ca-certificates.crt<span class="err">
-</span></code></pre></div><p>This means that everytime the upstream image is updated, I have to rebuild it (before re-deploy). Pain&hellip;</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="line"><span class="cl"><span class="k">FROM</span><span class="s"> homeassistant/home-assistant:2021.2.3</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ADD</span> myCA.pem /usr/local/share/ca-certificates/myCA.crt<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> /usr/sbin/update-ca-certificates<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># for python requests lib...</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">ENV</span> <span class="nv">REQUESTS_CA_BUNDLE</span><span class="o">=</span>/etc/ssl/certs/ca-certificates.crt<span class="err">
+</span></span></span></code></pre></div><p>This means that everytime the upstream image is updated, I have to rebuild it (before re-deploy). Pain&hellip;</p>
 <p>Much simpler option is to bind mount the host trusted certificates in the container (assuming host has the CA setup).</p>
 <p>My raspberry Pis (the swarm cluster) have the CA installed with:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="l">(tasks - for debian/raspbian)</span><span class="w">
-</span><span class="w"></span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">copy my CA</span><span class="w">
-</span><span class="w">  </span><span class="nt">copy</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l">myCA.pem</span><span class="w">
-</span><span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/local/share/ca-certificates/myCA.crt</span><span class="w">
-</span><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
-</span><span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
-</span><span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="m">0644</span><span class="w">
-</span><span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="kc">True</span><span class="w">
-</span><span class="w">  </span><span class="nt">notify</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="l">update trusted ca</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="l">(handlers)</span><span class="w">
-</span><span class="w"></span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">update trusted ca</span><span class="w">
-</span><span class="w">  </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/sbin/update-ca-certificates</span><span class="w">
-</span><span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="kc">True</span><span class="w">
-</span></code></pre></div><p>So any containers running in these hosts can have the system trusted CAs (including internal one) bind mounted with:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">docker run -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro <span class="se">\
-</span><span class="se"></span>           -e <span class="nv">REQUESTS_CA_BUNDLE</span><span class="o">=</span>/etc/ssl/certs/ca-certificates.crt <span class="se">\
-</span><span class="se"></span>           homeassistant/home-assistant:2021.2.3
-</code></pre></div>]]></content></item><item><title>0xB752 ddwrt + custom certificate</title><link>https://rpg.skmobi.com/posts/0xb752_ddwrt_ssl/</link><pubDate>Sun, 14 Feb 2021 16:26:09 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xb752_ddwrt_ssl/</guid><description>When I first installed dd-wrt (no support from openwrt) on my router, I enabled HTTPS-only access for the web UI.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="l">(tasks - for debian/raspbian)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">copy my CA</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">copy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l">myCA.pem</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/local/share/ca-certificates/myCA.crt</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="m">0644</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="kc">True</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">notify</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">update trusted ca</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">(handlers)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">update trusted ca</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="l">/usr/sbin/update-ca-certificates</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="kc">True</span><span class="w">
+</span></span></span></code></pre></div><p>So any containers running in these hosts can have the system trusted CAs (including internal one) bind mounted with:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker run -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           -e <span class="nv">REQUESTS_CA_BUNDLE</span><span class="o">=</span>/etc/ssl/certs/ca-certificates.crt <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           homeassistant/home-assistant:2021.2.3
+</span></span></code></pre></div>]]></content></item><item><title>0xB752 ddwrt + custom certificate</title><link>https://rpg.skmobi.com/posts/0xb752_ddwrt_ssl/</link><pubDate>Sun, 14 Feb 2021 16:26:09 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xb752_ddwrt_ssl/</guid><description>When I first installed dd-wrt (no support from openwrt) on my router, I enabled HTTPS-only access for the web UI.
 When the nasty prompt from the self-signed certificate popped up, I looked for an option to upload my own cerficate (signed by the internal CA I use).
 There was none&amp;hellip;
 Left it be for quite soem time, but finally decided to sort it out and, to my surprise, there&amp;rsquo;s no official documentation on it (or not easy to find, at least)&amp;hellip;</description><content type="html"><![CDATA[<p>When I first installed <a href="https://dd-wrt.com/">dd-wrt</a> (no support from <a href="https://openwrt.org/">openwrt</a>) on <a href="https://www.netgear.com/home/online-gaming/routers/xr500/">my router</a>, I enabled HTTPS-only access for the web UI.<br>
@@ -402,37 +402,37 @@ There was none&hellip;</p>
 </ul>
 <p>I found it hard to believe that dd-wrt had no GUI setting for a custom SSL cert, even more that there wouldn&rsquo;t be some <code>nvram</code> setting to store one, at least using ssh&hellip;</p>
 <p>Both options would be ok, but I decided to take a quick look at dd-wrt code and found <a href="https://github.com/mirror/dd-wrt/blob/088ba261dfe84e43e5954dd66e9ced02c01a1a95/src/router/httpd/httpd.c#L1564-L1583">this</a>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#if defined(HAVE_OPENSSL) || defined(HAVE_MATRIXSSL) || defined(HAVE_POLARSSL)
-</span><span class="cp"></span>		<span class="kt">char</span> <span class="o">*</span><span class="n">cert</span> <span class="o">=</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_cert&#34;</span><span class="p">);</span>
-		<span class="kt">char</span> <span class="o">*</span><span class="n">key</span> <span class="o">=</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_key&#34;</span><span class="p">);</span>
-		<span class="kt">char</span> <span class="o">*</span><span class="n">certfile</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-		<span class="kt">char</span> <span class="o">*</span><span class="n">keyfile</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-		<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">cert</span><span class="p">)</span> <span class="p">{</span>
-			<span class="n">certfile</span> <span class="o">=</span> <span class="s">&#34;/tmp/https_cert&#34;</span><span class="p">;</span>
-			<span class="n">writenvram</span><span class="p">(</span><span class="s">&#34;https_cert&#34;</span><span class="p">,</span> <span class="n">certfile</span><span class="p">);</span>
-		<span class="p">}</span>
-		<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-			<span class="n">keyfile</span> <span class="o">=</span> <span class="s">&#34;/tmp/https_key&#34;</span><span class="p">;</span>
-			<span class="n">writenvram</span><span class="p">(</span><span class="s">&#34;https_key&#34;</span><span class="p">,</span> <span class="n">keyfile</span><span class="p">);</span>
-		<span class="p">}</span>
-		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">certfile</span><span class="p">)</span>
-			<span class="n">certfile</span> <span class="o">=</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_cert_file&#34;</span><span class="p">);</span>
-		<span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="n">certfile</span><span class="p">)</span>
-			<span class="n">certfile</span> <span class="o">=</span> <span class="n">CERT_FILE</span><span class="p">;</span>
-		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">keyfile</span><span class="p">)</span>
-			<span class="n">keyfile</span> <span class="o">=</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_key_file&#34;</span><span class="p">);</span>
-		<span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="n">keyfile</span><span class="p">)</span>
-			<span class="n">keyfile</span> <span class="o">=</span> <span class="n">KEY_FILE</span><span class="p">;</span>
-<span class="cp">#endif
-</span></code></pre></div><p>Taking a look at blame it points to <a href="https://github.com/mirror/dd-wrt/commit/e27ffb50f592a58a392c789a24e2e681eb298112">rev 44703</a>, so sort of recent.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#if defined(HAVE_OPENSSL) || defined(HAVE_MATRIXSSL) || defined(HAVE_POLARSSL)
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>		<span class="kt">char</span> <span class="o">*</span><span class="n">cert</span> <span class="o">=</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_cert&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">char</span> <span class="o">*</span><span class="n">key</span> <span class="o">=</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_key&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">char</span> <span class="o">*</span><span class="n">certfile</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">char</span> <span class="o">*</span><span class="n">keyfile</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">cert</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">certfile</span> <span class="o">=</span> <span class="s">&#34;/tmp/https_cert&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="n">writenvram</span><span class="p">(</span><span class="s">&#34;https_cert&#34;</span><span class="p">,</span> <span class="n">certfile</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">keyfile</span> <span class="o">=</span> <span class="s">&#34;/tmp/https_key&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="n">writenvram</span><span class="p">(</span><span class="s">&#34;https_key&#34;</span><span class="p">,</span> <span class="n">keyfile</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">certfile</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="n">certfile</span> <span class="o">=</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_cert_file&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="n">certfile</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="n">certfile</span> <span class="o">=</span> <span class="n">CERT_FILE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">keyfile</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="n">keyfile</span> <span class="o">=</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_key_file&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="o">!*</span><span class="n">keyfile</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="n">keyfile</span> <span class="o">=</span> <span class="n">KEY_FILE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span></code></pre></div><p>Taking a look at blame it points to <a href="https://github.com/mirror/dd-wrt/commit/e27ffb50f592a58a392c789a24e2e681eb298112">rev 44703</a>, so sort of recent.</p>
 <p>It seems before it already supported specifying a custom location but only if was compiled with <code>HAVE_CUSTOMSSLCERT</code> 🤷</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#ifdef HAVE_CUSTOMSSLCERT
-</span><span class="cp"></span>		<span class="k">if</span> <span class="p">(</span><span class="n">SSL_CTX_use_certificate_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">certfile</span><span class="p">,</span> <span class="n">SSL_FILETYPE_PEM</span><span class="p">)</span>
-		<span class="k">if</span> <span class="p">(</span><span class="n">SSL_CTX_use_certificate_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_cert_file&#34;</span><span class="p">),</span> <span class="n">SSL_FILETYPE_PEM</span><span class="p">)</span>
-<span class="cp">#else
-</span><span class="cp"></span>		<span class="k">if</span> <span class="p">(</span><span class="n">SSL_CTX_use_certificate_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">CERT_FILE</span><span class="p">,</span> <span class="n">SSL_FILETYPE_PEM</span><span class="p">)</span>
-<span class="cp">#endif
-</span></code></pre></div><p>Anyway, I haven&rsquo;t found these new nvram settings documented anywhere, so I&rsquo;ll highlight them here:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#ifdef HAVE_CUSTOMSSLCERT
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>		<span class="k">if</span> <span class="p">(</span><span class="n">SSL_CTX_use_certificate_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">certfile</span><span class="p">,</span> <span class="n">SSL_FILETYPE_PEM</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">SSL_CTX_use_certificate_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">nvram_safe_get</span><span class="p">(</span><span class="s">&#34;https_cert_file&#34;</span><span class="p">),</span> <span class="n">SSL_FILETYPE_PEM</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#else
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>		<span class="k">if</span> <span class="p">(</span><span class="n">SSL_CTX_use_certificate_file</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">CERT_FILE</span><span class="p">,</span> <span class="n">SSL_FILETYPE_PEM</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span></code></pre></div><p>Anyway, I haven&rsquo;t found these new nvram settings documented anywhere, so I&rsquo;ll highlight them here:</p>
 <ul>
 <li><code>https_cert</code> / <code>https_key</code> - set them to the raw content of a cert / key and done, no need to store them anywhere in the router filesystem (so it does not require JFFS enabled)</li>
 <li><code>https_cert_file</code> / <code>https_key_file</code> - set them to the paths to each respective file, so you&rsquo;ll have to enable JFFS (or embed in the image, though that wouldn&rsquo;t make much sense - just overwrite the default one). I assume this might be helpful if <a href="https://letsencrypt.org/">Let&rsquo;s Encrypt</a> (or any other form of short-lived certs) are used and it&rsquo;s easier to replace a file that push to <code>nvram</code>. Or maybe if a very long chain of trust is used in the cert&hellip;?</li>
@@ -441,20 +441,20 @@ There was none&hellip;</p>
 <ul>
 <li>generate certificate with <a href="https://github.com/jsha/minica">minica</a></li>
 </ul>
-<pre><code>minica -ca-cert .. -ca-key .. -domains myrouter.internal -ip-addresses 192.168.1.1
+<pre tabindex="0"><code>minica -ca-cert .. -ca-key .. -domains myrouter.internal -ip-addresses 192.168.1.1
 </code></pre><ul>
 <li>ssh to router and set the <code>nvram</code> keys:</li>
 </ul>
-<pre><code>$ nvram set https_cert='-----BEGIN CERTIFICATE-----
+<pre tabindex="0"><code>$ nvram set https_cert=&#39;-----BEGIN CERTIFICATE-----
 ...
------END CERTIFICATE-----'
-$ nvram set https_key='-----BEGIN RSA PRIVATE KEY-----
+-----END CERTIFICATE-----&#39;
+$ nvram set https_key=&#39;-----BEGIN RSA PRIVATE KEY-----
 ...
 -----END RSA PRIVATE KEY-----
 </code></pre><ul>
 <li>reload web UI</li>
 </ul>
-<pre><code>$ stopservice httpd
+<pre tabindex="0"><code>$ stopservice httpd
 $ startservice httpd
 </code></pre>]]></content></item><item><title>0xF404 Mono Price, Mini Print</title><link>https://rpg.skmobi.com/posts/0xf404_mini_delta/</link><pubDate>Wed, 09 Dec 2020 23:38:59 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0xf404_mini_delta/</guid><description>TL;DR; One year ago I bought a MP Mini Delta, my final review:
 Pros:
@@ -559,37 +559,37 @@ Even though GCP monitoring seems oriented to metrics from GCP services it also a
 <p>Even though GCP monitoring seems oriented to metrics from GCP services it also allows you to create <a href="https://cloud.google.com/logging/docs/logs-based-metrics/">logs-based metrics</a>.<br>
 This basically allows you to defined rules to extract data points from logs into metrics that can be monitored and alerted on.</p>
 <p>First things first: based on <a href="/posts/0xd755_gcp_logging/">that previous post about GCP logging</a>, and assuming you have the setup mentioned there to ship logs to GCP/stackdriver, you can use <a href="https://fluentbit.io/">fluentbit</a> to generate these logs.</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">~# /opt/td-agent-bit/bin/td-agent-bit -i mem -o stdout
-Fluent Bit v1.5.6
-
-<span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>engine<span class="o">]</span> started <span class="o">(</span><span class="nv">pid</span><span class="o">=</span>21309<span class="o">)</span>
-<span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>storage<span class="o">]</span> <span class="nv">version</span><span class="o">=</span>1.0.5, initializing...
-<span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>storage<span class="o">]</span> in-memory
-<span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>storage<span class="o">]</span> normal synchronization mode, checksum disabled, <span class="nv">max_chunks_up</span><span class="o">=</span><span class="m">128</span>
-<span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>sp<span class="o">]</span> stream processor started
-<span class="o">[</span>0<span class="o">]</span> mem.0: <span class="o">[</span>1606182084.325065322, <span class="o">{</span><span class="s2">&#34;Mem.total&#34;</span><span class="o">=</span>&gt;948084, <span class="s2">&#34;Mem.used&#34;</span><span class="o">=</span>&gt;772048, <span class="s2">&#34;Mem.free&#34;</span><span class="o">=</span>&gt;176036, <span class="s2">&#34;Swap.total&#34;</span><span class="o">=</span>&gt;102396, <span class="s2">&#34;Swap.used&#34;</span><span class="o">=</span>&gt;6608, <span class="s2">&#34;Swap.free&#34;</span><span class="o">=</span>&gt;95788<span class="o">}]</span>
-<span class="o">[</span>1<span class="o">]</span> mem.0: <span class="o">[</span>1606182085.325055771, <span class="o">{</span><span class="s2">&#34;Mem.total&#34;</span><span class="o">=</span>&gt;948084, <span class="s2">&#34;Mem.used&#34;</span><span class="o">=</span>&gt;772088, <span class="s2">&#34;Mem.free&#34;</span><span class="o">=</span>&gt;175996, <span class="s2">&#34;Swap.total&#34;</span><span class="o">=</span>&gt;102396, <span class="s2">&#34;Swap.used&#34;</span><span class="o">=</span>&gt;6608, <span class="s2">&#34;Swap.free&#34;</span><span class="o">=</span>&gt;95788<span class="o">}]</span>
-<span class="o">[</span>2<span class="o">]</span> mem.0: <span class="o">[</span>1606182086.325105700, <span class="o">{</span><span class="s2">&#34;Mem.total&#34;</span><span class="o">=</span>&gt;948084, <span class="s2">&#34;Mem.used&#34;</span><span class="o">=</span>&gt;772904, <span class="s2">&#34;Mem.free&#34;</span><span class="o">=</span>&gt;175180, <span class="s2">&#34;Swap.total&#34;</span><span class="o">=</span>&gt;102396, <span class="s2">&#34;Swap.used&#34;</span><span class="o">=</span>&gt;6608, <span class="s2">&#34;Swap.free&#34;</span><span class="o">=</span>&gt;95788<span class="o">}]</span>
-</code></pre></div><p>configuration file <code>/etc/td-agent-bit/td-agent-bit.conf</code> would be updated with something like:</p>
-<div class="highlight"><pre class="chroma"><code class="language-ini" data-lang="ini"><span class="na">...</span>
-
-<span class="k">[INPUT]</span>
-    <span class="na">Name cpu</span>
-    <span class="na">Tag cpu</span>
-    <span class="na">Interval_Sec 10</span>
-
-<span class="k">[INPUT]</span>
-    <span class="na">Name mem</span>
-    <span class="na">Tag mem</span>
-    <span class="na">Interval_Sec 10</span>
-
-<span class="na">...</span>
-
-<span class="k">[OUTPUT]</span>
-    <span class="na">Name stackdriver</span>
-    <span class="na">google_service_credentials /etc/gcreds.json</span>
-    <span class="na">Match *</span>
-</code></pre></div><p>Logs will then show up in GCP Logs Viewer:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">~# /opt/td-agent-bit/bin/td-agent-bit -i mem -o stdout
+</span></span><span class="line"><span class="cl">Fluent Bit v1.5.6
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>engine<span class="o">]</span> started <span class="o">(</span><span class="nv">pid</span><span class="o">=</span>21309<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>storage<span class="o">]</span> <span class="nv">version</span><span class="o">=</span>1.0.5, initializing...
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>storage<span class="o">]</span> in-memory
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>storage<span class="o">]</span> normal synchronization mode, checksum disabled, <span class="nv">max_chunks_up</span><span class="o">=</span><span class="m">128</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2020/11/24 01:41:24<span class="o">]</span> <span class="o">[</span> info<span class="o">]</span> <span class="o">[</span>sp<span class="o">]</span> stream processor started
+</span></span><span class="line"><span class="cl"><span class="o">[</span>0<span class="o">]</span> mem.0: <span class="o">[</span>1606182084.325065322, <span class="o">{</span><span class="s2">&#34;Mem.total&#34;</span><span class="o">=</span>&gt;948084, <span class="s2">&#34;Mem.used&#34;</span><span class="o">=</span>&gt;772048, <span class="s2">&#34;Mem.free&#34;</span><span class="o">=</span>&gt;176036, <span class="s2">&#34;Swap.total&#34;</span><span class="o">=</span>&gt;102396, <span class="s2">&#34;Swap.used&#34;</span><span class="o">=</span>&gt;6608, <span class="s2">&#34;Swap.free&#34;</span><span class="o">=</span>&gt;95788<span class="o">}]</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>1<span class="o">]</span> mem.0: <span class="o">[</span>1606182085.325055771, <span class="o">{</span><span class="s2">&#34;Mem.total&#34;</span><span class="o">=</span>&gt;948084, <span class="s2">&#34;Mem.used&#34;</span><span class="o">=</span>&gt;772088, <span class="s2">&#34;Mem.free&#34;</span><span class="o">=</span>&gt;175996, <span class="s2">&#34;Swap.total&#34;</span><span class="o">=</span>&gt;102396, <span class="s2">&#34;Swap.used&#34;</span><span class="o">=</span>&gt;6608, <span class="s2">&#34;Swap.free&#34;</span><span class="o">=</span>&gt;95788<span class="o">}]</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>2<span class="o">]</span> mem.0: <span class="o">[</span>1606182086.325105700, <span class="o">{</span><span class="s2">&#34;Mem.total&#34;</span><span class="o">=</span>&gt;948084, <span class="s2">&#34;Mem.used&#34;</span><span class="o">=</span>&gt;772904, <span class="s2">&#34;Mem.free&#34;</span><span class="o">=</span>&gt;175180, <span class="s2">&#34;Swap.total&#34;</span><span class="o">=</span>&gt;102396, <span class="s2">&#34;Swap.used&#34;</span><span class="o">=</span>&gt;6608, <span class="s2">&#34;Swap.free&#34;</span><span class="o">=</span>&gt;95788<span class="o">}]</span>
+</span></span></code></pre></div><p>configuration file <code>/etc/td-agent-bit/td-agent-bit.conf</code> would be updated with something like:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[INPUT]</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Name cpu</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Tag cpu</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Interval_Sec 10</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[INPUT]</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Name mem</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Tag mem</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Interval_Sec 10</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[OUTPUT]</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Name stackdriver</span>
+</span></span><span class="line"><span class="cl">    <span class="na">google_service_credentials /etc/gcreds.json</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Match *</span>
+</span></span></code></pre></div><p>Logs will then show up in GCP Logs Viewer:</p>
 
 
 
@@ -598,25 +598,25 @@ Fluent Bit v1.5.6
 
 
 <a href="/posts/0x9b4b_gcp_metrics/shot1.png">
-    <img src="/posts/0x9b4b_gcp_metrics/shot1_hu74071fae66812d2454692a91eaf0d9b6_107407_600x0_resize_box_2.png" width="600" height="119">
+    <img src="/posts/0x9b4b_gcp_metrics/shot1_hu74071fae66812d2454692a91eaf0d9b6_107407_600x0_resize_box_3.png" width="600" height="119">
 </a>
 
 <p>As an extra step, as fluentbit <code>mem</code> outputs bytes, GCP does not allow any transformation of the data and visualization with multiple hostnames is friendlier when using percentage (instead of absolute values), I&rsquo;ve created <a href="https://github.com/fopina/fluent-bit-filter-math">a fluenbit math filter</a>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-ini" data-lang="ini"><span class="na">...</span>
-<span class="k">[INPUT]</span>
-    <span class="na">Name mem</span>
-    <span class="na">Tag mem</span>
-    <span class="na">Interval_Sec 10</span>
-
-<span class="k">[FILTER]</span>
-    <span class="na">Name math</span>
-    <span class="na">Match mem</span>
-    <span class="na">Operation div</span>
-    <span class="na">Field Mem.used</span>
-    <span class="na">Field Mem.total</span>
-    <span class="na">Output_field Mem.usage</span>
-<span class="na">...</span>
-</code></pre></div><p>This <code>[FILTER]</code> entry will add <code>Mem.usage</code> to the output (which is <code>Mem.used / Mem.total</code>).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">...</span>
+</span></span><span class="line"><span class="cl"><span class="k">[INPUT]</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Name mem</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Tag mem</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Interval_Sec 10</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[FILTER]</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Name math</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Match mem</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Operation div</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Field Mem.used</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Field Mem.total</span>
+</span></span><span class="line"><span class="cl">    <span class="na">Output_field Mem.usage</span>
+</span></span><span class="line"><span class="cl"><span class="na">...</span>
+</span></span></code></pre></div><p>This <code>[FILTER]</code> entry will add <code>Mem.usage</code> to the output (which is <code>Mem.used / Mem.total</code>).</p>
 <p>In the <code>Logs Viewer</code> you can then click <code>Actions</code>, <code>Create Metric</code> and set it up.</p>
 
 
@@ -626,7 +626,7 @@ Fluent Bit v1.5.6
 
 
 <a href="/posts/0x9b4b_gcp_metrics/shot2.png">
-    <img src="/posts/0x9b4b_gcp_metrics/shot2_hud475d487dd79bc8f34550ec4e3280d1a_347900_600x0_resize_box_2.png" width="600" height="252">
+    <img src="/posts/0x9b4b_gcp_metrics/shot2_hud475d487dd79bc8f34550ec4e3280d1a_347900_600x0_resize_box_3.png" width="600" height="252">
 </a>
 
 <p>Type <code>counter</code> will just measure the number of log lines for the given query while <code>distribution</code> will extract an actual value from each line (distribution being the right choice here).</p>
@@ -639,7 +639,7 @@ Fluent Bit v1.5.6
 
 
 <a href="/posts/0x9b4b_gcp_metrics/shot3.png">
-    <img src="/posts/0x9b4b_gcp_metrics/shot3_hucdb481de5eb74ed37e831e5a9b7d20d0_374560_600x0_resize_box_2.png" width="600" height="320">
+    <img src="/posts/0x9b4b_gcp_metrics/shot3_hucdb481de5eb74ed37e831e5a9b7d20d0_374560_600x0_resize_box_3.png" width="600" height="320">
 </a>
 
 <h3 id="note">Note</h3>
@@ -714,7 +714,7 @@ Then a webapp could open the garage door?</p>
 
 
 <a href="/posts/0xcf53_rgr/scheme1.png">
-    <img src="/posts/0xcf53_rgr/scheme1_hu2b2452184f27a22128abfd49f5d9a7ab_394485_500x0_resize_box_2.png" width="500" height="168">
+    <img src="/posts/0xcf53_rgr/scheme1_hu2b2452184f27a22128abfd49f5d9a7ab_394485_500x0_resize_box_3.png" width="500" height="168">
 </a>
 
 
@@ -728,18 +728,18 @@ Then a webapp could open the garage door?</p>
     <img src="/posts/0xcf53_rgr/basic_huef0e227d741b1d54e2d60df26055aa77_279911_300x0_resize_q75_box.jpeg" width="300" height="400">
 </a>
 </p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># shell over python, just for fun</span>
-<span class="c1"># export pin to userspace</span>
-<span class="nb">echo</span> <span class="s2">&#34;18&#34;</span> &gt; /sys/class/gpio/export
-<span class="c1"># Sets pin 18 as an output</span>
-<span class="nb">echo</span> <span class="s2">&#34;out&#34;</span> &gt; /sys/class/gpio/gpio18/direction
-<span class="c1"># &#34;push&#34; the button</span>
-<span class="nb">echo</span> <span class="s2">&#34;1&#34;</span> &gt; /sys/class/gpio/gpio18/value
-<span class="c1"># for 3 seconds</span>
-sleep <span class="m">3</span>
-<span class="c1"># release</span>
-<span class="nb">echo</span> <span class="s2">&#34;0&#34;</span> &gt; /sys/class/gpio/gpio18/value 
-</code></pre></div><p>And Sesame is open.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># shell over python, just for fun</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># export pin to userspace</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;18&#34;</span> &gt; /sys/class/gpio/export
+</span></span><span class="line"><span class="cl"><span class="c1"># Sets pin 18 as an output</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;out&#34;</span> &gt; /sys/class/gpio/gpio18/direction
+</span></span><span class="line"><span class="cl"><span class="c1"># &#34;push&#34; the button</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;1&#34;</span> &gt; /sys/class/gpio/gpio18/value
+</span></span><span class="line"><span class="cl"><span class="c1"># for 3 seconds</span>
+</span></span><span class="line"><span class="cl">sleep <span class="m">3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># release</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;0&#34;</span> &gt; /sys/class/gpio/gpio18/value 
+</span></span></code></pre></div><p>And Sesame is open.</p>
 <h2 id="you-must-live-twice">You Must Live Twice</h2>
 <p>All good and simple, but what about feedback? If the garage opener battery is dead, the Pi cannot <em>see</em> it anywhere&hellip;</p>
 <p>Let&rsquo;s use a second GPIO pin as input and enable it with the current from the opener!<br>
@@ -756,7 +756,7 @@ Déjà vu, another 4N25 it is then, the other way around: input will be the gara
 
 
 <a href="/posts/0xcf53_rgr/scheme2.png">
-    <img src="/posts/0xcf53_rgr/scheme2_hub59d32c9272cd5a9921cbd512959cabd_239752_500x0_resize_box_2.png" width="500" height="212">
+    <img src="/posts/0xcf53_rgr/scheme2_hub59d32c9272cd5a9921cbd512959cabd_239752_500x0_resize_box_3.png" width="500" height="212">
 </a>
 
 <ul>
@@ -775,8 +775,8 @@ Déjà vu, another 4N25 it is then, the other way around: input will be the gara
 
 <p>And there: enabling GPIO 18 will enable the opener that then enables GPIO 24. If opener battery is dead, it won&rsquo;t trigger the second 4N25, not enabling GPIO 24.</p>
 <p>In this setup, there&rsquo;s no GND connected to GPIO 24 so the GPIO setup needs proper <code>pull_up_down</code>:</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">pull_up_down</span><span class="o">=</span><span class="n">GPIO</span><span class="o">.</span><span class="n">PUD_DOWN</span><span class="p">)</span>
-</code></pre></div><h2 id="pentapussy">Pentapussy</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">GPIO</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="n">GPIO</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">pull_up_down</span><span class="o">=</span><span class="n">GPIO</span><span class="o">.</span><span class="n">PUD_DOWN</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="pentapussy">Pentapussy</h2>
 <p>Time to trim a stripboard and solder!</p>
 <p>
 
@@ -856,11 +856,11 @@ I would just reboot it once again and everything would be fine, so I postponed l
 <ul>
 <li>
 <p>Plug TV and boot Pi (so it autodetects the right resolution) and save current settings</p>
-<pre><code>sudo tvservice -d /boot/edid.dat
+<pre tabindex="0"><code>sudo tvservice -d /boot/edid.dat
 </code></pre></li>
 <li>
 <p>Then update <code>/boot/config.txt</code></p>
-<pre><code>hdmi_edid_file=1
+<pre tabindex="0"><code>hdmi_edid_file=1
 </code></pre></li>
 </ul>
 ]]></content></item><item><title>0x8490 Privileged Swarm Services</title><link>https://rpg.skmobi.com/posts/0x8490_privileged_swarm_service/</link><pubDate>Sat, 07 Mar 2020 14:38:07 +0000</pubDate><guid>https://rpg.skmobi.com/posts/0x8490_privileged_swarm_service/</guid><description>Some docker images require extra capabilities to work, ie:
@@ -876,49 +876,49 @@ Until then, the best solution seems to be spinning up a service that starts the 
 <p>There are a lot of issues on their github(s) such as <a href="https://github.com/docker/swarmkit/issues/1030">this</a>, <a href="https://github.com/moby/moby/issues/25885">this</a> or <a href="https://github.com/moby/moby/pull/38380">this</a>.</p>
 <p>It seems there is consensus into adding the feature to swarmkit though it won&rsquo;t be available before 19.06 or 19.09.</p>
 <p>Until then, the best solution seems to be spinning up a service that starts the container after, such as:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">web</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">docker:19.03</span><span class="w">
-</span><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l">sh -c &#34;docker pull fopina/octoprint &amp;&amp; docker run </span><span class="w">
-</span><span class="w">                        </span>--<span class="l">rm</span><span class="w">
-</span><span class="w">                        </span>--<span class="l">name octoprint_real</span><span class="w">
-</span><span class="w">                        </span>-<span class="l">v /nfs/path/to/octoprint/config:/root/.octoprint</span><span class="w">
-</span><span class="w">                        </span>--<span class="l">device=/dev/ttyAMA0</span><span class="w">
-</span><span class="w">                        </span>-<span class="l">p 5000:5000</span><span class="w">
-</span><span class="w">                        </span><span class="l">fopina/octoprint&#34;</span><span class="w">
-</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="l">/var/run/docker.sock:/var/run/docker.sock</span><span class="w">
-</span><span class="w">      </span>- <span class="l">/root/.docker:/root/.docker:ro</span><span class="w">
-</span><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">replicated</span><span class="w">
-</span><span class="w">      </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">      </span><span class="nt">placement</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">constraints</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">node.hostname == printingPi]</span><span class="w">
-</span></code></pre></div><p>Why would you use swarm service for this, since it&rsquo;s bound to the specific node where the USB cable is connected?</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">web</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">docker:19.03</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l">sh -c &#34;docker pull fopina/octoprint &amp;&amp; docker run </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span>--<span class="l">rm</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span>--<span class="l">name octoprint_real</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span>-<span class="l">v /nfs/path/to/octoprint/config:/root/.octoprint</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span>--<span class="l">device=/dev/ttyAMA0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span>-<span class="l">p 5000:5000</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="l">fopina/octoprint&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">/var/run/docker.sock:/var/run/docker.sock</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">/root/.docker:/root/.docker:ro</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">replicated</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">placement</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">constraints</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">node.hostname == printingPi]</span><span class="w">
+</span></span></span></code></pre></div><p>Why would you use swarm service for this, since it&rsquo;s bound to the specific node where the USB cable is connected?</p>
 <p>In this case, it&rsquo;s managing all <strong>services</strong> the same way, I don&rsquo;t want to deploy some with <code>docker-compose</code> and others with <code>docker swarm deploy</code>&hellip;</p>
 <p>But in the case of, let&rsquo;s say <a href="https://rpg.skmobi.com/posts/0x6baa_openvpn/">openvpn</a>, it could be useful for easily scaling up across different nodes.</p>
 <p>We could use a stack like the first:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">vpnd</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">docker:19.03</span><span class="w">
-</span><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l">docker run --rm</span><span class="w">
-</span><span class="w">                        </span>--<span class="l">name openvpn_real</span><span class="w">
-</span><span class="w">                        </span>--<span class="l">cap-add NET_ADMIN</span><span class="w">
-</span><span class="w">                        </span>-<span class="l">p 443:443/udp</span><span class="w">
-</span><span class="w">                        </span>-<span class="l">v /nfs/path/to/openvpn/:/etc/openvpn/</span><span class="w">
-</span><span class="w">                        </span><span class="l">fopina/openvpn</span><span class="w">
-</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="l">/var/run/docker.sock:/var/run/docker.sock</span><span class="w">
-</span><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">replicated</span><span class="w">
-</span><span class="w">      </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">      </span><span class="nt">placement</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="nt">constraints</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">node.role == manager]</span><span class="w">
-</span></code></pre></div><p>But as openvpn is not running in the actual service container, the port is not published in the swarm VIP / routing mesh.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">vpnd</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">docker:19.03</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l">docker run --rm</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span>--<span class="l">name openvpn_real</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span>--<span class="l">cap-add NET_ADMIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span>-<span class="l">p 443:443/udp</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span>-<span class="l">v /nfs/path/to/openvpn/:/etc/openvpn/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="l">fopina/openvpn</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">/var/run/docker.sock:/var/run/docker.sock</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">replicated</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">placement</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">constraints</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">node.role == manager]</span><span class="w">
+</span></span></span></code></pre></div><p>But as openvpn is not running in the actual service container, the port is not published in the swarm VIP / routing mesh.
 If we can scale it up, it needs to end in different nodes (as there&rsquo;s an host bound port) and to make use of the replicas, we need to use the node IP (not <em>any</em> node IP as the usual routing mesh)&hellip;</p>
 <p>My overkill solution:</p>
 <ul>
@@ -935,27 +935,27 @@ If we can scale it up, it needs to end in different nodes (as there&rsquo;s an h
 </ul>
 <p>To accomplish this, I&rsquo;ve created the image <a href="https://hub.docker.com/r/fopina/swarm-service-proxy">fopina/swarm-service-proxy</a> (built from <a href="https://github.com/fopina/docker-swarm-service-proxy">this</a>)</p>
 <p>The stack definition using this is</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="nt">vpnd</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">fopina/swarm-service-proxy:1</span><span class="w">
-</span><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span>--<span class="l">rm</span><span class="w">
-</span><span class="w">             </span>--<span class="l">cap-add NET_ADMIN</span><span class="w">
-</span><span class="w">             </span>-<span class="l">v /nfs/path/to/openvpn/:/etc/openvpn/</span><span class="w">
-</span><span class="w">             </span><span class="l">fopina/openvpn</span><span class="w">
-</span><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="l">/var/run/docker.sock:/var/run/docker.sock</span><span class="w">
-</span><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">PROXIED_PORT</span><span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
-</span><span class="w">      </span><span class="nt">PROXIED_PROTO</span><span class="p">:</span><span class="w"> </span><span class="l">udp</span><span class="w">
-</span><span class="w">      </span><span class="nt">PROXIED_NAME</span><span class="p">:</span><span class="w"> </span><span class="l">openvpn_real</span><span class="w">
-</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="m">443</span><span class="p">:</span><span class="m">443</span><span class="l">/udp</span><span class="w">
-</span><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">replicated</span><span class="w">
-</span><span class="w">      </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span></code></pre></div><p>With this, port is actually published from the service (not to the secondary container) so it makes use of the routing mesh (and it doesn&rsquo;t lock the port in the docker host where it lands).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.1&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">vpnd</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">fopina/swarm-service-proxy:1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span>--<span class="l">rm</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">             </span>--<span class="l">cap-add NET_ADMIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">             </span>-<span class="l">v /nfs/path/to/openvpn/:/etc/openvpn/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">             </span><span class="l">fopina/openvpn</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">/var/run/docker.sock:/var/run/docker.sock</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">PROXIED_PORT</span><span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">PROXIED_PROTO</span><span class="p">:</span><span class="w"> </span><span class="l">udp</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">PROXIED_NAME</span><span class="p">:</span><span class="w"> </span><span class="l">openvpn_real</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="m">443</span><span class="p">:</span><span class="m">443</span><span class="l">/udp</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l">replicated</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span></code></pre></div><p>With this, port is actually published from the service (not to the secondary container) so it makes use of the routing mesh (and it doesn&rsquo;t lock the port in the docker host where it lands).</p>
 <p>Syntax remained as close as possible to the initial version: command is used as if it was <code>docker run &lt;command&gt;</code>.</p>
 <ul>
 <li><code>PROXIED_PORT</code> is the internal port of the secondary container.</li>
@@ -986,31 +986,31 @@ I guess I could try to use one of those VPN services (with better privacy terms 
 <ol>
 <li>
 <p>Initialize the configuration directory</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm <span class="se">\
-</span><span class="se"></span>        -v testvpn:/etc/openvpn <span class="se">\
-</span><span class="se"></span>        fopina/openvpn <span class="se">\
-</span><span class="se"></span>        ovpn_genconfig -u udp://my.external.ip:9999
-</code></pre></div><p><code>testvpn</code> used like this will be a <a href="https://docs.docker.com/storage/volumes/">named volume</a> which is probably the cleanest and easiest option for most cases.<br>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run --rm <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>        -v testvpn:/etc/openvpn <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>        fopina/openvpn <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>        ovpn_genconfig -u udp://my.external.ip:9999
+</span></span></code></pre></div><p><code>testvpn</code> used like this will be a <a href="https://docs.docker.com/storage/volumes/">named volume</a> which is probably the cleanest and easiest option for most cases.<br>
 If you want to make configuration files available to the host filesystem or if you&rsquo;re using this in a <a href="https://docs.docker.com/engine/swarm/">swarm</a>, then you don&rsquo;t use a named volume&hellip;<br>
 <code>udp://my.external.ip:9999</code> can be <code>tcp://</code> instead if you need to use TCP for some reason, but <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">avoid if possible</a>.<br>
 <code>9999</code> will be port exposed publicly (in your router, for instance), not the one published by the container - might be the same but not necessarily.</p>
 </li>
 <li>
 <p>Generate CA</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm -ti <span class="se">\
-</span><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
-</span><span class="se"></span>           fopina/openvpn <span class="se">\
-</span><span class="se"></span>           ovpn_initpki
-</code></pre></div><p>Nothing much to say, just pick a passphrase for the CA that will be used to issue client certificates.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run --rm -ti <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           fopina/openvpn <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           ovpn_initpki
+</span></span></code></pre></div><p>Nothing much to say, just pick a passphrase for the CA that will be used to issue client certificates.</p>
 </li>
 <li>
 <p>Start the service</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run -v testvpn:/etc/openvpn <span class="se">\
-</span><span class="se"></span>           -d -p 9999:1194/udp <span class="se">\
-</span><span class="se"></span>           --restart<span class="o">=</span>always <span class="se">\
-</span><span class="se"></span>           --cap-add<span class="o">=</span>NET_ADMIN <span class="se">\
-</span><span class="se"></span>           fopina/openvpn
-</code></pre></div><p><code>-p 9999:1194/udp</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run -v testvpn:/etc/openvpn <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           -d -p 9999:1194/udp <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           --restart<span class="o">=</span>always <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           --cap-add<span class="o">=</span>NET_ADMIN <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           fopina/openvpn
+</span></span></code></pre></div><p><code>-p 9999:1194/udp</code></p>
 <ul>
 <li>you can choose other published port instead of <code>9999</code></li>
 <li>Leave the internal port <code>1194</code> as that one never changes</li>
@@ -1019,28 +1019,28 @@ If you want to make configuration files available to the host filesystem or if y
 </li>
 <li>
 <p>Generate client configuration</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm -ti <span class="se">\
-</span><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
-</span><span class="se"></span>           fopina/openvpn <span class="se">\
-</span><span class="se"></span>           easyrsa build-client-full CLIENTNAME nopass
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run --rm -ti <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           fopina/openvpn <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           easyrsa build-client-full CLIENTNAME nopass
+</span></span></code></pre></div><ul>
 <li><code>CLIENTNAME</code> should be whatever identifier you want for that profile/device</li>
 <li>remove <code>nopass</code> if you want the profile to have a password (that you will to enter everytime you connect)</li>
 </ul>
 </li>
 <li>
 <p>Generate .ovpn and download link</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm <span class="se">\
-</span><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
-</span><span class="se"></span>           fopina/openvpn:helper <span class="se">\
-</span><span class="se"></span>           ovpn_getclient_link CLIENTNAME
-</code></pre></div><p>This will bundle the previous step into an .ovpn file, upload it to <a href="https://vim.cx">vim.cx</a> (which is a <a href="https://privatebin.info/">PrivateBin</a> instance that supports attachments) and generate a QR code to make it easier to copy to a mobile device.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run --rm <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           fopina/openvpn:helper <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           ovpn_getclient_link CLIENTNAME
+</span></span></code></pre></div><p>This will bundle the previous step into an .ovpn file, upload it to <a href="https://vim.cx">vim.cx</a> (which is a <a href="https://privatebin.info/">PrivateBin</a> instance that supports attachments) and generate a QR code to make it easier to copy to a mobile device.
 If you prefer to manage the file transfer yourself, you can use:</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm <span class="se">\
-</span><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
-</span><span class="se"></span>           fopina/openvpn <span class="se">\
-</span><span class="se"></span>           ovpn_getclient CLIENTNAME &gt; CLIENTNAME.ovpn
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker run --rm <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           -v testvpn:/etc/openvpn <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           fopina/openvpn <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>           ovpn_getclient CLIENTNAME &gt; CLIENTNAME.ovpn
+</span></span></code></pre></div></li>
 </ol>
 <h2 id="done-references">Done: references</h2>
 <ul>
@@ -1090,7 +1090,7 @@ Again, getting lenticular lens was not so easy as it looked, so off and found <a
 <h3 id="example">Example</h3>
 <p><img src="b.png" alt="image 1"><img src="o.png" alt="image 2"></p>
 <p>Running</p>
-<pre><code>python lenticular.py b.png o.png
+<pre tabindex="0"><code>python lenticular.py b.png o.png
 </code></pre><p>Yields</p>
 <p><img src="tmp2p9xKb.png" alt="result image"></p>
 ]]></content></item><item><title>0x0000 The Seed</title><link>https://rpg.skmobi.com/posts/0x0000_the_seed/</link><pubDate>Tue, 07 May 2019 01:37:07 +0100</pubDate><guid>https://rpg.skmobi.com/posts/0x0000_the_seed/</guid><description>Sometimes we need something and we can&amp;rsquo;t find a straight up how-to online.
@@ -1109,31 +1109,31 @@ We want to record our steps to remember later on, but we also want Google to ind
 </ul>
 <h2 id="step-1---hugo-quickstart">Step 1 - Hugo quickstart</h2>
 <p>Follow <a href="https://gohugo.io/getting-started/quick-start/">Hugo quick.start</a> to get a basic page running.</p>
-<pre><code>➜  hugo new site quickstart
+<pre tabindex="0"><code>➜  hugo new site quickstart
 Congratulations! Your new Hugo site is created in quickstart.
 
-Just a few more steps and you're ready to go:
+Just a few more steps and you&#39;re ready to go:
 
 1. Download a theme into the same-named folder.
    Choose a theme from https://themes.gohugo.io/, or
-   create your own with the &quot;hugo new theme &lt;THEMENAME&gt;&quot; command.
+   create your own with the &#34;hugo new theme &lt;THEMENAME&gt;&#34; command.
 2. Perhaps you want to add some content. You can add single files
-   with &quot;hugo new &lt;SECTIONNAME&gt;/&lt;FILENAME&gt;.&lt;FORMAT&gt;&quot;.
-3. Start the built-in live server via &quot;hugo server&quot;.
+   with &#34;hugo new &lt;SECTIONNAME&gt;/&lt;FILENAME&gt;.&lt;FORMAT&gt;&#34;.
+3. Start the built-in live server via &#34;hugo server&#34;.
 
 Visit https://gohugo.io/ for quickstart guide and full documentation.
 ➜  cd quickstart
 ➜  git init
 Initialized empty Git repository in quickstart/.git/
 ➜  git submodule add https://github.com/budparr/gohugo-theme-ananke.git themes/ananke
-Cloning into 'quickstart/themes/ananke'...
+Cloning into &#39;quickstart/themes/ananke&#39;...
 remote: Enumerating objects: 17, done.
 remote: Counting objects: 100% (17/17), done.
 remote: Compressing objects: 100% (15/15), done.
 remote: Total 1349 (delta 3), reused 13 (delta 2), pack-reused 1332
 Receiving objects: 100% (1349/1349), 4.14 MiB | 3.08 MiB/s, done.
 Resolving deltas: 100% (722/722), done.
-➜  echo theme = \&quot;ananke\&quot; &gt;&gt; config.toml
+➜  echo theme = \&#34;ananke\&#34; &gt;&gt; config.toml
 ➜  hugo new posts/my-first-post.md
 quickstart/content/posts/my-first-post.md created
 </code></pre><p>If you run <code>hugo server -D</code> you should be able to open up http://localhost:1313/ and check your brand new blog with one empty post.</p>
@@ -1142,12 +1142,12 @@ quickstart/content/posts/my-first-post.md created
 <li>Create a <a href="https://github.com/">GitHub</a> repository</li>
 <li>Add it to your local repo and push</li>
 </ul>
-<pre><code>➜  git remote add origin git@github.com:YOURUSER/YOURREPO.git
+<pre tabindex="0"><code>➜  git remote add origin git@github.com:YOURUSER/YOURREPO.git
 ➜  git push -u origin master
 </code></pre><ul>
 <li>Publish the site to branch <code>gh-pages</code></li>
 </ul>
-<pre><code>➜  hugo -d /tmp/whatever
+<pre tabindex="0"><code>➜  hugo -d /tmp/whatever
 ➜  git checkout --orphan gh-pages
 ➜  rm -fr *
 ➜  rm .gitmodules
@@ -1159,7 +1159,7 @@ quickstart/content/posts/my-first-post.md created
 </ul>
 <p>After a couple of minutes <em>your brand new blog wit one empty post</em> should be available at <a href="https://YOURUSER.github.io/YOURREPO">https://YOURUSER.github.io/YOURREPO</a></p>
 <h2 id="step-3---extra---custom-cname">Step 3 - EXTRA - Custom CNAME</h2>
-<p>If you&rsquo;d rather use your own (sub)domain (such as <a href="https://rpg.skmobi.com/):">https://rpg.skmobi.com/):</a></p>
+<p>If you&rsquo;d rather use your own (sub)domain (such as <a href="https://rpg.skmobi.com/)">https://rpg.skmobi.com/)</a>:</p>
 <ul>
 <li>Add the (sub)domain to a file named <code>CNAME</code> in the root of the master branch like <a href="https://github.com/fopina/rpg/blob/master/CNAME">this</a></li>
 <li>Setup your DNS with CNAME record pointing to <code>YOURUSER.github.io</code></li>
@@ -1175,43 +1175,43 @@ Original idea taken from <a href="https://www.sidorenko.io/post/2018/12/hugo-on-
 <li>In <code>Environment Variables</code> of <code>Settings</code> of this Travis project, create the variable <code>GITHUB_AUTH_SECRET</code> with the content <code>https://USERNAME:PASSWORD@github.com/YOURUSER/YOURREPO</code>. Use your bot account here if you decided to create one.</li>
 <li>Create the file <code>deploy.sh</code> in your <code>master</code> branch root</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
-</span><span class="cp"></span>
-<span class="nb">set</span> -e
-
-<span class="nb">echo</span> <span class="nv">$GITHUB_AUTH_SECRET</span> &gt; ~/.git-credentials <span class="o">&amp;&amp;</span> chmod <span class="m">0600</span> ~/.git-credentials
-git config --global credential.helper store
-git config --global user.email <span class="s2">&#34;GITHUB_USER@users.noreply.github.com&#34;</span>
-git config --global user.name <span class="s2">&#34;Publishing bot&#34;</span>
-git config --global push.default simple
-
-git fetch origin gh-pages
-git checkout FETCH_HEAD
-git checkout -b gh-pages
-rm -fr *
-mv ../public/* .
-rmdir ../public/
-git add -A
-git commit -m <span class="s2">&#34;rebuilding site on `date`, commit </span><span class="si">${</span><span class="nv">TRAVIS_COMMIT</span><span class="si">}</span><span class="s2"> and job </span><span class="si">${</span><span class="nv">TRAVIS_JOB_NUMBER</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">true</span>
-git push origin gh-pages
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> -e
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$GITHUB_AUTH_SECRET</span> &gt; ~/.git-credentials <span class="o">&amp;&amp;</span> chmod <span class="m">0600</span> ~/.git-credentials
+</span></span><span class="line"><span class="cl">git config --global credential.helper store
+</span></span><span class="line"><span class="cl">git config --global user.email <span class="s2">&#34;GITHUB_USER@users.noreply.github.com&#34;</span>
+</span></span><span class="line"><span class="cl">git config --global user.name <span class="s2">&#34;Publishing bot&#34;</span>
+</span></span><span class="line"><span class="cl">git config --global push.default simple
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">git fetch origin gh-pages
+</span></span><span class="line"><span class="cl">git checkout FETCH_HEAD
+</span></span><span class="line"><span class="cl">git checkout -b gh-pages
+</span></span><span class="line"><span class="cl">rm -fr *
+</span></span><span class="line"><span class="cl">mv ../public/* .
+</span></span><span class="line"><span class="cl">rmdir ../public/
+</span></span><span class="line"><span class="cl">git add -A
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;rebuilding site on `date`, commit </span><span class="si">${</span><span class="nv">TRAVIS_COMMIT</span><span class="si">}</span><span class="s2"> and job </span><span class="si">${</span><span class="nv">TRAVIS_JOB_NUMBER</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">true</span>
+</span></span><span class="line"><span class="cl">git push origin gh-pages
+</span></span></code></pre></div><ul>
 <li>And finally, the <code>.travis.yml</code>, also in your <code>master</code> branch root</li>
 </ul>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l">minimal</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">install</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="l">wget -O /tmp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.55.0/hugo_0.55.0_Linux-64bit.deb</span><span class="w">
-</span><span class="w">  </span>- <span class="l">sudo dpkg -i /tmp/hugo.deb</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">script</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="l">hugo -d ../public</span><span class="w">
-</span><span class="w">  </span>- <span class="l">cp CNAME ../public</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="nt">deploy</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l">script</span><span class="w">
-</span><span class="w">    </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="l">./deploy.sh</span><span class="w">
-</span><span class="w">    </span><span class="nt">skip_cleanup</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span><span class="nt">on</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l">master</span><span class="w">
-</span></code></pre></div><p>Commit these 2 files, push them and you&rsquo;re done! Travis job should kick off and <code>gh-pages</code> branch will be automatically updated, as will your blog.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l">minimal</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">install</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">wget -O /tmp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.55.0/hugo_0.55.0_Linux-64bit.deb</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">sudo dpkg -i /tmp/hugo.deb</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">script</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">hugo -d ../public</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">cp CNAME ../public</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l">script</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="l">./deploy.sh</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">skip_cleanup</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="l">master</span><span class="w">
+</span></span></span></code></pre></div><p>Commit these 2 files, push them and you&rsquo;re done! Travis job should kick off and <code>gh-pages</code> branch will be automatically updated, as will your blog.</p>
 ]]></content></item></channel></rss>
