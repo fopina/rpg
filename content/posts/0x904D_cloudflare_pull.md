@@ -115,3 +115,8 @@ So traefik only binds tls.options based on the configured SNI, not in the SNI re
 Too bad, but still happy overall with the final setup!
 
 Fun part: I finally did this last week and today cloudflare announced [IP changes](https://www.cloudflare.com/ips/). But no, I don't have to do anything about it (anymore).
+
+
+### UPDATE
+
+follow up from https://community.traefik.io/t/default-router-404-error-tls-options/11270
