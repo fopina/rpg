@@ -1,0 +1,14 @@
+# FIXME: is this file read by CF deployment builders?
+# build command: hugo --minify -b $CF_PAGES_URL
+# output directory: public/
+# root directory: /
+
+name = "rpg"
+# FIXME: commented so wrangler is ignored (as it is broken...)
+# pages_build_output_dir = "public"
+
+[vars]
+HUGO_VERSION = "0.98.0"
+
+[env.preview.vars]
+HUGO_VERSION = "0.98.0"
