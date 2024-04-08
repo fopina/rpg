@@ -1,8 +1,0 @@
-# auto publishing should be off as master is published with github pages, not netlify
-
-[build]
-  publish = "public/"
-  command = "hugo --minify -D -F -b /"
-
-[build.environment]
-  HUGO_VERSION = "0.76.5"
