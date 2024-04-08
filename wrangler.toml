@@ -4,7 +4,8 @@
 # root directory: /
 
 name = "rpg"
-pages_build_output_dir = "public"
+# FIXME: commented so wrangler is ignored (as it is broken...)
+# pages_build_output_dir = "public"
 
 [vars]
 HUGO_VERSION = "0.98.0"
