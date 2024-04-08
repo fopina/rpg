@@ -3,6 +3,7 @@
 # output directory: public/
 # root directory: /
 
+name = "rpg"
 pages_build_output_dir = "./public"
 
 [vars]
