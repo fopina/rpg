@@ -1,0 +1,6 @@
+[vars]
+HUGO_VERSION = "1234567asdf"
+
+[env.preview.vars]
+HUGO_VERSION = "8901234bfgd"
+
