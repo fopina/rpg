@@ -2,7 +2,6 @@
 # build command: hugo --minify -b $CF_PAGES_URL
 # output directory: public/
 # root directory: /
-
 name = "rpg"
 pages_build_output_dir = "./public"
 
