@@ -1,6 +1,10 @@
+# FIXME: is this file read by CF deployment builders?
+# build command: hugo --minify -b $CF_PAGES_URL
+# output directory: public/
+# root directory: /
+
 [vars]
-HUGO_VERSION = "1234567asdf"
+HUGO_VERSION = "0.98.0"
 
 [env.preview.vars]
-HUGO_VERSION = "8901234bfgd"
-
+HUGO_VERSION = "0.98.0"
