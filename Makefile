@@ -6,7 +6,7 @@ new:
 
 build:
 ifeq ($(CF_PAGES),1)
-ifeq ($(CF_PAGES_BRANCH),production)
+ifeq ($(CF_PAGES_BRANCH),main)
 	hugo --minify
 else
 	hugo --minify -b $$CF_PAGES_URL
