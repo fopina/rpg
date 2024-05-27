@@ -5,6 +5,14 @@ Master switching (embedded etcd requires 2 nodes / master uses a lot more memory
 Swarm lacks docker features (capabilities)
 Kube is so complex...
 
+## UPDATE May 2024: WILL / NEED to switch regardless because...
+
+* no privilege
+* capabilities took ages to be supported, devices are not yet
+* overlay network sucks (?? Issue with keepalived / constant errors in journal)
+* no affinity, missed for sidecars
+* ... add others ...?
+
 ## To check
 
 * [ ] hostname based routing (traefik)
