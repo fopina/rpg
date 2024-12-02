@@ -1,4 +1,4 @@
 .DS_Store
 /resources
 /public
-.DS_Store
+*.lock
