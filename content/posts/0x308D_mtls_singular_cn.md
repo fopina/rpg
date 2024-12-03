@@ -9,3 +9,6 @@ tags:
   - mtls
 ---
 
+Traefik supports [client authentication (mTLS)](https://doc.traefik.io/traefik/https/tls/#client-authentication-mtls), allowing client certificates issued by a given CA to be required to connect to some services.
+
+However, it does not support filtering only by a subset of Subject CNs (common names).
