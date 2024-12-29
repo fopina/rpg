@@ -1,5 +1,5 @@
 ---
-title: "0x904Drop IPTables Drop"
+title: "0x904 Drop IPTables Drop"
 date: 2021-04-09T01:37:29+01:00
 draft: false
 toc: false

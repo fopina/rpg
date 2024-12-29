@@ -2,7 +2,7 @@ baseURL = "https://rpg.skmobi.com"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 title = "Random Post Generator"
-theme = "hermit"
+theme = "hermit-v2"
 
 enableGitInfo = true
 pygmentsCodefences  = true
