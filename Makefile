@@ -1,5 +1,7 @@
+IMAGE := ghcr.io/hugomods/hugo:reg-0.111.3
+
 all:
-	hugo -DFw serve
+	docker run --rm -p 1313:1313 -v $(PWD):/src $(IMAGE) hugo -DFw serve --bind 0.0.0.0
 
 new:
 	.github/newpost.py
@@ -12,5 +14,5 @@ else
 	hugo --minify -b $$CF_PAGES_URL
 endif
 else
-	hugo --minify
+	docker run --rm -v $(PWD):/src $(IMAGE) hugo --minify
 endif
