@@ -5,7 +5,7 @@
 name = "rpg"
 # FIXME: commented so wrangler is ignored (as it is broken...)
 pages_build_output_dir = "public"
-build = "echo ehlo"
+build = ["echo", "ehlo"]
 
 [vars]
 HUGO_VERSION = "0.111.4"
