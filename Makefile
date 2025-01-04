@@ -1,4 +1,4 @@
-IMAGE := ghcr.io/hugomods/hugo:reg-0.111.3
+IMAGE := ghcr.io/hugomods/hugo:reg-0.140.2
 
 all:
 	docker run --rm -p 1313:1313 -v $(PWD):/src $(IMAGE) hugo -DFw serve --bind 0.0.0.0
