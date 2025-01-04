@@ -5,9 +5,7 @@
 name = "rpg"
 # FIXME: commented so wrangler is ignored (as it is broken...)
 pages_build_output_dir = "public"
-
-[build]
-command = "npm run build" 
+build = "npm run build" 
 
 [vars]
 HUGO_VERSION = "0.111.4"
