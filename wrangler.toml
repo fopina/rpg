@@ -7,7 +7,4 @@ name = "rpg"
 pages_build_output_dir = "public"
 
 [vars]
-HUGO_VERSION = "0.111.3"
-
-[env.preview.vars]
-HUGO_VERSION = "0.111.3"
+HUGO_VERSION = "0.111.4"
