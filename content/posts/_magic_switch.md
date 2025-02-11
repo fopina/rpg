@@ -11,7 +11,7 @@ tags:
   - kvm 
 ---
 
-Apple is CRAZY expensive, unless you really value the small differences its products have... Then it's _just_ very expensive!
+Apple is CRAZY expensive, unless youx really value the small differences its products have... Then it's _just_ very expensive!
 
 I do value some of those differences, yet one huge annoyance is switching across devices with magic mouse/keyboard. Yes, "Universal Control" is not the answer to everything, I don't want to have both laptops connected when I'm using just one of them.
 
