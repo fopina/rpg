@@ -24,3 +24,30 @@ And every single post I can find online wraps up with "just connect the lightnin
 That being said, I did find a comment somewhere (can't remember where) mentioned to "forget devices" in one device and then re-pair in the other one. While this would be even worse than plugging cable, it can be automated, so I did: https://gist.github.com/fopina/71345e937195d88f98899420f147d8b5
 
 -- now left to trigger it whenever docking station is plugged or unplugged --
+
+Decided to give copilot and chatgpt a go on how to trigger a script when USB devices or monitors were plugged or unplugged.
+It accurately mentioned `system_profile SPblabla` to list current usb devices but for the LaunchAgent it would either suggest `WatchPath` /Volumes or /dev, and neither changed when switching my docking station (that has no USB disks connected to it).
+Kept the launchagent definition nevertheless and went off to find some path that would indeed work as I did not want to have the script simply running every X seconds...
+Found it here - https://stackoverflow.com/questions/20099333/terminal-command-to-show-connected-displays-monitors-resolutions
+
+Final launchd:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-0.1.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.skmobi.checksub</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/fipina/tmp/d/a.sh</string>
+    </array>
+<key>WatchPaths</key>
+    <array>
+        <string>/Library/Preferences/com.apple.windowserver.displays.plist</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>
+```
