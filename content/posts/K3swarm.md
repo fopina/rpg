@@ -11,6 +11,7 @@ Kube is so complex...
 * capabilities took ages to be supported, devices are not yet
 * overlay network sucks (?? Issue with keepalived / constant errors in journal)
 * no affinity, missed for sidecars
+* no sharing network namespace (very useful for vpn and other sidecars)
 * ... add others ...?
 
 ## To check
