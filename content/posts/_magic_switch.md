@@ -30,7 +30,7 @@ It accurately mentioned `system_profile SPblabla` to list current usb devices bu
 Kept the launchagent definition nevertheless and went off to find some path that would indeed work as I did not want to have the script simply running every X seconds...
 Found it here - https://stackoverflow.com/questions/20099333/terminal-command-to-show-connected-displays-monitors-resolutions
 
-Final launchd (at ~/Library/LaunchAgents/com.skmobi.checksub.plist):
+Final launchd (`launchctl load ~/Library/LaunchAgents/com.skmobi.checksub.plist`):
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-0.1.dtd">
