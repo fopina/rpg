@@ -40,14 +40,18 @@ Final launchd (`launchctl load ~/Library/LaunchAgents/com.skmobi.checksub.plist`
     <string>com.skmobi.checksub</string>
     <key>ProgramArguments</key>
     <array>
-        <string>.../magic_switch_monitor.sh</string>
+        <string>/Users/fopina/.local/bin/magic_switch_monitor.sh</string>
     </array>
-<key>WatchPaths</key>
+    <key>WatchPaths</key>
     <array>
         <string>/Library/Preferences/com.apple.windowserver.displays.plist</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/magic-switch.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/magic-switch-error.log</string>
 </dict>
 </plist>
 ```
@@ -55,15 +59,20 @@ Final launchd (`launchctl load ~/Library/LaunchAgents/com.skmobi.checksub.plist`
 ```
 #!/bin/sh
 
+# TODO: redirect all logs to unified logging
+# PATH does not have user profile here, add homebrew and .local
+
+export PATH=/opt/homebrew/bin:${HOME}/.local/bin:${PATH}
+
 cd $(dirname $0)
 
-date >> asd.log
-
 if system_profiler SPDisplaysDataType | grep -q 'DELL P2722H'; then
-  echo "turning on" >> asd.log
-  /Users/fipina/.local/bin/magic-switch on
+  echo "turning on"
+  # let the other one turn off first
+  sleep 2
+  magic-switch on
 else
-  echo "turning off" >> asd.log
-  /Users/fipina/.local/bin/magic-switch off
+  echo "turning off"
+  magic-switch off
 fi
 ```
