@@ -62,11 +62,33 @@ Final launchd (`launchctl load ~/Library/LaunchAgents/com.skmobi.checksub.plist`
 # TODO: redirect all logs to unified logging
 # PATH does not have user profile here, add homebrew and .local
 
-export PATH=/opt/homebrew/bin:${HOME}/.local/bin:${PATH}
+export PATH=/opt/homebrew/bin:/usr/local/bin:${HOME}/.local/bin:${PATH}
 
 cd $(dirname $0)
 
 if system_profiler SPDisplaysDataType | grep -q 'DELL P2722H'; then
+  echo "turning on"
+  # let the other one turn off first
+  sleep 2
+  magic-switch on
+else
+  echo "turning off"
+  magic-switch off
+fi
+```
+
+above fails because of macos12 - blabla usb-trigger written with chatgpt blabla
+
+
+```
+#!/bin/sh
+
+# TODO: redirect all logs to unified logging
+# PATH does not have user profile here, add homebrew and .local
+
+export PATH=/opt/homebrew/bin:/usr/local/bin:${HOME}/.local/bin:${PATH}
+
+if [ "$USB_EVENT" = "attach" ]; then
   echo "turning on"
   # let the other one turn off first
   sleep 2
