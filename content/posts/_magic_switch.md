@@ -98,3 +98,27 @@ else
   magic-switch off
 fi
 ```
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-0.1.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.skmobi.checksub</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/fopina/.local/bin/usb-trigger</string>
+        <string>0x17e9</string>
+        <string>0x4307</string>
+        <string>/Users/fopina/.local/bin/magic_switch_monitor.sh</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/magic-switch.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/magic-switch-error.log</string>
+</dict>
+</plist>
+```
