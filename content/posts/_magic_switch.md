@@ -92,10 +92,10 @@ if [ "$USB_EVENT" = "attach" ]; then
   echo "turning on"
   # let the other one turn off first
   sleep 2
-  magic-switch on
+  magic-switch --notify on --retries 2 --connect
 else
   echo "turning off"
-  magic-switch off
+  magic-switch --notify off
 fi
 ```
 
