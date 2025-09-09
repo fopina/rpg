@@ -23,11 +23,16 @@ And every single post I can find online wraps up with "just connect the lightnin
 
 That being said, I did find a comment somewhere (can't remember where) mentioned to "forget devices" in one device and then re-pair in the other one. While this would be even worse than plugging cable, it can be automated, so I did: https://gist.github.com/fopina/71345e937195d88f98899420f147d8b5
 
+> **dependencies** `brew install blueutil`
+
 -- now left to trigger it whenever docking station is plugged or unplugged --
 
 Decided to give copilot and chatgpt a go on how to trigger a script when USB devices or monitors were plugged or unplugged.
 It accurately mentioned `system_profile SPblabla` to list current usb devices but for the LaunchAgent it would either suggest `WatchPath` /Volumes or /dev, and neither changed when switching my docking station (that has no USB disks connected to it).
 Kept the launchagent definition nevertheless and went off to find some path that would indeed work as I did not want to have the script simply running every X seconds...
+
+# first (failed) try
+
 Found it here - https://stackoverflow.com/questions/20099333/terminal-command-to-show-connected-displays-monitors-resolutions
 
 Final launchd (`launchctl load ~/Library/LaunchAgents/com.skmobi.checksub.plist`):
@@ -77,9 +82,11 @@ else
 fi
 ```
 
-**above fails because of macos12** - blabla usb-trigger written with chatgpt blabla
+**above fails because of macos12** 
 
-https://github.com/fopina/usb-trigger/
+# final try (works)
+
+blabla usb-trigger written with chatgpt blabla - https://github.com/fopina/usb-trigger/
 
 ```
 #!/bin/sh
