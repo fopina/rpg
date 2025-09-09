@@ -77,8 +77,9 @@ else
 fi
 ```
 
-above fails because of macos12 - blabla usb-trigger written with chatgpt blabla
+**above fails because of macos12** - blabla usb-trigger written with chatgpt blabla
 
+https://github.com/fopina/usb-trigger/
 
 ```
 #!/bin/sh
