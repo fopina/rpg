@@ -10,7 +10,8 @@ Kube is so complex...
 * [ ] Node affinity (force architecture choice or Pi/server)
 * [ ] Use GPIO devices in Pi
 * [ ] Local volumes / NFS
-* [ ] Traefik customization / let's encrypt / etc
+* [ ] Traefik SSL customization - let's encrypt / etc
+* [ ] Traefik "real IP"
 
 ## UPDATE May 2024: WILL / NEED to switch regardless because...
 
