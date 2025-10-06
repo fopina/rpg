@@ -5,6 +5,13 @@ Master switching (embedded etcd requires 2 nodes / master uses a lot more memory
 Swarm lacks docker features (capabilities)
 Kube is so complex...
 
+## THINGS TO COVER
+
+* [ ] Node affinity (force architecture choice or Pi/server)
+* [ ] Use GPIO devices in Pi
+* [ ] Local volumes / NFS
+* [ ] Traefik customization / let's encrypt / etc
+
 ## UPDATE May 2024: WILL / NEED to switch regardless because...
 
 * no privilege
