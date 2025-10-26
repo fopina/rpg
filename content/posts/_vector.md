@@ -20,9 +20,13 @@ Migration
 Current fluentbit integrations:
 
 * add hostname to every record
-* inputs: cpu, mem2, netif, diskfree,
+* inputs: cpu (just cpu_p for dashboards), mem2, netif, diskfree,
 * output: influx
 * input: systemd (for dockerd logs), docker stats
 * output: loki
 * input: thermal and scaling for Pis
 * input: kmsg
+
+---
+
+setup basic vector with host metrics to compare how it looks in influxdb (get it to look exactly the same)
