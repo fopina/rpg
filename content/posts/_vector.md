@@ -25,7 +25,20 @@ Current fluentbit integrations:
 * input: systemd (for dockerd logs), docker stats
 * output: loki
 * input: thermal and scaling for Pis
-* input: kmsg
+* input: kmsg with a filter
+  ```
+  [FILTER]
+    Name grep
+    Match logs.kmsg
+    Logical_Op or
+    Exclude msg entered (disabled|forwarding|blocking) state
+    Exclude msg : renamed (from|to)
+    Exclude msg device .+ (left|entered) promiscuous mode
+  ```
+* input: pis temperature/throttled - with filters
+
+new extra:
+  * k3s events - from "central" vector
 
 ---
 
