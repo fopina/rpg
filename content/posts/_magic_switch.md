@@ -130,3 +130,121 @@ fi
 </dict>
 </plist>
 ```
+
+
+# alternative (and what I actually use now): Hammerspoon
+
+The `usb-trigger` approach above works, but I ended up moving the USB monitoring into [Hammerspoon](https://www.hammerspoon.org/). The Bluetooth work still belongs to `magic-switch`; Hammerspoon replaces `usb-trigger`, its LaunchAgent, and the `magic_switch_monitor.sh` wrapper.
+
+The watcher matches the docking station by its USB vendor/product ID pair (`0x17e9:0x4307` in my case), rather than a UUID. Change that pair for your own dock. In the Hammerspoon console, `hs.inspect(hs.usb.attachedDevices())` lists the attached devices and their IDs.
+
+With Hammerspoon installed and `magic-switch` available at `~/.local/bin/magic-switch` (plus `blueutil` installed as above), save this as `~/.hammerspoon/usb_command_watcher.lua`:
+
+```lua
+-- Controls Magic Switch when one configured USB device is connected or disconnected.
+--
+-- Hammerspoon exposes USB devices as a vendor ID and product ID pair. Configure
+-- `deviceID` as "0xvendorID:0xproductID". This watcher replaces the previous
+-- usb-trigger match for vendor 0x17e9 and product 0x4307.
+
+local usbCommandWatcher = {}
+local activeTasks = {}
+local pendingAttach
+local homeDirectory = assert(os.getenv("HOME"), "HOME must be set")
+
+local config = {
+  deviceID = "0x17e9:0x4307",
+  magicSwitchPath = homeDirectory .. "/.local/bin/magic-switch",
+  taskEnvironment = {
+    HOME = homeDirectory,
+    PATH = "/opt/homebrew/bin:/usr/local/bin:" .. homeDirectory .. "/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+  },
+  alertMessages = {
+    added = "attached",
+    removed = "detached",
+  },
+}
+
+local function deviceID(device)
+  return string.format("0x%04x:0x%04x", device.vendorID, device.productID)
+end
+
+local function runMagicSwitch(arguments, eventType)
+  local task
+  task = hs.task.new(config.magicSwitchPath, function(exitCode, stdOut, stdErr)
+    activeTasks[task] = nil
+    hs.printf(
+      "magic-switch command for %s exited with status %d\nstdout:\n%s\nstderr:\n%s",
+      eventType,
+      exitCode,
+      stdOut ~= "" and stdOut or "(none)",
+      stdErr ~= "" and stdErr or "(none)"
+    )
+  end, arguments)
+
+  if not task then
+    hs.printf("Could not start magic-switch command for %s", eventType)
+    return
+  end
+
+  -- GUI apps do not inherit the PATH configured by an interactive shell.
+  task:setEnvironment(config.taskEnvironment)
+  activeTasks[task] = true
+  task:start()
+end
+
+function usbCommandWatcher.start()
+  usbCommandWatcher.watcher = hs.usb.watcher.new(function(device)
+    if deviceID(device) ~= config.deviceID then
+      return
+    end
+
+    hs.alert.show(config.alertMessages[device.eventType])
+
+    if device.eventType == "added" then
+      -- Preserve the old script's delay, allowing the other display to turn off.
+      pendingAttach = hs.timer.doAfter(2, function()
+        pendingAttach = nil
+        runMagicSwitch({ "--notify", "on", "--retries", "2", "--connect" }, "added")
+      end)
+    elseif device.eventType == "removed" then
+      if pendingAttach then
+        pendingAttach:stop()
+        pendingAttach = nil
+      end
+      runMagicSwitch({ "--notify", "off" }, "removed")
+    end
+  end)
+
+  usbCommandWatcher.watcher:start()
+end
+
+usbCommandWatcher.start()
+
+return usbCommandWatcher
+```
+
+Then add this to `~/.hammerspoon/init.lua` and reload Hammerspoon's configuration:
+
+```lua
+require("usb_command_watcher")
+```
+
+The module starts its watcher when loaded. Keep Hammerspoon running, and enable launching it at login if you want this available after signing in. It reacts to attach/detach events; loading the configuration does not run `magic-switch` for an already-connected dock.
+
+When the dock attaches, it shows an `attached` alert and waits two seconds before running `magic-switch --notify on --retries 2 --connect`. This gives the other laptop time to release the devices. Detaching shows `detached` and runs `magic-switch --notify off` immediately. If the dock is removed during that two-second window, the pending attach action is cancelled.
+
+The commands run asynchronously through `hs.task`, so the delay and Bluetooth operations do not block Hammerspoon. The module retains references to the running tasks until their completion callbacks run.
+
+One gotcha was `PATH`: Hammerspoon did not inherit my interactive shell's environment, so `magic-switch` initially could not find `blueutil`. The task environment above explicitly includes Homebrew and `~/.local/bin`, with the home directory obtained from `HOME` instead of hardcoding a username.
+
+Every completed command logs its exit status, stdout, and stderr to the Hammerspoon console, including successful runs. I also updated my installed `magic-switch` so `on` returns a nonzero exit code if any device still fails to pair after its retries, and `off` returns nonzero if any device fails to unpair. Those aggregate statuses are returned from `main()` and passed to `sys.exit(main())`, allowing the watcher to report the failure. This does not make every `blueutil` failure fatal: the preliminary unpair and optional `--connect` results during `on` are still ignored.
+
+To retire the previous setup, I unloaded its LaunchAgent and removed its plist:
+
+```sh
+launchctl bootout "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.skmobi.checksub.plist"
+rm "$HOME/Library/LaunchAgents/com.skmobi.checksub.plist"
+```
+
+That migration step only applies if the earlier LaunchAgent is installed. With it retired, Hammerspoon handles the USB events and calls `magic-switch` directly; the old monitor shell script is no longer used.
