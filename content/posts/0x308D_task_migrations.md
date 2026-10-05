@@ -14,6 +14,9 @@ tags:
 what data they transfer, and any limitations.
 
 Existing migration/export scripts: https://github.com/fopina/trello-to-mstodo
+- Notion importer in this draft branch: scripts/todo_to_notion.py (usage in
+  scripts/README.md). Maps Name, List, Due date and Status; NotStarted -> Not done,
+  Completed -> Done; Missed unused. Other fields are retained as JSON comments.
 - import_from_trello.py covers the Trello -> Microsoft To Do migration.
 - export_all.py exports To Do folders and task objects; the README currently calls
   it export.py. Use --completed --output BACKUP.json to include completed tasks.
