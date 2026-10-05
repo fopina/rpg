@@ -11,7 +11,21 @@ tags:
 ---
 
 <!-- TODO before publishing: include the migration scripts and explain how to run them,
-what data they transfer, and any limitations. -->
+what data they transfer, and any limitations.
+
+Existing migration/export scripts: https://github.com/fopina/trello-to-mstodo
+- import_from_trello.py covers the Trello -> Microsoft To Do migration.
+- export_all.py exports To Do folders and task objects; the README currently calls
+  it export.py. Use --completed --output BACKUP.json to include completed tasks.
+- Verified against captured browser requests: client.py uses the same
+  https://substrate.office.com/todob2/api/v1 taskfolders and per-folder tasks API.
+  Task ParentFolderId maps to folder Id; folder Name is preserved in the export.
+- Before relying on a complete export, implement pagination for folders and tasks.
+  The client requests 200 items and raises at >=200, but does not follow DeltaLink.
+  Browser verification returned task pages of 50, 19, then 0 by following DeltaLink.
+- Compare linked-entity coverage: the browser adds $expand=LinkedEntity; the client
+  does not. Separately verify checklist/subtask and attachment export coverage.
+-->
 
 Keeping a to-do list should be the easy part. Doing the things on it is already enough work...
 
