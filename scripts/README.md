@@ -8,14 +8,18 @@ dependency.
 | --- | --- |
 | `Subject` | `Name` (title) |
 | Folder `Name`, resolved via `ParentFolderId` | `List` (text, select, or multi-select) |
-| `DueDateTime.DateTime`, with `DueDate` fallback | `Due date` (date) |
+| `CreatedDateTime` | `Date` (date) |
 | `Status: NotStarted` | `Status: Not done` |
 | `Status: Completed` | `Status: Done` |
+| `Subtasks[].Subject` / `IsCompleted` | Page checklist text / checked state |
 
-`Missed` is never assigned. Due dates are imported as calendar dates; tasks without
-one get an empty date property. The remaining original task fields are preserved
+`Missed` is never assigned. The task creation date is imported into `Date`; tasks
+without one get an empty date property. The remaining original task fields are preserved
 in page comments as JSON, including HTML descriptions, recurrence and any nested
-subtask data present in the export. Long metadata is split across comments without
+subtask data present in the export. Subtasks also appear as checklist items in the
+page body, in export order, with their completion state preserved.
+Task creation and completion dates are also added as visible page text blocks.
+Long metadata is split across comments without
 truncation. This does not fetch missing subtasks or attachment files from To Do.
 
 ## Setup and usage
@@ -25,9 +29,11 @@ and grant it access to the target database. Set its secret as `NOTION_TOKEN` in 
 environment. The script never writes that secret into its progress file.
 
 Configure SyncTasks to use this database and map its task title, date, and completion
-fields to `Name`, `Due date`, and `Status` (`Done` means completed). Use `List` when
+fields to `Name`, `Date`, and `Status` (`Done` means completed). Use `List` when
 configuring list filters. SyncTasks compatibility still needs an in-app check;
 page comments are preserved in Notion, but their display in SyncTasks is unverified.
+Notion's system `Last edited time` property is read-only, so `CompletedDateTime`
+cannot be imported into it; completion timestamps remain in the metadata comment.
 
 First validate the input locally (no token or network required):
 
@@ -59,6 +65,14 @@ Select/multi-select list options may be added by Notion when pages are created.
 The progress file defaults to `microsoft-todo-export-2026-10-05.notion-state.json`
 beside the export, outside the repository. Rerun the same command with the same
 input, destination, mapping, and progress file to skip finished pages and comments.
+Rerunning with an older journal also adds missing checklists to existing pages.
+Checklist writes are batched and journaled so completed batches are skipped.
+
+To update pages already recorded in the journal without creating new pages, rerun
+with `--apply --update-existing`. This refreshes writable properties and appends
+subtasks not already recorded by the importer. Existing page content is preserved.
+Notion's system Last edited time is updated automatically to the rerun time; the
+exported `LastModifiedDateTime` cannot be assigned to that read-only property.
 Keep this file: a fresh journal creates a fresh set of pages, and the importer does
 not deduplicate against pages created by other tools or previous journals.
 
@@ -71,6 +85,10 @@ than risk duplicating a page or comment. Reconcile that entry manually:
 - For `comment_N`, check whether that numbered metadata comment exists. If it does,
   set `comments_written` to `N + 1`; otherwise leave the count unchanged. Remove
   `pending` after checking.
+- For `checklist_N`, inspect the page for that batch of checklist items. If the
+  entire batch exists, set `checklist_batches_written` to `N + 1`; if none exists,
+  leave the count unchanged. If only some exist, remove those partial items before
+  retrying the batch. Remove `pending` after reconciling.
 
 Do not run two imports concurrently with the same progress file. Successful
 imports do not modify or delete the original To Do tasks.
